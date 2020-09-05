@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "enrollment-system-client": {
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "enrollment-system-client"
+    }
+  },
+  "defaultProject": "enrollment-system-client",
+  "cli": {
+    "analytics": "bc26eb9f-66e3-4ff6-b04f-959593d23adb"
+  }
 }
