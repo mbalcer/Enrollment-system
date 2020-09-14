@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../login/auth/auth.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPanelComponent implements OnInit {
 
-  constructor() { }
+  username = '';
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.username = this.authService.getLoggedInUserName();
   }
 
 }

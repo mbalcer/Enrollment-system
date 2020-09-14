@@ -10,6 +10,7 @@ export class AuthService {
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
 
   public username: string;
+  public password: string;
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +18,7 @@ export class AuthService {
     return this.http.get(environment.basePath + `/auth/basic`,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map(() => {
       this.username = username;
+      this.password = password;
       this.registerSuccessfulLogin(username);
     }));
   }
