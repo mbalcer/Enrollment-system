@@ -16,4 +16,7 @@ export class AdminPanelComponent implements OnInit {
     this.username = this.authService.getLoggedInUserName();
   }
 
+  logout() {
+    this.authService.logout();
+  }
 }
