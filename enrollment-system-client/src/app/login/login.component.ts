@@ -5,7 +5,7 @@ import {AuthService} from './auth/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -13,10 +13,7 @@ export class LoginComponent implements OnInit {
     username: '',
     password: ''
   };
-  errorMessage = 'Invalid Credentials';
-  successMessage: string;
-  invalidLogin = false;
-  loginSuccess = false;
+  invalidCredentials = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) { }
 
@@ -24,13 +21,10 @@ export class LoginComponent implements OnInit {
 
   handleLogin() {
     this.authService.authenticationService(this.userToLogin.username, this.userToLogin.password).subscribe(result => {
-      this.invalidLogin = false;
-      this.loginSuccess = true;
-      this.successMessage = 'Login Successful';
+      this.invalidCredentials = false;
       this.router.navigate(['/admin-panel']);
     }, () => {
-      this.invalidLogin = true;
-      this.loginSuccess = false;
+      this.invalidCredentials = true;
     });
   }
 }
