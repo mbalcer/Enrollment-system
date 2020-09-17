@@ -1,15 +1,18 @@
-<div class="logo">
-  Enrollment System
-</div>
-<div class="login-page">
-  <div class="form">
-    <form class="login-form" (ngSubmit)="handleLogin()">
-      <input type="text" placeholder="username" name="login-username" [(ngModel)]="userToLogin.username"/>
-      <input type="password" placeholder="password" name="login-password" [(ngModel)]="userToLogin.password"/>
-      <button>login</button>
-      <p class="error" *ngIf="invalidCredentials">Invalid Credentials</p>
-      <p class="message">Not registered? <a href="#">Create an account</a></p>
-    </form>
+<div class="all">
+  <div class="logo">
+    Enrollment System
+  </div>
+  <div class="login-page">
+    <div class="form">
+      <h2>Sign in</h2>
+      <form class="login-form" (ngSubmit)="handleLogin()">
+        <input type="text" placeholder="username" name="login-username" [(ngModel)]="userToLogin.username"/>
+        <input type="password" placeholder="password" name="login-password" [(ngModel)]="userToLogin.password"/>
+        <button>login</button>
+        <p class="error" *ngIf="invalidCredentials">Invalid Credentials</p>
+        <p class="message">Not registered? <a href="#">Create an account</a></p>
+      </form>
 
+    </div>
   </div>
 </div>
