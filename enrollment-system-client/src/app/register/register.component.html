@@ -1,1 +1,64 @@
-<p>register works!</p>
+<div class="all">
+  <div class="logo">
+    Enrollment System
+  </div>
+  <div class="register-page">
+    <div class="form">
+      <h2>Sign up</h2>
+      <form class="register-form" (ngSubmit)="registerForm.form.valid && signUp()" #registerForm="ngForm">
+        <input type="text"
+               placeholder="username"
+               name="register-username"
+               [(ngModel)]="userToRegister.login"
+               #registerUsername="ngModel"
+               [ngClass]="{ 'is-invalid': registerForm.submitted && registerUsername.invalid }"
+               required minlength="6" maxlength="20"
+        />
+        <p class="message error invalid" *ngIf="registerForm.submitted && registerUsername.invalid">
+          <span *ngIf="registerUsername.errors?.required">Username is required</span>
+          <span *ngIf="registerUsername.errors?.minlength">Username must min 6 letters</span>
+        </p>
+        <input type="password"
+               placeholder="password"
+               name="register-password"
+               [(ngModel)]="userToRegister.password"
+               #registerPassword="ngModel"
+               [ngClass]="{ 'is-invalid': registerForm.submitted && registerPassword.invalid }"
+               required minlength="8" maxlength="40"
+        />
+        <p class="message error invalid" *ngIf="registerForm.submitted && registerPassword.invalid">
+          <span *ngIf="registerPassword.errors?.required">Password is required</span>
+          <span *ngIf="registerPassword.errors?.minlength">Password must min 8 letters</span>
+        </p>
+        <input type="password"
+               placeholder="confirm password"
+               name="register-confirm-password"
+               [(ngModel)]="userToRegister.confirmPassword"
+               #registerConfirmPassword="ngModel"
+               [ngClass]="{ 'is-invalid': registerForm.submitted && registerConfirmPassword.invalid }"
+               required pattern="{{registerPassword.value}}"
+        />
+        <p class="message error invalid" *ngIf="registerForm.submitted && registerConfirmPassword.invalid">
+          <span *ngIf="registerConfirmPassword.errors?.required">Confirm password is required</span>
+          <span *ngIf="registerConfirmPassword.errors?.pattern">Password & Confirm Password must be the same</span>
+        </p>
+        <input type="text"
+               placeholder="email address"
+               name="register-email"
+               [(ngModel)]="userToRegister.email"
+               #registerEmail="ngModel"
+               [ngClass]="{ 'is-invalid': registerForm.submitted && registerEmail.invalid}"
+               required email
+        />
+        <p class="message error invalid" *ngIf="registerForm.submitted && registerEmail.invalid">
+          <span *ngIf="registerEmail.errors?.required">Email is required</span>
+          <span *ngIf="registerEmail.errors?.email">Field is not a valid email</span>
+        </p>
+
+        <button>create</button>
+        <p class="message error" id="errorRegister"></p>
+        <p class="message">Already registered? <a href="#">Sign In</a></p>
+      </form>
+    </div>
+  </div>
+</div>

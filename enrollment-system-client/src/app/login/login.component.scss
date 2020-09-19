@@ -1,4 +1,4 @@
-@import "../../variables";
+@import "../../variables.scss";
 
 .all {
   background: linear-gradient(135deg, $base-color-light, $base-color);
@@ -15,7 +15,7 @@
 }
 
 .login-page {
-  width: 360px;
+  width: 400px;
   padding: 4% 0 0;
   margin: auto;
 }
