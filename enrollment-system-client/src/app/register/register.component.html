@@ -4,7 +4,7 @@
   </div>
   <div class="register-page">
     <div class="form">
-      <h2>Sign up</h2>
+      <h2>Register account</h2>
       <form class="register-form" (ngSubmit)="registerForm.form.valid && signUp()" #registerForm="ngForm">
         <input type="text"
                placeholder="username"
@@ -55,9 +55,9 @@
           <span *ngIf="registerEmail.errors?.email">Field is not a valid email</span>
         </p>
 
-        <button>create</button>
+        <button>register</button>
         <p class="message error" id="errorRegister"></p>
-        <p class="message">Already registered? <a href="#">Sign In</a></p>
+        <p class="message">Already registered? <a routerLink="/login">Sign In</a></p>
       </form>
     </div>
   </div>

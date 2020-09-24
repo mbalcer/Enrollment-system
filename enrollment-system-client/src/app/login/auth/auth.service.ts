@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
@@ -15,7 +15,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   authenticationService(username: string, password: string) {
-    return this.http.get(environment.basePath + `/auth/basic`,
+    return this.http.get(environment.basePath + `/auth`,
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map(() => {
       this.username = username;
       this.password = password;
@@ -25,6 +25,10 @@ export class AuthService {
 
   createBasicAuthToken(username: string, password: string) {
     return 'Basic ' + window.btoa(username + ':' + password);
+  }
+
+  getAuthorization() {
+    return { authorization: this.createBasicAuthToken(this.username, this.password)};
   }
 
   registerSuccessfulLogin(username) {
