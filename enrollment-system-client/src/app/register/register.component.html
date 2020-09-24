@@ -56,7 +56,8 @@
         </p>
 
         <button>register</button>
-        <p class="message error" id="errorRegister"></p>
+        <p class="message error" *ngIf="errorRegister.isError">{{errorRegister.message}}</p>
+        <p class="message success" *ngIf="errorRegister.message != '' && !errorRegister.isError">{{errorRegister.message}}</p>
         <p class="message">Already registered? <a routerLink="/login">Sign In</a></p>
       </form>
     </div>

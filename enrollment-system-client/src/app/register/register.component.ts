@@ -9,25 +9,41 @@ import {User} from '../model/user.model';
 })
 export class RegisterComponent implements OnInit {
 
-  userToRegister: UserRegisterViewModel = {
-    login: '',
-    password: '',
-    confirmPassword: '',
-    email: ''
+  errorRegister: ErrorForm = {
+    isError: false,
+    message: ''
   };
+
+  userToRegister: UserRegisterViewModel;
 
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.initUserToRegister();
+  }
+
+  initUserToRegister() {
+    this.userToRegister = {
+      login: '',
+      password: '',
+      confirmPassword: '',
+      email: ''
+    };
   }
 
   signUp() {
     const account = new User(this.userToRegister.login,  this.userToRegister.email, this.userToRegister.password);
-    console.log(account);
     this.accountService.registerUser(account).subscribe(result => {
-      console.log(result);
-    }, error => {
-      console.log(error);
+      this.errorRegister =  {
+        isError: false,
+        message: 'You have been successfully registered'
+      };
+      this.initUserToRegister();
+    }, errorResponse => {
+      this.errorRegister = {
+        isError: true,
+        message: errorResponse.error.message
+      };
     });
   }
 }
@@ -37,4 +53,9 @@ export interface UserRegisterViewModel {
   password: string;
   confirmPassword: string;
   email: string;
+}
+
+export interface ErrorForm {
+  isError: boolean;
+  message?: string;
 }
