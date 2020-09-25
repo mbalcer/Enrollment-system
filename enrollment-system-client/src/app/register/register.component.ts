@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AccountService} from '../service/account.service';
 import {User} from '../model/user.model';
+import {FormMessage} from '../model/form-message.model';
+import {TypeMessage} from '../model/enumeration/type-message.enum';
 
 @Component({
   selector: 'app-register',
@@ -9,11 +11,8 @@ import {User} from '../model/user.model';
 })
 export class RegisterComponent implements OnInit {
 
-  errorRegister: ErrorForm = {
-    isError: false,
-    message: ''
-  };
-
+  public TypeMessageEnum = TypeMessage;
+  messageRegister: FormMessage = new FormMessage();
   userToRegister: UserRegisterViewModel;
 
   constructor(private accountService: AccountService) { }
@@ -34,14 +33,14 @@ export class RegisterComponent implements OnInit {
   signUp() {
     const account = new User(this.userToRegister.login,  this.userToRegister.email, this.userToRegister.password);
     this.accountService.registerUser(account).subscribe(result => {
-      this.errorRegister =  {
-        isError: false,
+      this.messageRegister =  {
+        type: TypeMessage.SUCCESS,
         message: 'You have been successfully registered'
       };
       this.initUserToRegister();
     }, errorResponse => {
-      this.errorRegister = {
-        isError: true,
+      this.messageRegister = {
+        type: TypeMessage.ERROR,
         message: errorResponse.error.message
       };
     });
@@ -53,9 +52,4 @@ export interface UserRegisterViewModel {
   password: string;
   confirmPassword: string;
   email: string;
-}
-
-export interface ErrorForm {
-  isError: boolean;
-  message?: string;
 }
