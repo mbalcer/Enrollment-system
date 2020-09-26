@@ -9,10 +9,9 @@
         <input type="text" placeholder="username" name="login-username" [(ngModel)]="userToLogin.username"/>
         <input type="password" placeholder="password" name="login-password" [(ngModel)]="userToLogin.password"/>
         <button>login</button>
-        <p class="error" *ngIf="invalidCredentials">Invalid Credentials</p>
+        <p class="message error" *ngIf="messageLogin.type === TypeMessage.ERROR">{{messageLogin.message}}</p>
         <p class="message">Not registered? <a routerLink="/register">Create an account</a></p>
       </form>
-
     </div>
   </div>
 </div>

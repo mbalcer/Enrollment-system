@@ -5,7 +5,7 @@
   <div class="register-page">
     <div class="form">
       <h2>Register account</h2>
-      <form class="register-form" (ngSubmit)="registerForm.form.valid && signUp()" #registerForm="ngForm">
+      <form class="register-form" (ngSubmit)="registerForm.form.valid && signUp(registerForm)" #registerForm="ngForm">
         <input type="text"
                placeholder="username"
                name="register-username"

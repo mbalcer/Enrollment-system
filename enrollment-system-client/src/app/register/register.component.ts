@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
     };
   }
 
-  signUp() {
+  signUp(form) {
     const account = new User(this.userToRegister.login,  this.userToRegister.email, this.userToRegister.password);
     this.accountService.registerUser(account).subscribe(result => {
       this.messageRegister =  {
@@ -38,6 +38,7 @@ export class RegisterComponent implements OnInit {
         message: 'You have been successfully registered'
       };
       this.initUserToRegister();
+      form.submitted = false;
     }, errorResponse => {
       this.messageRegister = {
         type: TypeMessage.ERROR,
