@@ -9,13 +9,15 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpInterceptorService} from './http-interceptor.service';
 import {RegisterComponent} from './register/register.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {MenuComponent} from './dashboard/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    DashboardComponent
+    DashboardComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
