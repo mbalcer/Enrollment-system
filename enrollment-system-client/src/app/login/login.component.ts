@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   handleLogin() {
     this.authService.authenticationService(this.userToLogin.username, this.userToLogin.password).subscribe(result => {
-      this.router.navigate(['/admin-panel']);
+      this.router.navigate(['/dashboard']);
     }, errorResponse => {
       this.messageLogin = {
         type: TypeMessage.ERROR,

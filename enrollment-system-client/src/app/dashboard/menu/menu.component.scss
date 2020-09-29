@@ -1,0 +1,41 @@
+@import "../../../variables.scss";
+
+ul.menu {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+
+  > li {
+    width: 100%;
+    list-style-type: none;
+    margin: 1em 0 0 0;
+
+    > a {
+      display: flex;
+      flex-direction: column;
+      color: $white;
+      font-size: 24px;
+      text-decoration: none;
+
+      > mat-icon {
+        transform: scale(1.5);
+        transform-origin: top left;
+        margin: 20px 0 10px 57px;
+        color: $white;
+      }
+
+      > span {
+        font-size: 18px;
+        margin-top: 10px;
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
+  > li:hover > a {
+    color: #2980b9;
+  }
+}
