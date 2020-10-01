@@ -1,5 +1,8 @@
 @import "../../../variables.scss";
 
+$icon-size: 24px;
+$icon-scale: 1.5;
+
 ul.menu {
   display: flex;
   flex-direction: column;
@@ -15,13 +18,13 @@ ul.menu {
       display: flex;
       flex-direction: column;
       color: $white;
-      font-size: 24px;
+      font-size: $icon-size;
       text-decoration: none;
 
       > mat-icon {
-        transform: scale(1.5);
+        transform: scale($icon-scale);
         transform-origin: top left;
-        margin: 20px 0 10px 57px;
+        margin: 20px 0 10px calc((#{$width-menu} - (#{$icon-scale} * #{$icon-size}))/2);
         color: $white;
       }
 
@@ -36,6 +39,12 @@ ul.menu {
   }
 
   > li:hover > a {
-    color: #2980b9;
+    color: $base-color-light;
+  }
+
+  > li:hover > a > mat-icon {
+    // This filter is for #278ea5 color. If you change $base-color-light or color for ' ul.menu > li:hover > a' property then also change this filter.
+    // Filter generator: https://codepen.io/sosuke/pen/Pjoqqp
+    filter: invert(43%) sepia(72%) saturate(438%) hue-rotate(144deg) brightness(95%) contrast(91%);
   }
 }

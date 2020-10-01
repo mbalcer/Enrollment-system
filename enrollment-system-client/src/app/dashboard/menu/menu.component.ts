@@ -10,7 +10,7 @@ import {MatIconRegistry} from '@angular/material/icon';
 export class MenuComponent implements OnInit {
 
   constructor(private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon('enrollment', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/web.svg'));
+    iconRegistry.addSvgIcon('registration', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/web.svg'));
     iconRegistry.addSvgIcon('subjects', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/book.svg'));
     iconRegistry.addSvgIcon('signout', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/signout.svg'));
     iconRegistry.addSvgIcon('profile', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/user.svg'));
