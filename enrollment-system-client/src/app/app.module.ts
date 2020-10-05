@@ -12,6 +12,8 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {MenuComponent} from './dashboard/menu/menu.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
+import {CleanUrlSerializer} from './clean-url-serializer';
+import {UrlSerializer} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,10 @@ import {MaterialModule} from './material.module';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true
+    },
+    {
+      provide: UrlSerializer,
+      useClass: CleanUrlSerializer
     }
   ],
   bootstrap: [AppComponent]
