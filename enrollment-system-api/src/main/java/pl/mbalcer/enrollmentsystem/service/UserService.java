@@ -8,12 +8,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.errors.EmailAlreadyUsedException;
 import pl.mbalcer.enrollmentsystem.errors.LoginAlreadyUsedException;
+import pl.mbalcer.enrollmentsystem.errors.UserNotFoundException;
 import pl.mbalcer.enrollmentsystem.model.User;
 import pl.mbalcer.enrollmentsystem.model.dto.RegisterUserDTO;
 import pl.mbalcer.enrollmentsystem.repository.UserRepository;
 import pl.mbalcer.enrollmentsystem.service.mapper.UserMapper;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -42,5 +44,13 @@ public class UserService {
         user.setPassword(passwordEncrypted);
         User saveUser = userRepository.save(user);
         return new ResponseEntity<>(userMapper.toUserDTO(saveUser), HttpStatus.CREATED);
+    }
+
+    public ResponseEntity getUser(String username) {
+        Optional<User> userOptional = userRepository.findUserByUsername(username);
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException();
+
+        return new ResponseEntity(userMapper.toUserDTO(userOptional.get()), HttpStatus.OK);
     }
 }

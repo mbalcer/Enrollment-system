@@ -21,7 +21,7 @@ public class InitService {
 
     @PostConstruct
     public void init() {
-        User user = new User(0L, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl", "IT");
+        User user = new User(0L, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl");
         userRepository.save(user);
     }
 

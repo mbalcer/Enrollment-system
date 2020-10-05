@@ -28,4 +28,9 @@ public class AccountController {
     public ResponseEntity registerUser(@RequestBody RegisterUserDTO userDTO) {
         return userService.registerUser(userDTO);
     }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity getUser(@PathVariable String username) {
+        return userService.getUser(username);
+    }
 }
