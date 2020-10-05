@@ -15,4 +15,8 @@ export class AccountService {
   public registerUser(account: IUser): Observable<IUser> {
     return this.http.post(environment.basePath + '/register', account);
   }
+
+  public getUser(): Observable<IUser> {
+    return this.http.get(environment.basePath + '/user/' + this.authService.getLoggedInUserName());
+  }
 }

@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {IUser} from '../../model/user.model';
 
 @Component({
   selector: 'app-top-bar',
@@ -6,6 +7,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./top-bar.component.scss']
 })
 export class TopBarComponent implements OnInit {
+
+  @Input() user: IUser;
 
   constructor() { }
 
