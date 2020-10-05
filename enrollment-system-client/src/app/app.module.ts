@@ -14,6 +14,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {CleanUrlSerializer} from './clean-url-serializer';
 import {UrlSerializer} from '@angular/router';
+import {TopBarComponent} from './dashboard/top-bar/top-bar.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {UrlSerializer} from '@angular/router';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    MenuComponent
+    MenuComponent,
+    TopBarComponent
   ],
   imports: [
     BrowserModule,
