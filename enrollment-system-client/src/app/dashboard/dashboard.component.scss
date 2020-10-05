@@ -11,3 +11,9 @@
   color: $white;
   min-height: 100vh;
 }
+
+.right-site {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - #{$width-menu});
+}

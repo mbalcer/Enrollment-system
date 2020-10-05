@@ -1,0 +1,42 @@
+@import "../../../variables.scss";
+
+$width-logo: 200px;
+
+.top-bar {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  border-bottom: 1px solid $gray;
+  display: flex;
+  flex-direction: row;
+}
+
+.logo {
+  margin: 0;
+  padding: 0.4em;
+  font-size: 20px;
+  width: $width-logo;
+}
+
+.profile {
+  display: flex;
+  flex-direction: row-reverse;
+  width: calc(100% - #{$width-logo});
+  padding: 0.5em;
+
+  > .user-info {
+    margin-right: 0.5em;
+    font-weight: bold;
+  }
+
+  > .sign-out {
+    margin-left: 0.5em;
+    color: $black;
+    text-decoration: none;
+
+    &:hover {
+      color: $base-color;
+      text-decoration: underline;
+    }
+  }
+}
