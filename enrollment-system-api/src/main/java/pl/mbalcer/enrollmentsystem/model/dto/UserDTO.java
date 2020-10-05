@@ -12,12 +12,10 @@ public class UserDTO {
     private String username;
     private String fullName;
     private String email;
-    private String major;
 
     public UserDTO(User user) {
         this.username = user.getUsername();
         this.fullName = user.getUsername();
         this.email = user.getEmail();
-        this.major = user.getMajor();
     }
 }
