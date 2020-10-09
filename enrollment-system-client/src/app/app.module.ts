@@ -15,6 +15,7 @@ import {MaterialModule} from './material.module';
 import {CleanUrlSerializer} from './clean-url-serializer';
 import {UrlSerializer} from '@angular/router';
 import {TopBarComponent} from './dashboard/top-bar/top-bar.component';
+import {HomeComponent} from './dashboard/home/home.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {TopBarComponent} from './dashboard/top-bar/top-bar.component';
     RegisterComponent,
     DashboardComponent,
     MenuComponent,
-    TopBarComponent
+    TopBarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
