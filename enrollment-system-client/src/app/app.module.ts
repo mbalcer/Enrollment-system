@@ -17,6 +17,7 @@ import {UrlSerializer} from '@angular/router';
 import {TopBarComponent} from './dashboard/top-bar/top-bar.component';
 import {HomeComponent} from './dashboard/home/home.component';
 import {ProfileComponent} from './dashboard/profile/profile.component';
+import {SubjectsComponent} from './dashboard/subjects/subjects.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {ProfileComponent} from './dashboard/profile/profile.component';
     MenuComponent,
     TopBarComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    SubjectsComponent
   ],
   imports: [
     BrowserModule,
