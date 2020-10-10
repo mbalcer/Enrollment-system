@@ -1,9 +1,10 @@
 package pl.mbalcer.enrollmentsystem.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.mbalcer.enrollmentsystem.model.Student;
 import pl.mbalcer.enrollmentsystem.model.User;
+import pl.mbalcer.enrollmentsystem.repository.StudentRepository;
 import pl.mbalcer.enrollmentsystem.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
@@ -12,17 +13,19 @@ import javax.annotation.PostConstruct;
 public class InitService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final StudentRepository studentRepository;
 
-    @Autowired
-    public InitService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public InitService(UserRepository userRepository, PasswordEncoder passwordEncoder, StudentRepository studentRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.studentRepository = studentRepository;
     }
 
     @PostConstruct
     public void init() {
         User user = new User(0L, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl");
-        userRepository.save(user);
+        Student student = new Student(user,"IT", 111000L, 7);
+        studentRepository.save(student);
     }
 
 }

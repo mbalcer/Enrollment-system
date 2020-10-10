@@ -15,7 +15,7 @@ public class UserDTO {
 
     public UserDTO(User user) {
         this.username = user.getUsername();
-        this.fullName = user.getUsername();
+        this.fullName = user.getFullName();
         this.email = user.getEmail();
     }
 }
