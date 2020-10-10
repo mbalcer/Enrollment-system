@@ -18,6 +18,7 @@ import {TopBarComponent} from './dashboard/top-bar/top-bar.component';
 import {HomeComponent} from './dashboard/home/home.component';
 import {ProfileComponent} from './dashboard/profile/profile.component';
 import {SubjectsComponent} from './dashboard/subjects/subjects.component';
+import {RegistrationComponent} from './dashboard/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {SubjectsComponent} from './dashboard/subjects/subjects.component';
     TopBarComponent,
     HomeComponent,
     ProfileComponent,
-    SubjectsComponent
+    SubjectsComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
