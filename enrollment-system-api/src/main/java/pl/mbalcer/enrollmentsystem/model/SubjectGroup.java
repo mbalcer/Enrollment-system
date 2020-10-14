@@ -20,8 +20,10 @@ public class SubjectGroup {
     private LocalTime courseTime;
     private String place;
     private Integer numberOfPlaces;
-    private String teacher;
 
     @ManyToOne
     private Subject subject;
+
+    @ManyToOne
+    private Teacher teacher;
 }

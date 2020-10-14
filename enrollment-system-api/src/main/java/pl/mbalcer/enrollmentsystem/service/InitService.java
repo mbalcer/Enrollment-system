@@ -1,5 +1,6 @@
 package pl.mbalcer.enrollmentsystem.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.model.*;
@@ -22,8 +23,10 @@ public class InitService {
     private final FieldOfStudyRepository fieldOfStudyRepository;
     private final SubjectRepository subjectRepository;
     private final SubjectGroupRepository subjectGroupRepository;
+    private final TeacherRepository teacherRepository;
 
-    public InitService(UserRepository userRepository, PasswordEncoder passwordEncoder, StudentRepository studentRepository, FacultyRepository facultyRepository, FieldOfStudyRepository fieldOfStudyRepository, SubjectRepository subjectRepository, SubjectGroupRepository subjectGroupRepository) {
+    @Autowired
+    public InitService(UserRepository userRepository, PasswordEncoder passwordEncoder, StudentRepository studentRepository, FacultyRepository facultyRepository, FieldOfStudyRepository fieldOfStudyRepository, SubjectRepository subjectRepository, SubjectGroupRepository subjectGroupRepository, TeacherRepository teacherRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.studentRepository = studentRepository;
@@ -31,6 +34,7 @@ public class InitService {
         this.fieldOfStudyRepository = fieldOfStudyRepository;
         this.subjectRepository = subjectRepository;
         this.subjectGroupRepository = subjectGroupRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     @PostConstruct
@@ -47,8 +51,11 @@ public class InitService {
         Subject subject = new Subject(0l, "Graduation seminar", "description", Duration.ofHours(30), CourseType.SEMINAR, 4);
         subject = subjectRepository.save(subject);
 
+        Teacher teacher = new Teacher(mathAndItFaculty, "janek", passwordEncoder.encode("janek"), "Jan Kowalski", "jankow111@wp.pl");
+        teacher = teacherRepository.save(teacher);
+
         LocalDateTime startGroup = LocalDateTime.of(2020, 10, 12, 8, 0);
-        SubjectGroup group1 = new SubjectGroup(0l, startGroup, LocalTime.of(1, 30), "UTP", 14, "prof Jan Kowalski", subject);
+        SubjectGroup group1 = new SubjectGroup(0l, startGroup, LocalTime.of(1, 30), "UTP", 14, subject, teacher);
         subjectGroupRepository.save(group1);
     }
 
