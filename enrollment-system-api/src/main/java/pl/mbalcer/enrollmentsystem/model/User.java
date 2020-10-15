@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import pl.mbalcer.enrollmentsystem.model.enumeration.Role;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -23,10 +26,12 @@ public class User implements UserDetails {
     private String password;
     private String fullName;
     private String email;
+    private Role role = Role.STUDENT;
+    private Boolean isActive = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Set.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
@@ -56,6 +61,8 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
     }
+
+
 }

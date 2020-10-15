@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import pl.mbalcer.enrollmentsystem.model.enumeration.Role;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -29,7 +30,7 @@ public class Student extends User {
     private List<SubjectGroup> groups = new ArrayList<>();
 
     public Student(User user, FieldOfStudy fieldOfStudy, Long indexNumber, Integer semester) {
-        super(user.getId(), user.getUsername(), user.getPassword(), user.getFullName(), user.getEmail());
+        super(user.getId(), user.getUsername(), user.getPassword(), user.getFullName(), user.getEmail(), Role.STUDENT, false);
         this.fieldOfStudy = fieldOfStudy;
         this.indexNumber = indexNumber;
         this.semester = semester;

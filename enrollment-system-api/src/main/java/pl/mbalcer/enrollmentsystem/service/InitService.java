@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.model.*;
 import pl.mbalcer.enrollmentsystem.model.enumeration.CourseType;
+import pl.mbalcer.enrollmentsystem.model.enumeration.Role;
 import pl.mbalcer.enrollmentsystem.model.enumeration.StudyMode;
 import pl.mbalcer.enrollmentsystem.model.enumeration.StudyType;
 import pl.mbalcer.enrollmentsystem.repository.*;
@@ -45,7 +46,7 @@ public class InitService {
         FieldOfStudy it = new FieldOfStudy(0l, "IT", StudyType.FIRST_CYCLE, StudyMode.FULL_TIME, mathAndItFaculty, null);
         it = fieldOfStudyRepository.save(it);
 
-        User user = new User(0L, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl");
+        User user = new User(0L, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl", Role.STUDENT, true);
         Student student = new Student(user, it, 111000L, 7);
         student = studentRepository.save(student);
 
