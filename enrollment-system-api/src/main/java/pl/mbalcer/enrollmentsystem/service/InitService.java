@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 
 @Service
 public class InitService {
@@ -39,14 +40,14 @@ public class InitService {
 
     @PostConstruct
     public void init() {
-        User user = new User(0L, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl");
-        Student student = new Student(user,"IT", 111000L, 7);
-        studentRepository.save(student);
-
         Faculty mathAndItFaculty = new Faculty(0l, "Faculty mathematics and IT", "Bydgoszcz", null);
         mathAndItFaculty = facultyRepository.save(mathAndItFaculty);
-        FieldOfStudy it = new FieldOfStudy(0l, "IT", StudyType.FIRST_CYCLE, StudyMode.FULL_TIME, mathAndItFaculty);
-        fieldOfStudyRepository.save(it);
+        FieldOfStudy it = new FieldOfStudy(0l, "IT", StudyType.FIRST_CYCLE, StudyMode.FULL_TIME, mathAndItFaculty, null);
+        it = fieldOfStudyRepository.save(it);
+
+        User user = new User(0L, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl");
+        Student student = new Student(user, it, 111000L, 7);
+        student = studentRepository.save(student);
 
         Subject subject = new Subject(0l, "Graduation seminar", "description", Duration.ofHours(30), CourseType.SEMINAR, 4);
         subject = subjectRepository.save(subject);
@@ -55,7 +56,7 @@ public class InitService {
         teacher = teacherRepository.save(teacher);
 
         LocalDateTime startGroup = LocalDateTime.of(2020, 10, 12, 8, 0);
-        SubjectGroup group1 = new SubjectGroup(0l, startGroup, LocalTime.of(1, 30), "UTP", 14, subject, teacher);
+        SubjectGroup group1 = new SubjectGroup(0l, startGroup, LocalTime.of(1, 30), "UTP", 14, subject, teacher, Arrays.asList(student), Arrays.asList(it));
         subjectGroupRepository.save(group1);
     }
 
