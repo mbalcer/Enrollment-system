@@ -27,4 +27,10 @@ public class ExceptionHandlerAdvice {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex);
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity handleBadRequestException(BadRequestException ex) {
+        log.error(ex.getMessage(), ex);
+        return ResponseEntity.badRequest().body(ex);
+    }
 }
