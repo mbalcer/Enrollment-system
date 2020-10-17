@@ -18,6 +18,7 @@ public class Faculty {
     private Long id;
     private String name;
     private String address;
+    private String abbreviation;
 
     @OneToMany(mappedBy = "faculty")
     private List<FieldOfStudy> fieldsOfStudy;

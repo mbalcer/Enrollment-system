@@ -39,11 +39,11 @@ public class UserService {
         else if (userRepository.findOneByEmail(userDTO.getEmail()).isPresent())
             throw new EmailAlreadyUsedException();
 
-        User user = userMapper.toUserEntity(userDTO);
+        User user = userMapper.toEntity(userDTO);
         String passwordEncrypted = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(passwordEncrypted);
         User saveUser = userRepository.save(user);
-        return new ResponseEntity<>(userMapper.toUserDTO(saveUser), HttpStatus.CREATED);
+        return new ResponseEntity<>(userMapper.toDto(saveUser), HttpStatus.CREATED);
     }
 
     public ResponseEntity getUser(String username) {
@@ -51,6 +51,6 @@ public class UserService {
         if (userOptional.isEmpty())
             throw new UserNotFoundException();
 
-        return new ResponseEntity(userMapper.toUserDTO(userOptional.get()), HttpStatus.OK);
+        return new ResponseEntity(userMapper.toDto(userOptional.get()), HttpStatus.OK);
     }
 }

@@ -11,4 +11,5 @@ public class FacultyDTO {
     private Long id;
     private String name;
     private String address;
+    private String abbreviation;
 }

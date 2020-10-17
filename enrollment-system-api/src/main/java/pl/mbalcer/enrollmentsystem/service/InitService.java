@@ -41,7 +41,7 @@ public class InitService {
 
     @PostConstruct
     public void init() {
-        Faculty mathAndItFaculty = new Faculty(0l, "Faculty mathematics and IT", "Bydgoszcz", null);
+        Faculty mathAndItFaculty = new Faculty(0l, "Faculty mathematics and IT", "Bydgoszcz", "MaI", null);
         mathAndItFaculty = facultyRepository.save(mathAndItFaculty);
         FieldOfStudy it = new FieldOfStudy(0l, "IT", StudyType.FIRST_CYCLE, StudyMode.FULL_TIME, mathAndItFaculty, null);
         it = fieldOfStudyRepository.save(it);
