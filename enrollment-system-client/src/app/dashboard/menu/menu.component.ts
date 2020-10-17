@@ -13,12 +13,10 @@ export class MenuComponent implements OnInit, AfterViewChecked {
   @Input() user: IUser;
 
   menu = [];
-  initMenu = false;
 
   constructor(private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
     iconRegistry.addSvgIcon('registration', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/web.svg'));
     iconRegistry.addSvgIcon('subjects', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/book.svg'));
-    iconRegistry.addSvgIcon('signout', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/signout.svg'));
     iconRegistry.addSvgIcon('profile', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/user.svg'));
     iconRegistry.addSvgIcon('home', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/home.svg'));
     iconRegistry.addSvgIcon('university', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/university.svg'));

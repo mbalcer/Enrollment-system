@@ -1,7 +1,10 @@
 <div class="top-bar">
   <p class="logo">Enrollment System</p>
   <div class="profile">
-    <a class="sign-out" routerLink="/logout">Sign out</a>
+    <a class="sign-out" routerLink="/logout">
+      <mat-icon svgIcon="signout" aria-hidden="false" aria-label="Sign Out"></mat-icon>
+      <span>Sign out</span>
+    </a>
     |
     <div class="user-info">{{user.fullName}}</div>
   </div>
