@@ -3,18 +3,12 @@
     <mat-icon svgIcon="home" aria-hidden="false" aria-label="Home Page"></mat-icon>
     <span>Home</span>
   </a></li>
-  <li><a [routerLink]="[{ outlets: { panel: ['registration'] }}]">
-    <mat-icon svgIcon="registration" aria-hidden="false" aria-label="Registration"></mat-icon>
-    <span>Registration</span>
-  </a></li>
-  <li><a [routerLink]="[{ outlets: { panel: ['subjects'] }}]">
-    <mat-icon svgIcon="subjects" aria-hidden="false" aria-label="Subjects"></mat-icon>
-    <span>Subjects</span>
-  </a></li>
-  <li><a [routerLink]="[{ outlets: { panel: ['profile'] }}]">
-    <mat-icon svgIcon="profile" aria-hidden="false" aria-label="Profile"></mat-icon>
-    <span>Profile</span>
-  </a></li>
+  <li *ngFor="let m of menu">
+    <a [routerLink]="[{ outlets: { panel: [m] }}]">
+      <mat-icon [svgIcon]="m" aria-hidden="false"></mat-icon>
+      <span>{{m | titlecase}}</span>
+    </a>
+  </li>
   <li><a routerLink="/logout"><mat-icon svgIcon="signout" aria-hidden="false" aria-label="Sign Out"></mat-icon>
     <span>Sign out</span>
   </a></li>

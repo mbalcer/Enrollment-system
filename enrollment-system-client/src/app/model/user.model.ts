@@ -3,6 +3,8 @@ export interface IUser {
   fullName?: string;
   email?: string;
   password?: string;
+  role?: string;
+  isActive?: boolean;
 }
 
 export class User implements IUser {
@@ -11,5 +13,7 @@ export class User implements IUser {
     public email?: string,
     public password?: string,
     public fullName?: string,
+    public role?: string,
+    public isActive?: boolean
   ) {}
 }
