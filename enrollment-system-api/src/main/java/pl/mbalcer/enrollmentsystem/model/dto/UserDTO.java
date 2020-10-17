@@ -14,7 +14,7 @@ public class UserDTO {
     private String fullName;
     private String email;
     private Role role;
-    private boolean isActive;
+    private Boolean isActive;
 
     public UserDTO(User user) {
         this.username = user.getUsername();

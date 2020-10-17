@@ -46,8 +46,10 @@ public class InitService {
         FieldOfStudy it = new FieldOfStudy(0l, "IT", StudyType.FIRST_CYCLE, StudyMode.FULL_TIME, mathAndItFaculty, null);
         it = fieldOfStudyRepository.save(it);
 
-        User user = new User(0L, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl", Role.STUDENT, true);
-        Student student = new Student(user, it, 111000L, 7);
+        User admin = new User(0l, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl", Role.ADMIN, true);
+        userRepository.save(admin);
+
+        Student student = new Student(0L, "adamek", passwordEncoder.encode("adam123"), "Adam Kowalski", "adam@utp.edu.pl",  111000L, 7, it);
         student = studentRepository.save(student);
 
         Subject subject = new Subject(0l, "Graduation seminar", "description", Duration.ofHours(30), CourseType.SEMINAR, 4);

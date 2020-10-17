@@ -35,4 +35,11 @@ public class Student extends User {
         this.indexNumber = indexNumber;
         this.semester = semester;
     }
+
+    public Student(Long id, String username, String password, String fullName, String email, Long indexNumber, Integer semester, FieldOfStudy fieldOfStudy) {
+        super(id, username, password, fullName, email, Role.STUDENT, false);
+        this.indexNumber = indexNumber;
+        this.semester = semester;
+        this.fieldOfStudy = fieldOfStudy;
+    }
 }
