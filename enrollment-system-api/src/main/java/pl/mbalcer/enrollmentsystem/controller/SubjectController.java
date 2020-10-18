@@ -30,7 +30,7 @@ public class SubjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SubjectDTO> getFaculty(@PathVariable Long id) {
+    public ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
         log.debug("REST request to get Subject : {}", id);
         Optional<SubjectDTO> subjectDTO = subjectService.findOne(id);
         if (subjectDTO.isPresent()) return ResponseEntity.ok().body(subjectDTO.get());
@@ -38,21 +38,21 @@ public class SubjectController {
     }
 
     @PostMapping
-    public ResponseEntity<SubjectDTO> createFaculty(@RequestBody SubjectDTO subjectDTO) throws URISyntaxException {
+    public ResponseEntity<SubjectDTO> createSubject(@RequestBody SubjectDTO subjectDTO) throws URISyntaxException {
         log.debug("REST request to save Subject : {}", subjectDTO);
         SubjectDTO result = subjectService.create(subjectDTO);
         return ResponseEntity.created(new URI("/api/subject/" + result.getId())).body(result);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SubjectDTO> updateFaculty(@RequestBody SubjectDTO subjectDTO, @PathVariable Long id) throws URISyntaxException {
+    public ResponseEntity<SubjectDTO> updateSubject(@RequestBody SubjectDTO subjectDTO, @PathVariable Long id) throws URISyntaxException {
         log.debug("REST request to update Subject : {}", subjectDTO);
         SubjectDTO result = subjectService.update(subjectDTO, id);
         return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFaculty(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {
         log.debug("REST request to delete Subject : {}", id);
         subjectService.delete(id);
         return ResponseEntity.noContent().build();
