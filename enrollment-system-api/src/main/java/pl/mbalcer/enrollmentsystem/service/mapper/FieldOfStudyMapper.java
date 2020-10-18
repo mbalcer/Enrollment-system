@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.mbalcer.enrollmentsystem.model.Faculty;
 import pl.mbalcer.enrollmentsystem.model.FieldOfStudy;
 import pl.mbalcer.enrollmentsystem.model.dto.FieldOfStudyDTO;
-import pl.mbalcer.enrollmentsystem.repository.FacultyRepository;
+import pl.mbalcer.enrollmentsystem.service.FacultyService;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ import java.util.Optional;
 public abstract class FieldOfStudyMapper implements EntityMapper<FieldOfStudyDTO, FieldOfStudy> {
 
     @Autowired
-    FacultyRepository facultyRepository;
+    FacultyService facultyService;
 
     @Mapping(target = "faculty", expression = "java(fromAbbreviation(dto.getAbbreviationFaculty()))")
     public abstract FieldOfStudy toEntity(FieldOfStudyDTO dto);
@@ -23,7 +23,7 @@ public abstract class FieldOfStudyMapper implements EntityMapper<FieldOfStudyDTO
     public abstract FieldOfStudyDTO toDto(FieldOfStudy entity);
 
     Faculty fromAbbreviation(String abbreviation) {
-        Optional<Faculty> faculty = facultyRepository.findByAbbreviation(abbreviation);
+        Optional<Faculty> faculty = facultyService.findOneByAbbreviation(abbreviation);
         if (faculty.isPresent())
             return faculty.get();
         else {

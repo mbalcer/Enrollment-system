@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class FieldOfStudyService implements ServiceInitiator<FieldOfStudyDTO> {
+public class FieldOfStudyService implements CrudService<FieldOfStudyDTO> {
 
     private FieldOfStudyRepository fieldOfStudyRepository;
     private FieldOfStudyMapper fieldOfStudyMapper;
@@ -69,6 +69,7 @@ public class FieldOfStudyService implements ServiceInitiator<FieldOfStudyDTO> {
         Optional<FieldOfStudy> fieldOfStudyById = fieldOfStudyRepository.findById(id);
         if (fieldOfStudyById.isEmpty())
             throw new BadRequestException("Invalid id");
+        // TODO remove foreign key to fieldofstudy in subjectgroups
         fieldOfStudyRepository.deleteById(id);
     }
 }

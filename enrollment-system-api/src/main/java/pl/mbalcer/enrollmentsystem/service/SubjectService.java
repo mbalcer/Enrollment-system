@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class SubjectService implements ServiceInitiator<SubjectDTO> {
+public class SubjectService implements CrudService<SubjectDTO> {
 
     private final SubjectRepository subjectRepository;
     private final SubjectMapper subjectMapper;

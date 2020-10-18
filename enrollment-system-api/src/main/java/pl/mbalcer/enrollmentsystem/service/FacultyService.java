@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class FacultyService implements ServiceInitiator<FacultyDTO> {
+public class FacultyService implements CrudService<FacultyDTO> {
 
     private final FacultyRepository facultyRepository;
     private final FacultyMapper facultyMapper;
@@ -71,5 +71,10 @@ public class FacultyService implements ServiceInitiator<FacultyDTO> {
             throw new BadRequestException("Invalid id");
         // TODO remove foreign key to faculty in fieldofstudy and teacher
         facultyRepository.deleteById(id);
+    }
+
+    public Optional<Faculty> findOneByAbbreviation(String abbreviation) {
+        log.debug("Request to get Faculty by abbreviation : {}", abbreviation);
+        return facultyRepository.findByAbbreviation(abbreviation);
     }
 }
