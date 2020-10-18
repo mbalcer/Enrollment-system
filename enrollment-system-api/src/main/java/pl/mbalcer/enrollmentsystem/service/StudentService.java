@@ -3,7 +3,7 @@ package pl.mbalcer.enrollmentsystem.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.errors.BadRequestException;
-import pl.mbalcer.enrollmentsystem.errors.LoginAlreadyUsedException;
+import pl.mbalcer.enrollmentsystem.errors.NotFoundException;
 import pl.mbalcer.enrollmentsystem.model.Student;
 import pl.mbalcer.enrollmentsystem.model.dto.StudentDTO;
 import pl.mbalcer.enrollmentsystem.repository.StudentRepository;
@@ -72,7 +72,7 @@ public class StudentService implements CrudService<StudentDTO> {
 
     public StudentDTO findOneByUsername(String username) {
         log.debug("Request to get Student by username: {}", username);
-        Student student = studentRepository.findByUsername(username).orElseThrow(LoginAlreadyUsedException::new);
+        Student student = studentRepository.findByUsername(username).orElseThrow(NotFoundException::new);
         return studentMapper.toDto(student);
     }
 }
