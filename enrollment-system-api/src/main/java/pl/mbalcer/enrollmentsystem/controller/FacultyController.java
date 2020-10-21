@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/faculty")
 @Slf4j
 public class FacultyController {
 
@@ -23,14 +23,14 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping("/faculties")
+    @GetMapping
     public ResponseEntity<List<FacultyDTO>> getAllFaculties() {
         log.debug("REST request to get a page of Faculties");
         List<FacultyDTO> all = facultyService.findAll();
         return ResponseEntity.ok().body(all);
     }
 
-    @GetMapping("/faculties/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<FacultyDTO> getFaculty(@PathVariable Long id) {
         log.debug("REST request to get Faculty : {}", id);
         Optional<FacultyDTO> facultyDTO = facultyService.findOne(id);
@@ -38,21 +38,21 @@ public class FacultyController {
         else return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/faculties")
+    @PostMapping
     public ResponseEntity<FacultyDTO> createFaculty(@RequestBody FacultyDTO facultyDTO) throws URISyntaxException {
         log.debug("REST request to save Faculty : {}", facultyDTO);
         FacultyDTO result = facultyService.create(facultyDTO);
         return ResponseEntity.created(new URI("/api/faculties/" + result.getId())).body(result);
     }
 
-    @PutMapping("/faculties/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<FacultyDTO> updateFaculty(@RequestBody FacultyDTO facultyDTO, @PathVariable Long id) throws URISyntaxException {
         log.debug("REST request to update Faculty : {}", facultyDTO);
         FacultyDTO result = facultyService.update(facultyDTO, id);
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("/faculties/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFaculty(@PathVariable Long id) {
         log.debug("REST request to delete Faculty : {}", id);
         facultyService.delete(id);

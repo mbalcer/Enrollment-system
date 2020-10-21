@@ -52,9 +52,9 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO StudentDTO, @PathVariable Long id) throws URISyntaxException {
-        log.debug("REST request to update Student : {}", StudentDTO);
-        StudentDTO result = studentService.update(StudentDTO, id);
+    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable Long id) throws URISyntaxException {
+        log.debug("REST request to update Student : {}", studentDTO);
+        StudentDTO result = studentService.update(studentDTO, id);
         return ResponseEntity.ok().body(result);
     }
 
