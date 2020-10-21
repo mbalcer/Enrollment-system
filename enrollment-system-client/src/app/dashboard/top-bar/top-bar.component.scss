@@ -1,50 +1,38 @@
 @import "../../../variables.scss";
 
-$width-logo: 200px;
+.spacer {
+  flex: 1 1 auto;
+}
 
 .top-bar {
   width: 100%;
-  height: auto;
-  background-color: $white;
-  border-bottom: 1px solid $gray;
-  display: flex;
-  flex-direction: row;
+  height: 7.5vh;
 }
 
 .logo {
-  margin: 0;
-  padding: 0.4em;
-  font-size: 20px;
-  width: $width-logo;
+  font-size: 24px;
 }
 
-.profile {
-  display: flex;
-  flex-direction: row-reverse;
-  width: calc(100% - #{$width-logo});
-  padding: 0.5em;
-
-  > .user-info {
-    margin-right: 0.5em;
+.user-info {
+  margin-right: 0.5em;
+  font-size: 16px;
+  > .user {
     font-weight: bold;
   }
+}
 
-  > .sign-out {
-    margin-left: 0.5em;
-    color: $black;
-    text-decoration: none;
-    display: flex;
-    flex-direction: row;
+.sign-out {
+  color: $black;
+  display: flex;
+  flex-direction: row;
 
-    > mat-icon {
-      filter: invert(100%);
-      transform: scale(0.8);
-      transform-origin: top left;
-    }
+  mat-icon {
+    filter: invert(100%);
+  }
 
-    &:hover {
-      color: $base-color;
-      text-decoration: underline;
-    }
+  span {
+    margin-left: 0.3em;
   }
 }
+
+

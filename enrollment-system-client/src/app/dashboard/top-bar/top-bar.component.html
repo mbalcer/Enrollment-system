@@ -1,11 +1,13 @@
-<div class="top-bar">
-  <p class="logo">Enrollment System</p>
-  <div class="profile">
-    <a class="sign-out" routerLink="/logout">
-      <mat-icon svgIcon="signout" aria-hidden="false" aria-label="Sign Out"></mat-icon>
-      <span>Sign out</span>
-    </a>
-    |
-    <div class="user-info">{{user.fullName}}</div>
-  </div>
-</div>
+<mat-toolbar class="top-bar">
+<!--  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">-->
+<!--    <mat-icon>menu</mat-icon>-->
+<!--  </button>-->
+  <span class="logo">Enrollment system</span>
+  <span class="spacer"></span>
+  <span class="user-info">You are logged as <span class="user">{{user.fullName}}</span></span>
+  |
+  <button mat-button class="sign-out" aria-label="Sign out button">
+    <mat-icon svgIcon="signout" aria-hidden="false" aria-label="Sign Out"></mat-icon>
+    <span>Sign out</span>
+  </button>
+</mat-toolbar>

@@ -19,6 +19,7 @@ import {HomeComponent} from './dashboard/home/home.component';
 import {ProfileComponent} from './dashboard/profile/profile.component';
 import {SubjectsComponent} from './dashboard/subjects/subjects.component';
 import {RegistrationComponent} from './dashboard/registration/registration.component';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -33,14 +34,15 @@ import {RegistrationComponent} from './dashboard/registration/registration.compo
     SubjectsComponent,
     RegistrationComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MaterialModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        OverlayModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
