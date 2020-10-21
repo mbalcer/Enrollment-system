@@ -15,10 +15,10 @@ import {MaterialModule} from './material.module';
 import {CleanUrlSerializer} from './clean-url-serializer';
 import {UrlSerializer} from '@angular/router';
 import {TopBarComponent} from './dashboard/top-bar/top-bar.component';
-import {HomeComponent} from './dashboard/home/home.component';
-import {ProfileComponent} from './dashboard/profile/profile.component';
-import {SubjectsComponent} from './dashboard/subjects/subjects.component';
-import {RegistrationComponent} from './dashboard/registration/registration.component';
+import {HomeComponent} from './dashboard/components/home/home.component';
+import {ProfileComponent} from './dashboard/components/profile/profile.component';
+import {SubjectsComponent} from './dashboard/components/subjects/subjects.component';
+import {RegistrationComponent} from './dashboard/components/registration/registration.component';
 import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
