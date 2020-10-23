@@ -8,6 +8,7 @@ import {RegistrationComponent} from './dashboard/components/registration/registr
 import {SubjectsComponent} from './dashboard/components/subjects/subjects.component';
 import {ProfileComponent} from './dashboard/components/profile/profile.component';
 import {HomeComponent} from './dashboard/components/home/home.component';
+import {UniversityComponent} from './dashboard/components/university/university.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -34,6 +35,11 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+        outlet: 'panel'
+      },
+      {
+        path: 'university',
+        component: UniversityComponent,
         outlet: 'panel'
       }
     ]}

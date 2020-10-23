@@ -20,6 +20,7 @@ import {ProfileComponent} from './dashboard/components/profile/profile.component
 import {SubjectsComponent} from './dashboard/components/subjects/subjects.component';
 import {RegistrationComponent} from './dashboard/components/registration/registration.component';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {UniversityComponent} from './dashboard/components/university/university.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {OverlayModule} from '@angular/cdk/overlay';
     HomeComponent,
     ProfileComponent,
     SubjectsComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    UniversityComponent
   ],
     imports: [
         BrowserModule,
