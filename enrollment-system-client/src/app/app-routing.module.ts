@@ -10,6 +10,7 @@ import {ProfileComponent} from './dashboard/components/profile/profile.component
 import {HomeComponent} from './dashboard/components/home/home.component';
 import {UniversityComponent} from './dashboard/components/university/university.component';
 import {GroupsComponent} from './dashboard/components/groups/groups.component';
+import {UsersComponent} from './dashboard/components/users/users.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -46,6 +47,11 @@ const routes: Routes = [
       {
         path: 'groups',
         component: GroupsComponent,
+        outlet: 'panel'
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
         outlet: 'panel'
       }
     ]}

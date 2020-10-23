@@ -22,6 +22,7 @@ import {RegistrationComponent} from './dashboard/components/registration/registr
 import {OverlayModule} from '@angular/cdk/overlay';
 import {UniversityComponent} from './dashboard/components/university/university.component';
 import {GroupsComponent} from './dashboard/components/groups/groups.component';
+import {UsersComponent} from './dashboard/components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {GroupsComponent} from './dashboard/components/groups/groups.component';
     SubjectsComponent,
     RegistrationComponent,
     UniversityComponent,
-    GroupsComponent
+    GroupsComponent,
+    UsersComponent
   ],
     imports: [
         BrowserModule,
