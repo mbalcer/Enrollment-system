@@ -11,6 +11,7 @@ import {HomeComponent} from './dashboard/components/home/home.component';
 import {UniversityComponent} from './dashboard/components/university/university.component';
 import {GroupsComponent} from './dashboard/components/groups/groups.component';
 import {UsersComponent} from './dashboard/components/users/users.component';
+import {RequestsComponent} from './dashboard/components/requests/requests.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -52,6 +53,11 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
+        outlet: 'panel'
+      },
+      {
+        path: 'requests',
+        component: RequestsComponent,
         outlet: 'panel'
       }
     ]}
