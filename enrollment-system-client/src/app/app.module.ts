@@ -23,7 +23,8 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import {UniversityComponent} from './dashboard/components/university/university.component';
 import {GroupsComponent} from './dashboard/components/groups/groups.component';
 import {UsersComponent} from './dashboard/components/users/users.component';
-import { RequestsComponent } from './dashboard/components/requests/requests.component';
+import {RequestsComponent} from './dashboard/components/requests/requests.component';
+import {SettingsComponent} from './dashboard/components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { RequestsComponent } from './dashboard/components/requests/requests.comp
     UniversityComponent,
     GroupsComponent,
     UsersComponent,
-    RequestsComponent
+    RequestsComponent,
+    SettingsComponent
   ],
     imports: [
         BrowserModule,
