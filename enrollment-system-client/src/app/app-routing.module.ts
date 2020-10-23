@@ -15,58 +15,21 @@ import {RequestsComponent} from './dashboard/components/requests/requests.compon
 import {SettingsComponent} from './dashboard/components/settings/settings.component';
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: '', component: LoginComponent},
-  {path: 'logout', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], children: [
-      {
-        path: '',
-        component: HomeComponent,
-        outlet: 'panel',
-        pathMatch: 'full'
-      },
-      {
-        path: 'registration',
-        component: RegistrationComponent,
-        outlet: 'panel'
-      },
-      {
-        path: 'subjects',
-        component: SubjectsComponent,
-        outlet: 'panel'
-      },
-      {
-        path: 'profile',
-        component: ProfileComponent,
-        outlet: 'panel'
-      },
-      {
-        path: 'university',
-        component: UniversityComponent,
-        outlet: 'panel'
-      },
-      {
-        path: 'groups',
-        component: GroupsComponent,
-        outlet: 'panel'
-      },
-      {
-        path: 'users',
-        component: UsersComponent,
-        outlet: 'panel'
-      },
-      {
-        path: 'requests',
-        component: RequestsComponent,
-        outlet: 'panel'
-      },
-      {
-        path: 'settings',
-        component: SettingsComponent,
-        outlet: 'panel'
-      }
-    ]}
+  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
+  { path: 'logout', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], children: [
+      { path: '', component: HomeComponent, outlet: 'panel', pathMatch: 'full' },
+      { path: 'registration', component: RegistrationComponent, outlet: 'panel' },
+      { path: 'subjects', component: SubjectsComponent, outlet: 'panel' },
+      { path: 'profile', component: ProfileComponent, outlet: 'panel' },
+      { path: 'university', component: UniversityComponent, outlet: 'panel' },
+      { path: 'groups', component: GroupsComponent, outlet: 'panel' },
+      { path: 'users', component: UsersComponent, outlet: 'panel' },
+      { path: 'requests', component: RequestsComponent, outlet: 'panel' },
+      { path: 'settings', component: SettingsComponent, outlet: 'panel' }
+  ]}
 ];
 
 @NgModule({
