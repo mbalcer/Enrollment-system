@@ -13,6 +13,8 @@ export class UniversityComponent implements OnInit {
   dataSource = new MatTableDataSource<Faculty>();
   faculties: IFaculty[];
 
+  facultyToSave = new Faculty();
+
   constructor(private facultyService: FacultyService) { }
 
   ngOnInit(): void {
@@ -33,14 +35,33 @@ export class UniversityComponent implements OnInit {
   }
 
   deleteFaculty(row: IFaculty) {
-    console.log(row);
+    this.facultyService.deleteFaculty(row.id).subscribe(result => {
+      this.faculties.splice(this.faculties.indexOf(row), 1);
+      this.refreshTable();
+    }, error => {
+      console.log(error);
+    });
   }
 
   editFaculty(row: IFaculty) {
-    console.log(row);
+    this.facultyToSave = row;
   }
 
-  addFaculty() {
-    console.log("add");
+  saveFaculty() {
+    if (this.facultyToSave.id != null && typeof this.facultyToSave.id === 'number') {
+      this.facultyService.putFaculty(this.facultyToSave).subscribe(result => {
+        this.facultyToSave = new Faculty();
+      }, error => {
+        console.log(error);
+      });
+    } else {
+      this.facultyService.postFaculty(this.facultyToSave).subscribe(result => {
+        this.faculties.push(result);
+        this.facultyToSave = new Faculty();
+        this.refreshTable();
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 }

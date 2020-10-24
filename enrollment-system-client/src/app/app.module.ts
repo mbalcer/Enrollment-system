@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpInterceptorService} from './http-interceptor.service';
@@ -51,7 +51,8 @@ import {SettingsComponent} from './dashboard/components/settings/settings.compon
         HttpClientModule,
         BrowserAnimationsModule,
         MaterialModule,
-        OverlayModule
+        OverlayModule,
+        ReactiveFormsModule
     ],
   providers: [
     {

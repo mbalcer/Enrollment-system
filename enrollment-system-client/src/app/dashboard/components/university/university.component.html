@@ -1,10 +1,24 @@
 <mat-tab-group mat-align-tabs="center">
   <mat-tab label="Faculty">
     <div class="container-university">
-      <button mat-button aria-label="Add Faculty button" class="add-button" (click)="addFaculty()">
-        <mat-icon>add_circle_outline</mat-icon>
-        <span>Add Faculty</span>
-      </button>
+      <div class="form-add-faculty">
+        <mat-form-field appearance="standard">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="facultyToSave.name" name="name">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Address</mat-label>
+          <input matInput [(ngModel)]="facultyToSave.address" name="address">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Abbreviation</mat-label>
+          <input matInput [(ngModel)]="facultyToSave.abbreviation" name="abbreviation">
+        </mat-form-field>
+        <button mat-button aria-label="Add Faculty button" class="add-button" (click)="saveFaculty()">
+          <mat-icon>add_circle_outline</mat-icon>
+          <span>Save Faculty</span>
+        </button>
+      </div>
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-faculty">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> No. </th>
