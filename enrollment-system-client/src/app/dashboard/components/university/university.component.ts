@@ -25,6 +25,7 @@ export class UniversityComponent implements OnInit {
   dataSourceFieldsOfStudy = new MatTableDataSource<FieldOfStudy>();
   fieldsOfStudy: IFieldOfStudy[];
   fieldOfStudyToSave = new FieldOfStudy();
+  fieldOfStudyMessage = new FormMessage();
 
   constructor(private facultyService: FacultyService, private fieldOfStudyService: FieldOfStudyService) { }
 
@@ -33,100 +34,107 @@ export class UniversityComponent implements OnInit {
     this.getFieldsOfStudy();
   }
 
-  refreshTable() {
+  refreshTables() {
     this.dataSourceFaculties = new MatTableDataSource<Faculty>(this.faculties);
     this.dataSourceFieldsOfStudy = new MatTableDataSource<FieldOfStudy>(this.fieldsOfStudy);
   }
 
-  clearMessage() {
+  clearMessages() {
     this.facultyMessage = new FormMessage();
+    this.fieldOfStudyMessage = new FormMessage();
   }
 
-  processError(error) {
-    this.facultyMessage.type = TypeMessage.ERROR;
+  processError(message: FormMessage, error) {
+    message.type = TypeMessage.ERROR;
     if (error.error.message == null || error.error.message.length === 0) {
-      this.facultyMessage.message = 'Server error. Try again later.';
+      message.message = 'Server error. Try again later.';
     } else {
-      this.facultyMessage.message = error.error.message;
+      message.message = error.error.message;
     }
+  }
+
+  processSuccess(message: FormMessage, text) {
+    message.type = TypeMessage.SUCCESS;
+    message.message = text;
+  }
+
+  createSuccessMessage(object: string, operation: string) {
+    return 'The ' + object + ' has been successfully ' + operation;
   }
 
   getFaculties() {
     this.facultyService.getAllFaculties().subscribe(result => {
       this.faculties = result;
-      this.refreshTable();
-    }, error => this.processError(error));
+      this.refreshTables();
+    }, error => this.processError(this.facultyMessage, error));
   }
 
   deleteFaculty(row: IFaculty) {
-    this.clearMessage();
+    this.clearMessages();
     this.facultyService.deleteFaculty(row.id).subscribe(result => {
       this.faculties.splice(this.faculties.indexOf(row), 1);
-      this.refreshTable();
-      this.facultyMessage = {
-        type: TypeMessage.SUCCESS,
-        message: 'The faculty has been successfully deleted'
-      };
-    }, error => this.processError(error));
+      this.refreshTables();
+      this.processSuccess(this.facultyMessage, this.createSuccessMessage('faculty', 'deleted'));
+    }, error => this.processError(this.facultyMessage, error));
   }
 
   editFaculty(row: IFaculty) {
-    this.clearMessage();
+    this.clearMessages();
     this.facultyToSave = row;
   }
 
   saveFaculty() {
-    this.clearMessage();
+    this.clearMessages();
     if (this.facultyToSave.id != null && typeof this.facultyToSave.id === 'number') {
       this.facultyService.putFaculty(this.facultyToSave).subscribe(result => {
         this.facultyToSave = new Faculty();
-        this.facultyMessage = {
-          type: TypeMessage.SUCCESS,
-          message: 'The faculty has been successfully updated'
-        };
-      }, error => this.processError(error));
+        this.processSuccess(this.facultyMessage, this.createSuccessMessage('faculty', 'updated'));
+      }, error => this.processError(this.facultyMessage, error));
     } else {
       this.facultyService.postFaculty(this.facultyToSave).subscribe(result => {
         this.faculties.push(result);
         this.facultyToSave = new Faculty();
-        this.refreshTable();
-        this.facultyMessage = {
-          type: TypeMessage.SUCCESS,
-          message: 'The faculty has been successfully added'
-        };
-      }, error => this.processError(error));
+        this.refreshTables();
+        this.processSuccess(this.facultyMessage, this.createSuccessMessage('faculty', 'added'));
+      }, error => this.processError(this.facultyMessage, error));
     }
   }
 
   getFieldsOfStudy() {
     this.fieldOfStudyService.getAllFieldsOfStudy().subscribe(result => {
       this.fieldsOfStudy = result;
-      this.refreshTable();
-    }, error => console.log(error));
+      this.refreshTables();
+    }, error => this.processError(this.fieldOfStudyMessage, error));
   }
 
   editFieldOfStudy(row: IFieldOfStudy) {
+    this.clearMessages();
     this.fieldOfStudyToSave = row;
   }
 
   deleteFieldOfStudy(row: IFieldOfStudy) {
+    this.clearMessages();
     this.fieldOfStudyService.deleteFieldOfStudy(row.id).subscribe(result => {
       this.fieldsOfStudy.splice(this.fieldsOfStudy.indexOf(row), 1);
-      this.refreshTable();
-    }, error => this.processError(error));
+      this.refreshTables();
+      this.processSuccess(this.fieldOfStudyMessage, this.createSuccessMessage('field of study', 'deleted'));
+    }, error => this.processError(this.fieldOfStudyMessage, error));
   }
 
   saveFieldOfStudy() {
+    this.clearMessages();
     if (this.fieldOfStudyToSave.id != null && typeof this.fieldOfStudyToSave.id === 'number') {
       this.fieldOfStudyService.putFieldOfStudy(this.fieldOfStudyToSave).subscribe(result => {
         this.fieldOfStudyToSave = new FieldOfStudy();
-      }, error => console.log(error));
+        this.processSuccess(this.fieldOfStudyMessage, this.createSuccessMessage('field of study', 'updated'));
+      }, error => this.processError(this.fieldOfStudyMessage, error));
     } else {
       this.fieldOfStudyService.postFieldOfStudy(this.fieldOfStudyToSave).subscribe(result => {
         this.fieldsOfStudy.push(result);
         this.fieldOfStudyToSave = new FieldOfStudy();
-        this.refreshTable();
-      }, error => console.log(error));
+        this.refreshTables();
+        this.processSuccess(this.fieldOfStudyMessage, this.createSuccessMessage('field of study', 'added'));
+      }, error => this.processError(this.fieldOfStudyMessage, error));
     }
   }
 }

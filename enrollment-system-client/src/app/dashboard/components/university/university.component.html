@@ -90,6 +90,10 @@
           <span>Save Field Of Study</span>
         </button>
       </div>
+      <div class="message-container">
+        <p class="message error" *ngIf="fieldOfStudyMessage.type === TypeMessage.ERROR">{{fieldOfStudyMessage.message}}</p>
+        <p class="message success" *ngIf="fieldOfStudyMessage.type === TypeMessage.SUCCESS">{{fieldOfStudyMessage.message}}</p>
+      </div>
       <table mat-table [dataSource]="dataSourceFieldsOfStudy" class="mat-elevation-z8 table-fieldOfStudy">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> No. </th>
