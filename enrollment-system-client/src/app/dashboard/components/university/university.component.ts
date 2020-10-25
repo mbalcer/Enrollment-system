@@ -4,6 +4,8 @@ import {Faculty, IFaculty} from './faculty.model';
 import {FacultyService} from './faculty.service';
 import {FormMessage} from '../../../model/form-message.model';
 import {TypeMessage} from '../../../model/enumeration/type-message.enum';
+import {FieldOfStudy, IFieldOfStudy} from './field-of-study.model';
+import {FieldOfStudyService} from './field-of-study.service';
 
 @Component({
   selector: 'app-university',
@@ -12,21 +14,27 @@ import {TypeMessage} from '../../../model/enumeration/type-message.enum';
 })
 export class UniversityComponent implements OnInit {
   public TypeMessage = TypeMessage;
-  displayedColumnsFacultyTable: string[] = ['id', 'name', 'address', 'abbreviation', 'actions'];
-  dataSource = new MatTableDataSource<Faculty>();
-  faculties: IFaculty[];
 
+  displayedColumnsFacultyTable: string[] = ['id', 'name', 'address', 'abbreviation', 'actions'];
+  dataSourceFaculties = new MatTableDataSource<Faculty>();
+  faculties: IFaculty[];
   facultyToSave = new Faculty();
   facultyMessage = new FormMessage();
 
-  constructor(private facultyService: FacultyService) { }
+  displayedColumnsFieldOfStudyTable: string[] = ['id', 'name', 'type', 'mode', 'abbreviationFaculty'];
+  dataSourceFieldsOfStudy = new MatTableDataSource<FieldOfStudy>();
+  fieldsOfStudy: IFieldOfStudy[];
+
+  constructor(private facultyService: FacultyService, private fieldOfStudyService: FieldOfStudyService) { }
 
   ngOnInit(): void {
     this.getFaculties();
+    this.getFieldsOfStudy();
   }
 
   refreshTable() {
-    this.dataSource = new MatTableDataSource<Faculty>(this.faculties);
+    this.dataSourceFaculties = new MatTableDataSource<Faculty>(this.faculties);
+    this.dataSourceFieldsOfStudy = new MatTableDataSource<FieldOfStudy>(this.fieldsOfStudy);
   }
 
   clearMessage() {
@@ -87,5 +95,12 @@ export class UniversityComponent implements OnInit {
         };
       }, error => this.processError(error));
     }
+  }
+
+  getFieldsOfStudy() {
+    this.fieldOfStudyService.getAllFieldsOfStudy().subscribe(result => {
+      this.fieldsOfStudy = result;
+      this.refreshTable();
+    }, error => console.log(error));
   }
 }
