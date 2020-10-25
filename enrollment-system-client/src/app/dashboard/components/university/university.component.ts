@@ -27,6 +27,9 @@ export class UniversityComponent implements OnInit {
   fieldOfStudyToSave = new FieldOfStudy();
   fieldOfStudyMessage = new FormMessage();
 
+  studyTypes = ['FIRST_CYCLE', 'SECOND_CYCLE', 'THIRD_CYCLE', 'LONG_CYCLE'];
+  studyModes = ['FULL_TIME', 'PART_TIME'];
+
   constructor(private facultyService: FacultyService, private fieldOfStudyService: FieldOfStudyService) { }
 
   ngOnInit(): void {

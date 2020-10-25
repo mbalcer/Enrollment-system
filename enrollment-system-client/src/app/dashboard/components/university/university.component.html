@@ -71,11 +71,15 @@
         </mat-form-field>
         <mat-form-field appearance="standard">
           <mat-label>Type</mat-label>
-          <input matInput [(ngModel)]="fieldOfStudyToSave.type" name="type">
+          <mat-select [(ngModel)]="fieldOfStudyToSave.type" name="type">
+            <mat-option *ngFor="let type of studyTypes" [value]="type"> {{type}} </mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field appearance="standard">
           <mat-label>Mode</mat-label>
-          <input matInput [(ngModel)]="fieldOfStudyToSave.mode" name="mode">
+          <mat-select [(ngModel)]="fieldOfStudyToSave.mode" name="mode">
+            <mat-option *ngFor="let mode of studyModes" [value]="mode"> {{mode}} </mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field appearance="standard">
           <mat-label>Faculty</mat-label>
