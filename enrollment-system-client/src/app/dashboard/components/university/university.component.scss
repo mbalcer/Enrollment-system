@@ -30,9 +30,18 @@
   }
 }
 
+.form-add-fieldOfStudy {
+  display: flex;
+  flex-direction: row;
+
+  > * {
+    width: 18%;
+    margin: 0 1%;
+  }
+}
+
 .message-container {
   text-align: center;
-
 
   .message {
     color: $gray;
@@ -46,10 +55,9 @@
   .success {
     color: $success-color;
   }
-
 }
 
-.table-faculty {
+.table-faculty, .table-fieldOfStudy {
   width: 100%;
   margin-top: 1em;
 }

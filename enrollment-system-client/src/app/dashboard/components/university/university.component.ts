@@ -21,9 +21,10 @@ export class UniversityComponent implements OnInit {
   facultyToSave = new Faculty();
   facultyMessage = new FormMessage();
 
-  displayedColumnsFieldOfStudyTable: string[] = ['id', 'name', 'type', 'mode', 'abbreviationFaculty'];
+  displayedColumnsFieldOfStudyTable: string[] = ['id', 'name', 'type', 'mode', 'abbreviationFaculty', 'actions'];
   dataSourceFieldsOfStudy = new MatTableDataSource<FieldOfStudy>();
   fieldsOfStudy: IFieldOfStudy[];
+  fieldOfStudyToSave = new FieldOfStudy();
 
   constructor(private facultyService: FacultyService, private fieldOfStudyService: FieldOfStudyService) { }
 
@@ -102,5 +103,30 @@ export class UniversityComponent implements OnInit {
       this.fieldsOfStudy = result;
       this.refreshTable();
     }, error => console.log(error));
+  }
+
+  editFieldOfStudy(row: IFieldOfStudy) {
+    this.fieldOfStudyToSave = row;
+  }
+
+  deleteFieldOfStudy(row: IFieldOfStudy) {
+    this.fieldOfStudyService.deleteFieldOfStudy(row.id).subscribe(result => {
+      this.fieldsOfStudy.splice(this.fieldsOfStudy.indexOf(row), 1);
+      this.refreshTable();
+    }, error => this.processError(error));
+  }
+
+  saveFieldOfStudy() {
+    if (this.fieldOfStudyToSave.id != null && typeof this.fieldOfStudyToSave.id === 'number') {
+      this.fieldOfStudyService.putFieldOfStudy(this.fieldOfStudyToSave).subscribe(result => {
+        this.fieldOfStudyToSave = new FieldOfStudy();
+      }, error => console.log(error));
+    } else {
+      this.fieldOfStudyService.postFieldOfStudy(this.fieldOfStudyToSave).subscribe(result => {
+        this.fieldsOfStudy.push(result);
+        this.fieldOfStudyToSave = new FieldOfStudy();
+        this.refreshTable();
+      }, error => console.log(error));
+    }
   }
 }
