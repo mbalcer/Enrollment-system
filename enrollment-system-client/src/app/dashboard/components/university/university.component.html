@@ -19,6 +19,10 @@
           <span>Save Faculty</span>
         </button>
       </div>
+      <div class="message-container">
+        <p class="message error" *ngIf="facultyMessage.type === TypeMessage.ERROR">{{facultyMessage.message}}</p>
+        <p class="message success" *ngIf="facultyMessage.type === TypeMessage.SUCCESS">{{facultyMessage.message}}</p>
+      </div>
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-faculty">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> No. </th>

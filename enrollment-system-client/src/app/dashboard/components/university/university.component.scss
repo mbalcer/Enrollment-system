@@ -1,3 +1,5 @@
+@import "../../../../variables.scss";
+
 :host {
   width: auto;
 }
@@ -28,8 +30,23 @@
   }
 }
 
-.add-button {
-  float: right;
+.message-container {
+  text-align: center;
+
+
+  .message {
+    color: $gray;
+    font-size: 12px;
+  }
+
+  .error {
+    color: $error-color;
+  }
+
+  .success {
+    color: $success-color;
+  }
+
 }
 
 .table-faculty {
