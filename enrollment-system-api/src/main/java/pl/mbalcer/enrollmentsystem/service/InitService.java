@@ -26,9 +26,10 @@ public class InitService {
     private final SubjectRepository subjectRepository;
     private final SubjectGroupRepository subjectGroupRepository;
     private final TeacherRepository teacherRepository;
+    private final AppointmentRepository appointmentRepository;
 
     @Autowired
-    public InitService(UserRepository userRepository, PasswordEncoder passwordEncoder, StudentRepository studentRepository, FacultyRepository facultyRepository, FieldOfStudyRepository fieldOfStudyRepository, SubjectRepository subjectRepository, SubjectGroupRepository subjectGroupRepository, TeacherRepository teacherRepository) {
+    public InitService(UserRepository userRepository, PasswordEncoder passwordEncoder, StudentRepository studentRepository, FacultyRepository facultyRepository, FieldOfStudyRepository fieldOfStudyRepository, SubjectRepository subjectRepository, SubjectGroupRepository subjectGroupRepository, TeacherRepository teacherRepository, AppointmentRepository appointmentRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.studentRepository = studentRepository;
@@ -37,6 +38,7 @@ public class InitService {
         this.subjectRepository = subjectRepository;
         this.subjectGroupRepository = subjectGroupRepository;
         this.teacherRepository = teacherRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     @PostConstruct
@@ -58,9 +60,18 @@ public class InitService {
         Teacher teacher = new Teacher(mathAndItFaculty, "janek", passwordEncoder.encode("janek"), "Jan Kowalski", "jankow111@wp.pl");
         teacher = teacherRepository.save(teacher);
 
-        LocalDateTime startGroup = LocalDateTime.of(2020, 10, 12, 8, 0);
-        SubjectGroup group1 = new SubjectGroup(0l, startGroup, LocalTime.of(1, 30), "UTP", 14, subject, teacher, Arrays.asList(student), Arrays.asList(it));
-        subjectGroupRepository.save(group1);
+        SubjectGroup group1 = new SubjectGroup(0l, LocalTime.of(1, 30), "UTP", 14, subject, teacher, null, Arrays.asList(student), Arrays.asList(it));
+        group1 = subjectGroupRepository.save(group1);
+
+        LocalDateTime startTime = LocalDateTime.of(2020, 10, 12, 8, 0);
+        LocalDateTime endTime = LocalDateTime.of(2020, 10, 12, 9, 30);
+
+        for (int i=0; i<10; i++) {
+            Appointment appointment = new Appointment(0l, startTime, endTime, group1);
+            appointmentRepository.save(appointment);
+            startTime = startTime.plusDays(7);
+            endTime = endTime.plusDays(7);
+        }
     }
 
 }

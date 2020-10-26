@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,6 @@ public class SubjectGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime startTime;
     private LocalTime courseTime;
     private String place;
     private Integer numberOfPlaces;
@@ -28,6 +26,9 @@ public class SubjectGroup {
 
     @ManyToOne
     private Teacher teacher;
+
+    @OneToMany(mappedBy = "group")
+    private List<Appointment> timeTable;
 
     @ManyToMany
     @JoinTable(
