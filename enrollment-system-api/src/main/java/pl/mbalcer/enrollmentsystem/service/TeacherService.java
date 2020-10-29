@@ -75,4 +75,9 @@ public class TeacherService implements CrudService<TeacherDTO> {
         Teacher teacher = teacherRepository.findByUsername(username).orElseThrow(NotFoundException::new);
         return teacherMapper.toDto(teacher);
     }
+
+    public Optional<Teacher> findOneByFullName(String fullName) {
+        log.debug("Request to get Teacher by fullName: {}", fullName);
+        return teacherRepository.findByFullName(fullName);
+    }
 }

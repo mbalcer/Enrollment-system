@@ -5,18 +5,26 @@ import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.mbalcer.enrollmentsystem.model.SubjectGroup;
+import pl.mbalcer.enrollmentsystem.model.Teacher;
 import pl.mbalcer.enrollmentsystem.model.dto.SubjectGroupDTO;
+import pl.mbalcer.enrollmentsystem.service.TeacherService;
+
+import java.util.Optional;
 
 @Mapper(componentModel = "spring", uses = {FieldOfStudyMapper.class, StudentMapper.class, SubjectMapper.class, AppointmentMapper.class})
-public interface SubjectGroupMapper extends EntityMapper<SubjectGroupDTO, SubjectGroup> {
+public abstract class SubjectGroupMapper implements EntityMapper<SubjectGroupDTO, SubjectGroup> {
 
-    @Mapping(source = "nameTeacher", target = "teacher.fullName")
+    @Autowired
+    TeacherService teacherService;
+
+    @Mapping(target = "teacher", expression = "java(teacherFromFullName(dto.getNameTeacher()))")
     @Mapping(source = "fieldsOfStudyDTO", target = "fieldsOfStudy")
     @Mapping(source = "studentsDTO", target = "students")
     @Mapping(source = "subjectDTO", target = "subject")
     @Mapping(source = "timeTableDTO", target = "timeTable")
-    SubjectGroup toEntity(SubjectGroupDTO dto);
+    public abstract SubjectGroup toEntity(SubjectGroupDTO dto);
 
     @Mapping(source = "teacher.fullName", target = "nameTeacher")
     @Mapping(source = "fieldsOfStudy", target = "fieldsOfStudyDTO")
@@ -24,9 +32,20 @@ public interface SubjectGroupMapper extends EntityMapper<SubjectGroupDTO, Subjec
     @Mapping(source = "subject", target = "subjectDTO")
     @Mapping(source = "timeTable", target = "timeTableDTO")
     @Named("toDto")
-    SubjectGroupDTO toDto(SubjectGroup entity);
+    public abstract SubjectGroupDTO toDto(SubjectGroup entity);
 
     @InheritConfiguration(name = "toDto")
     @Mapping(target = "studentsDTO", ignore = true)
-    SubjectGroupDTO toDTOWithoutStudents(SubjectGroup subjectGroup);
+    public abstract SubjectGroupDTO toDTOWithoutStudents(SubjectGroup subjectGroup);
+
+    Teacher teacherFromFullName(String fullName) {
+        Optional<Teacher> teacher = teacherService.findOneByFullName(fullName);
+        if (teacher.isPresent())
+            return teacher.get();
+        else  {
+            Teacher newTeacher = new Teacher();
+            newTeacher.setFullName(fullName);
+            return newTeacher;
+        }
+    }
 }
