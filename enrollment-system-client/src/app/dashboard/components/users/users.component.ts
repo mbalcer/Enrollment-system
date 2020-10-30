@@ -15,6 +15,8 @@ export class UsersComponent implements OnInit {
   users: IUser[];
   roles = ['STUDENT', 'TEACHER', 'ADMIN'];
   filterRoles = ['ALL'].concat(this.roles);
+  editableRow = null;
+  disableEditRow = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -46,5 +48,26 @@ export class UsersComponent implements OnInit {
         this.dataSource.filter = filterValue;
       }
     }
+  }
+
+  changeRole(element: IUser) {
+    this.userService.changeRole(element).subscribe(result => {
+      this.refreshTables();
+    }, error => console.log(error));
+    this.cancelChangeRole();
+  }
+
+  displayEditableRow(element: IUser) {
+    if (this.editableRow === null && !this.disableEditRow) {
+      this.editableRow = element.username;
+    }
+    if (this.disableEditRow) {
+      this.disableEditRow = false;
+    }
+  }
+
+  cancelChangeRole() {
+    this.editableRow = null;
+    this.disableEditRow = true;
   }
 }

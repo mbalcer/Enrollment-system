@@ -9,10 +9,15 @@ import {HttpClient} from '@angular/common/http';
 })
 export class UserService {
   private USER_URL = environment.basePath + '/users';
+  private CHANGE_ROLE_URL = this.USER_URL + '/role';
 
   constructor(private httpClient: HttpClient) { }
 
   getAllUsers(): Observable<IUser[]> {
     return this.httpClient.get<IUser[]>(this.USER_URL);
+  }
+
+  changeRole(user: IUser): Observable<IUser> {
+    return this.httpClient.patch<IUser>(this.CHANGE_ROLE_URL, user);
   }
 }
