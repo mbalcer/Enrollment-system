@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {IUser, User} from '../../../model/user.model';
 import {UserService} from './user.service';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-users',
@@ -12,7 +13,10 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['username', 'email', 'fullName', 'role', 'active'];
   dataSource = new MatTableDataSource<User>();
   users: IUser[];
-  roles = ['ALL', 'STUDENT', 'TEACHER', 'ADMIN'];
+  roles = ['STUDENT', 'TEACHER', 'ADMIN'];
+  filterRoles = ['ALL'].concat(this.roles);
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private userService: UserService) { }
 
@@ -30,6 +34,7 @@ export class UsersComponent implements OnInit {
 
   refreshTables() {
     this.dataSource = new MatTableDataSource<User>(this.users);
+    this.dataSource.paginator = this.paginator;
   }
 
   filterTable(filterValue) {
