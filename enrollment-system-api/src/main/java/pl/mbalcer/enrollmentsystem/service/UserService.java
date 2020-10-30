@@ -11,10 +11,12 @@ import pl.mbalcer.enrollmentsystem.errors.LoginAlreadyUsedException;
 import pl.mbalcer.enrollmentsystem.errors.UserNotFoundException;
 import pl.mbalcer.enrollmentsystem.model.User;
 import pl.mbalcer.enrollmentsystem.model.dto.RegisterUserDTO;
+import pl.mbalcer.enrollmentsystem.model.dto.UserDTO;
 import pl.mbalcer.enrollmentsystem.repository.UserRepository;
 import pl.mbalcer.enrollmentsystem.service.mapper.UserMapper;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,5 +54,20 @@ public class UserService {
             throw new UserNotFoundException();
 
         return new ResponseEntity(userMapper.toDto(userOptional.get()), HttpStatus.OK);
+    }
+
+    public List<UserDTO> findAll() {
+        List<User> all = userRepository.findAll();
+        return userMapper.toDto(all);
+    }
+
+    public UserDTO changeRole(UserDTO userDTO) {
+        Optional<User> userByUsername = userRepository.findUserByUsername(userDTO.getUsername());
+        if(userByUsername.isEmpty())
+            throw new UserNotFoundException();
+
+        User user = userByUsername.get();
+        user.setRole(userDTO.getRole());
+        return userMapper.toDto(userRepository.save(user));
     }
 }

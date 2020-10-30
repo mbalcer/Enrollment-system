@@ -8,7 +8,7 @@ import pl.mbalcer.enrollmentsystem.model.dto.UserDTO;
 @Mapper(componentModel = "spring", uses = {})
 public interface UserMapper extends EntityMapper<UserDTO, User> {
 
-    @Mapping(source = "username", target = "username")
+    @Mapping(source = "isActive", target = "isActive")
     User toEntity(UserDTO dto);
 
     UserDTO toDto(User entity);
