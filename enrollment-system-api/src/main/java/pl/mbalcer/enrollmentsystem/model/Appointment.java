@@ -3,6 +3,7 @@ package pl.mbalcer.enrollmentsystem.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,5 +20,6 @@ public class Appointment {
     private LocalDateTime endTime;
 
     @ManyToOne
+    @ToString.Exclude
     private SubjectGroup group;
 }

@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.errors.BadRequestException;
 import pl.mbalcer.enrollmentsystem.model.SubjectGroup;
 import pl.mbalcer.enrollmentsystem.model.dto.SubjectGroupDTO;
+import pl.mbalcer.enrollmentsystem.repository.AppointmentRepository;
 import pl.mbalcer.enrollmentsystem.repository.SubjectGroupRepository;
+import pl.mbalcer.enrollmentsystem.service.mapper.AppointmentMapper;
 import pl.mbalcer.enrollmentsystem.service.mapper.SubjectGroupMapper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,10 +21,14 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
 
     private final SubjectGroupRepository subjectGroupRepository;
     private final SubjectGroupMapper subjectGroupMapper;
+    private final AppointmentRepository appointmentRepository;
+    private final AppointmentMapper appointmentMapper;
 
-    public SubjectGroupService(SubjectGroupRepository subjectGroupRepository, SubjectGroupMapper subjectGroupMapper) {
+    public SubjectGroupService(SubjectGroupRepository subjectGroupRepository, SubjectGroupMapper subjectGroupMapper, AppointmentRepository appointmentRepository, AppointmentMapper appointmentMapper) {
         this.subjectGroupRepository = subjectGroupRepository;
         this.subjectGroupMapper = subjectGroupMapper;
+        this.appointmentRepository = appointmentRepository;
+        this.appointmentMapper = appointmentMapper;
     }
 
     @Override
@@ -54,8 +61,10 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
         if (dto.getId() != null) {
             throw new BadRequestException("A new subjectGroup cannot already have an ID");
         }
+
         SubjectGroup group = subjectGroupMapper.toEntity(dto);
         group = subjectGroupRepository.save(group);
+        saveTimeTable(group);
         return subjectGroupMapper.toDto(group);
     }
 
@@ -65,10 +74,25 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
         if (id == null || !subjectGroupRepository.existsById(id)) {
             throw new BadRequestException("Invalid id");
         }
-        SubjectGroup group = subjectGroupMapper.toEntity(dto);
-        group.setId(id);
+        SubjectGroup group = subjectGroupRepository.findById(id).get();
+        group.getTimeTable().forEach(appointment -> {
+            appointment.setGroup(null);
+            appointmentRepository.deleteById(appointment.getId());
+        });
+        subjectGroupMapper.updateSubjectGroup(dto, group);
+        appointmentMapper.updateAppointments(dto.getTimeTableDTO(), group.getTimeTable());
+        saveTimeTable(group);
         group = subjectGroupRepository.save(group);
         return subjectGroupMapper.toDto(group);
+    }
+
+    private void saveTimeTable(SubjectGroup group) {
+        Optional.ofNullable(group.getTimeTable())
+                .orElse(Collections.emptyList())
+                .forEach(appointment -> {
+                    appointment.setGroup(group);
+                    appointmentRepository.save(appointment);
+                });
     }
 
     @Override

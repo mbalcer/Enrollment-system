@@ -1,10 +1,7 @@
 package pl.mbalcer.enrollmentsystem.service.mapper;
 
 
-import org.mapstruct.InheritConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.mbalcer.enrollmentsystem.model.SubjectGroup;
 import pl.mbalcer.enrollmentsystem.model.Teacher;
@@ -37,6 +34,13 @@ public abstract class SubjectGroupMapper implements EntityMapper<SubjectGroupDTO
     @InheritConfiguration(name = "toDto")
     @Mapping(target = "studentsDTO", ignore = true)
     public abstract SubjectGroupDTO toDTOWithoutStudents(SubjectGroup subjectGroup);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "teacher", expression = "java(teacherFromFullName(dto.getNameTeacher()))")
+    @Mapping(source = "fieldsOfStudyDTO", target = "fieldsOfStudy")
+    @Mapping(source = "studentsDTO", target = "students")
+    @Mapping(source = "subjectDTO", target = "subject")
+    public abstract void updateSubjectGroup(SubjectGroupDTO dto, @MappingTarget SubjectGroup entity);
 
     Teacher teacherFromFullName(String fullName) {
         Optional<Teacher> teacher = teacherService.findOneByFullName(fullName);

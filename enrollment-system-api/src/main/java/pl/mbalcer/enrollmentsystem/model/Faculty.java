@@ -3,6 +3,7 @@ package pl.mbalcer.enrollmentsystem.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Faculty {
     private String abbreviation;
 
     @OneToMany(mappedBy = "faculty")
+    @ToString.Exclude
     private List<FieldOfStudy> fieldsOfStudy;
 
 }
