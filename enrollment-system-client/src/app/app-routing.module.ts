@@ -13,6 +13,7 @@ import {GroupsComponent} from './dashboard/components/groups/groups.component';
 import {UsersComponent} from './dashboard/components/users/users.component';
 import {RequestsComponent} from './dashboard/components/requests/requests.component';
 import {SettingsComponent} from './dashboard/components/settings/settings.component';
+import {MyGroupsComponent} from './dashboard/components/my-groups/my-groups.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: '', component: HomeComponent, outlet: 'panel', pathMatch: 'full' },
       { path: 'registration', component: RegistrationComponent, outlet: 'panel' },
       { path: 'subjects', component: SubjectsComponent, outlet: 'panel' },
+      { path: 'my-groups', component: MyGroupsComponent, outlet: 'panel' },
       { path: 'profile', component: ProfileComponent, outlet: 'panel' },
       { path: 'university', component: UniversityComponent, outlet: 'panel' },
       { path: 'groups', component: GroupsComponent, outlet: 'panel' },
