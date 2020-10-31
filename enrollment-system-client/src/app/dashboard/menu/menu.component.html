@@ -3,10 +3,10 @@
     <mat-icon svgIcon="home" aria-hidden="false" aria-label="Home Page"></mat-icon>
     <span>Home</span>
   </a></li>
-  <li *ngFor="let m of menu">
-    <a [routerLink]="[{ outlets: { panel: [m] }}]">
-      <mat-icon [svgIcon]="m" aria-hidden="false"></mat-icon>
-      <span>{{m | titlecase}}</span>
+  <li *ngFor="let menuItem of menu">
+    <a [routerLink]="[{ outlets: { panel: [menuItem.routerLink] }}]">
+      <mat-icon [svgIcon]="menuItem.svgIcon" aria-hidden="false"></mat-icon>
+      <span>{{menuItem.name}}</span>
     </a>
   </li>
 </ul>
