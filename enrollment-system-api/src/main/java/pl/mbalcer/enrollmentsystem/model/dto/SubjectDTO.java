@@ -14,7 +14,7 @@ public class SubjectDTO {
     private Long id;
     private String name;
     private String description;
-    private Duration numberOfHours;
+    private Long numberOfHours;
     private CourseType courseType;
     private Integer ECTS;
 }

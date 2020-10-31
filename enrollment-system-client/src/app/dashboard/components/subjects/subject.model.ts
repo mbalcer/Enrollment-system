@@ -4,7 +4,7 @@ export interface ISubject {
   description: string;
   numberOfHours: number;
   courseType: string;
-  ECTS: number;
+  ects: number;
 }
 
 export class Subject implements ISubject {
@@ -13,7 +13,7 @@ export class Subject implements ISubject {
   description: string;
   numberOfHours: number;
   courseType: string;
-  ECTS: number;
+  ects: number;
 
   constructor() {
     this.id = null;
@@ -21,6 +21,6 @@ export class Subject implements ISubject {
     this.description = '';
     this.numberOfHours = 0;
     this.courseType = '';
-    this.ECTS = 0;
+    this.ects = 0;
   }
 }
