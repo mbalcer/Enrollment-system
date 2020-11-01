@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.mbalcer.enrollmentsystem.model.enumeration.CourseType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Duration;
 
 @Data
@@ -20,6 +17,7 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(length = 8000)
     private String description;
     private Duration numberOfHours;
     private CourseType courseType;

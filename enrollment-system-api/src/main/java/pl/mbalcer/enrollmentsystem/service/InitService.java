@@ -51,8 +51,21 @@ public class InitService {
         User admin = new User(0l, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl", Role.ADMIN, true);
         userRepository.save(admin);
 
-        Student student = new Student(0L, "adamek", passwordEncoder.encode("adam123"), "Adam Kowalski", "adam@utp.edu.pl",  111000L, 7, it);
+        Student student = new Student(0L, "siema", passwordEncoder.encode("adam123"), "Adam Kowalski", "adamrewrwer@utp.edu.pl", 111000L, 7, it);
         student = studentRepository.save(student);
+
+        for (int i=1; i<10; i++) {
+            Student newStudent = new Student(0L, "adamek"+i, passwordEncoder.encode("adam123"), "Adam Kowalski", "adam"+i+"@utp.edu.pl", 111000L, 7, it);
+            studentRepository.save(newStudent);
+
+            Subject s = new Subject(0l, "Lecture "+i,
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A architecto, consequatur delectus dicta dignissimos dolores illum in ipsa ipsum laboriosam magni officia qui recusandae rerum soluta tenetur veniam vitae? Modi. \n\n" +
+                            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A architecto, consequatur delectus dicta dignissimos dolores illum in ipsa ipsum laboriosam magni officia qui recusandae rerum soluta tenetur veniam vitae? Modi.\n\n" +
+                            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A architecto, consequatur delectus dicta dignissimos dolores illum in ipsa ipsum laboriosam magni officia qui recusandae rerum soluta tenetur veniam vitae? Modi." +
+                            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A architecto, consequatur delectus dicta dignissimos dolores illum in ipsa ipsum laboriosam magni officia qui recusandae rerum soluta tenetur veniam vitae? Modi.",
+                    Duration.ofHours(i*5), CourseType.LECTURE, i);
+            subjectRepository.save(s);
+        }
 
         Subject subject = new Subject(0l, "Graduation seminar", "description", Duration.ofHours(30), CourseType.SEMINAR, 4);
         subject = subjectRepository.save(subject);
