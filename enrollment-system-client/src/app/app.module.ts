@@ -26,6 +26,7 @@ import {UsersComponent} from './dashboard/components/users/users.component';
 import {RequestsComponent} from './dashboard/components/requests/requests.component';
 import {SettingsComponent} from './dashboard/components/settings/settings.component';
 import {MyGroupsComponent} from './dashboard/components/my-groups/my-groups.component';
+import {SubjectDetailsComponent} from './dashboard/components/subjects/subject-details/subject-details.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {MyGroupsComponent} from './dashboard/components/my-groups/my-groups.comp
     UsersComponent,
     RequestsComponent,
     SettingsComponent,
-    MyGroupsComponent
+    MyGroupsComponent,
+    SubjectDetailsComponent
   ],
     imports: [
         BrowserModule,
