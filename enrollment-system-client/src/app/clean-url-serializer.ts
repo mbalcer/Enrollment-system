@@ -10,8 +10,8 @@ export class CleanUrlSerializer extends DefaultUrlSerializer {
 
   parse(url: string): UrlTree {
     appContants.outlets.forEach(outletName => {
-      const reg = new RegExp('/(' + outletName + ')/([^\/]*)');
-      url = url.replace(reg, '$1/($1:$2)' );
+      const reg = new RegExp('dashboard/([^.]*)');
+      url = url.replace(reg, 'dashboard/(' + outletName + ':$1)' );
     });
     return this._defaultUrlSerializer.parse(url);
   }
@@ -19,11 +19,9 @@ export class CleanUrlSerializer extends DefaultUrlSerializer {
   serialize(tree: UrlTree): string {
     let url = this._defaultUrlSerializer.serialize(tree);
     appContants.outlets.forEach(outletName => {
-      const reg = new RegExp('\\(' + outletName + ':([^\/]*)\\)');
+      const reg = new RegExp('\\(' + outletName + ':([^.]*)\\)');
       url = url.replace(reg, '$1');
     });
     return url;
   }
-
-
 }
