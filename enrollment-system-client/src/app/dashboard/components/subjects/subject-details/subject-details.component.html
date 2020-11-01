@@ -1,1 +1,40 @@
-<p>subject-details works!</p>
+<div class="container-subject-details">
+  <h1>{{subject.name}}</h1>
+  <table class="table-details">
+    <tr>
+      <th class="column-title"> No. </th>
+      <td> {{subject.id}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Name. </th>
+      <td> {{subject.name}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Number of hours </th>
+      <td> {{subject.numberOfHours}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Course type </th>
+      <td> {{subject.courseType}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> ECTS </th>
+      <td> {{subject.ects}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Language. </th>
+      <td> Polish </td>
+    </tr>
+  </table>
+  <div class="description">
+    <h2>Description</h2>
+    <span>
+      {{subject.description}}
+    </span>
+  </div>
+</div>
