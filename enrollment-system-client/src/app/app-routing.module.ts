@@ -15,6 +15,7 @@ import {RequestsComponent} from './dashboard/components/requests/requests.compon
 import {SettingsComponent} from './dashboard/components/settings/settings.component';
 import {MyGroupsComponent} from './dashboard/components/my-groups/my-groups.component';
 import {SubjectDetailsComponent} from './dashboard/components/subjects/subject-details/subject-details.component';
+import {GroupDetailsComponent} from './dashboard/components/groups/group-details/group-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent, outlet: 'panel' },
       { path: 'university', component: UniversityComponent, outlet: 'panel' },
       { path: 'groups', component: GroupsComponent, outlet: 'panel' },
+      { path: 'groups/:id', component: GroupDetailsComponent, outlet: 'panel'},
       { path: 'users', component: UsersComponent, outlet: 'panel' },
       { path: 'requests', component: RequestsComponent, outlet: 'panel' },
       { path: 'settings', component: SettingsComponent, outlet: 'panel' }
