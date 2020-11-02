@@ -29,6 +29,7 @@ $enrollment-system-client-theme: mat-light-theme($enrollment-system-client-prima
 /* You can add global styles to this file, and also import other style files */
 /*@import url(~bootstrap/dist/css/bootstrap.min.css);*/
 @import url(~font-awesome/css/font-awesome.min.scss);
+@import "variables";
 
 html, body {
   height: 100%;
@@ -37,4 +38,56 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.container-component {
+  width: 75%;
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.div-with-table {
+  margin-top: 1em;
+}
+
+.table {
+  width: 100%;
+}
+
+.table-details {
+  width: 100%;
+
+  > tr > th, > tr > td {
+    border: 1px solid #dee2e6;
+    margin: 0;
+    padding: 1em;
+  }
+
+  > tr > th.column-title {
+    background-color: #f8f9fa;
+    text-align: left;
+  }
+}
+
+.space {
+  flex: 1 1 auto;
+}
+
+
+.message-container {
+  text-align: center;
+
+  .message {
+    color: $gray;
+    font-size: 12px;
+  }
+
+  .error {
+    color: $error-color;
+  }
+
+  .success {
+    color: $success-color;
+  }
 }

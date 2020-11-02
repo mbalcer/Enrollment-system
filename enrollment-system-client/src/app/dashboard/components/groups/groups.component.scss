@@ -1,29 +1,8 @@
-@import "../../../../variables.scss";
-
-:host {
-  width: auto;
-}
-
-.container-groups {
-  width: 75%;
-  margin: 1em auto;
-  display: flex;
-  flex-direction: column;
-}
-
 .div-table-groups {
   margin-top: 1em;
-}
-
-.table-groups {
-  width: 100%;
 }
 
 .btn-add {
   display: flex;
   flex-direction: row;
-}
-
-.spacer {
-   flex: 1 1 auto;
 }

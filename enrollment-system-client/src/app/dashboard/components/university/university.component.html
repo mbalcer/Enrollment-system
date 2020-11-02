@@ -1,6 +1,6 @@
 <mat-tab-group mat-align-tabs="center">
   <mat-tab label="Faculty">
-    <div class="container-university">
+    <div class="container-component">
       <div class="form-add-faculty">
         <mat-form-field appearance="standard">
           <mat-label>Name</mat-label>
@@ -23,7 +23,7 @@
         <p class="message error" *ngIf="facultyMessage.type === TypeMessage.ERROR">{{facultyMessage.message}}</p>
         <p class="message success" *ngIf="facultyMessage.type === TypeMessage.SUCCESS">{{facultyMessage.message}}</p>
       </div>
-      <table mat-table [dataSource]="dataSourceFaculties" class="mat-elevation-z8 table-faculty">
+      <table mat-table [dataSource]="dataSourceFaculties" class="mat-elevation-z8 table">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> No. </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
@@ -63,7 +63,7 @@
   </mat-tab>
 
   <mat-tab label="Field of study">
-    <div class="container-university">
+    <div class="container-component">
       <div class="form-add-fieldOfStudy">
         <mat-form-field appearance="standard">
           <mat-label>Name</mat-label>
@@ -98,7 +98,7 @@
         <p class="message error" *ngIf="fieldOfStudyMessage.type === TypeMessage.ERROR">{{fieldOfStudyMessage.message}}</p>
         <p class="message success" *ngIf="fieldOfStudyMessage.type === TypeMessage.SUCCESS">{{fieldOfStudyMessage.message}}</p>
       </div>
-      <table mat-table [dataSource]="dataSourceFieldsOfStudy" class="mat-elevation-z8 table-fieldOfStudy">
+      <table mat-table [dataSource]="dataSourceFieldsOfStudy" class="mat-elevation-z8 table">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> No. </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>

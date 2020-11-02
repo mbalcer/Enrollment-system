@@ -1,21 +1,3 @@
-@import "../../../../variables.scss";
-
-:host {
-  width: auto;
-}
-
-.container-users {
-  width: 75%;
-  margin: 1em auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.table-users {
-  width: 100%;
-  margin-top: 1em;
-}
-
 .filter-table {
   width: 30%;
   margin: 0 auto;

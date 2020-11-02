@@ -1,13 +1,13 @@
-<div class="container-users">
+<div class="container-component">
   <mat-form-field appearance="standard" class="filter-table">
     <mat-label>Filter role</mat-label>
     <mat-select name="role">
       <mat-option (onSelectionChange)="filterTable($event)" *ngFor="let role of filterRoles" [value]="role"> {{role}} </mat-option>
     </mat-select>
   </mat-form-field>
-  <div class="mat-elevation-z8">
+  <div class="mat-elevation-z8 div-with-table">
 
-    <table mat-table [dataSource]="dataSource" class="table-users">
+    <table mat-table [dataSource]="dataSource" class="table">
       <ng-container matColumnDef="username">
         <th mat-header-cell *matHeaderCellDef> Username </th>
         <td mat-cell *matCellDef="let element"> {{element.username}} </td>
