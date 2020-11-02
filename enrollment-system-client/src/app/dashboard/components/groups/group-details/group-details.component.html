@@ -1,1 +1,40 @@
-<p>group-details works!</p>
+<div class="container-component">
+  <h1>Group no. {{group.id}}</h1>
+  <table class="table-details">
+    <tr>
+      <th class="column-title"> Subject </th>
+      <td> {{group.subjectDTO.name}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Teacher </th>
+      <td> {{group.nameTeacher}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Place </th>
+      <td> {{group.place}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Course time </th>
+      <td> {{group.courseTime}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Number of places </th>
+      <td> {{group.numberOfPlaces}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Fields of study </th>
+      <td> {{getListFieldsOfStudy(group)}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Time Table </th>
+      <td [innerHTML]="getTimeTable(group)"> </td>
+    </tr>
+
+  </table>
+</div>

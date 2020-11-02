@@ -11,7 +11,19 @@
   flex-direction: column;
 }
 
+.div-table-groups {
+  margin-top: 1em;
+}
+
 .table-groups {
   width: 100%;
-  margin-top: 1em;
+}
+
+.btn-add {
+  display: flex;
+  flex-direction: row;
+}
+
+.spacer {
+   flex: 1 1 auto;
 }

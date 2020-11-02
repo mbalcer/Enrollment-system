@@ -15,4 +15,8 @@ export class SubjectGroupService {
   getAllGroups(): Observable<ISubjectGroup[]> {
     return this.httpClient.get<ISubjectGroup[]>(this.SUBJECT_GROUP_URL);
   }
+
+  getGroup(id: number): Observable<ISubjectGroup> {
+    return this.httpClient.get<ISubjectGroup>(this.SUBJECT_GROUP_URL + '/' + id);
+  }
 }
