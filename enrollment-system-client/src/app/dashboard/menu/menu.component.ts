@@ -1,7 +1,7 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
-import {IUser} from '../../model/user.model';
+import {IUser} from '../../user/model/user.model';
 
 @Component({
   selector: 'app-menu',

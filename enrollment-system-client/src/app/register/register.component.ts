@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AccountService} from '../service/account.service';
-import {User} from '../model/user.model';
+import {User} from '../user/model/user.model';
 import {FormMessage} from '../model/form-message.model';
 import {TypeMessage} from '../model/enumeration/type-message.enum';
 

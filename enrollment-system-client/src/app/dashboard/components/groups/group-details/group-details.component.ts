@@ -3,7 +3,7 @@ import {SubjectGroup} from '../subject-group.model';
 import {SubjectGroupService} from '../subject-group.service';
 import {ActivatedRoute} from '@angular/router';
 import {MatTableDataSource} from '@angular/material/table';
-import {Student} from '../../../../model/student.model';
+import {Student} from '../../../../user/model/student.model';
 
 @Component({
   selector: 'app-group-details',

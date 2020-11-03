@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {IUser, User} from '../../../model/user.model';
-import {UserService} from './user.service';
+import {IUser, User} from '../../../user/model/user.model';
+import {UserService} from '../../../user/service/user.service';
 import {MatPaginator} from '@angular/material/paginator';
 
 @Component({

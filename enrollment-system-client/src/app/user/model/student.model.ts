@@ -1,4 +1,4 @@
-import {FieldOfStudy} from '../dashboard/components/university/field-of-study.model';
+import {FieldOfStudy} from '../../dashboard/components/university/field-of-study.model';
 
 export interface IStudent {
   username: string;
