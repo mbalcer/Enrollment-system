@@ -22,6 +22,11 @@
     </tr>
 
     <tr>
+      <th class="column-title"> Number of enrolled </th>
+      <td> {{group.studentsDTO.length}} </td>
+    </tr>
+
+    <tr>
       <th class="column-title"> Number of places </th>
       <td> {{group.numberOfPlaces}} </td>
     </tr>
@@ -37,4 +42,27 @@
     </tr>
 
   </table>
+
+  <h2 class="title-students">Students:</h2>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSourceStudents" class="table">
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef> Full Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef> Index Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.indexNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fieldOfStudy">
+        <th mat-header-cell *matHeaderCellDef> Field Of Study </th>
+        <td mat-cell *matCellDef="let element"> {{element.fieldOfStudyDTO.name}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </div>
