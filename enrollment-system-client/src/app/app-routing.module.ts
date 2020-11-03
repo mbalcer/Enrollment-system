@@ -16,6 +16,7 @@ import {SettingsComponent} from './dashboard/components/settings/settings.compon
 import {MyGroupsComponent} from './dashboard/components/my-groups/my-groups.component';
 import {SubjectDetailsComponent} from './dashboard/components/subjects/subject-details/subject-details.component';
 import {GroupDetailsComponent} from './dashboard/components/groups/group-details/group-details.component';
+import {AddGroupComponent} from './dashboard/components/groups/add-group/add-group.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
       { path: 'university', component: UniversityComponent, outlet: 'panel' },
       { path: 'groups', component: GroupsComponent, outlet: 'panel' },
       { path: 'groups/:id', component: GroupDetailsComponent, outlet: 'panel'},
+      { path: 'groups/add', component: AddGroupComponent, outlet: 'panel'},
       { path: 'users', component: UsersComponent, outlet: 'panel' },
       { path: 'requests', component: RequestsComponent, outlet: 'panel' },
       { path: 'settings', component: SettingsComponent, outlet: 'panel' }
