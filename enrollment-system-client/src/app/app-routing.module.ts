@@ -32,8 +32,9 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent, outlet: 'panel' },
       { path: 'university', component: UniversityComponent, outlet: 'panel' },
       { path: 'groups', component: GroupsComponent, outlet: 'panel' },
-      { path: 'groups/:id', component: GroupDetailsComponent, outlet: 'panel'},
       { path: 'groups/add', component: AddGroupComponent, outlet: 'panel'},
+      { path: 'groups/:id', component: GroupDetailsComponent, outlet: 'panel'},
+      { path: 'groups/:id/edit', component: AddGroupComponent, outlet: 'panel'},
       { path: 'users', component: UsersComponent, outlet: 'panel' },
       { path: 'requests', component: RequestsComponent, outlet: 'panel' },
       { path: 'settings', component: SettingsComponent, outlet: 'panel' }

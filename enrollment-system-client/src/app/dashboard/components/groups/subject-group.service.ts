@@ -19,4 +19,12 @@ export class SubjectGroupService {
   getGroup(id: number): Observable<ISubjectGroup> {
     return this.httpClient.get<ISubjectGroup>(this.SUBJECT_GROUP_URL + '/' + id);
   }
+
+  postGroup(group: ISubjectGroup): Observable<ISubjectGroup> {
+    return this.httpClient.post<ISubjectGroup>(this.SUBJECT_GROUP_URL, group);
+  }
+
+  putGroup(group: ISubjectGroup, id: number): Observable<ISubjectGroup> {
+    return this.httpClient.put<ISubjectGroup>(this.SUBJECT_GROUP_URL + '/' + id, group);
+  }
 }

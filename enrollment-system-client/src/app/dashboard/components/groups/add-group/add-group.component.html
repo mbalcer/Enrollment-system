@@ -1,1 +1,43 @@
-<p>add-group works!</p>
+<div class="container-component">
+  <h2 *ngIf="isAdd">Add new group</h2>
+  <h2 *ngIf="!isAdd">Edit group no. {{groupToAdd.id}}</h2>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Subject</mat-label>
+    <mat-select [(ngModel)]="groupToAdd.subjectDTO" name="subject">
+      <mat-option *ngFor="let subject of subjects" [value]="subject">
+        {{subject.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Teacher</mat-label>
+    <mat-select [(ngModel)]="groupToAdd.nameTeacher" name="teacher">
+      <mat-option *ngFor="let teacher of teachers" [value]="teacher.fullName">
+        {{teacher.fullName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Place</mat-label>
+    <input matInput [(ngModel)]="groupToAdd.place" name="place">
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Course time</mat-label>
+    <input matInput type="time" [(ngModel)]="groupToAdd.courseTime" name="courseTime">
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Number of places</mat-label>
+    <input matInput type="number" [(ngModel)]="groupToAdd.numberOfPlaces" name="numberOfPlaces">
+  </mat-form-field>
+
+  <button mat-button aria-label="Add group button" class="add-button" (click)="saveGroup()">
+    <mat-icon>add_circle_outline</mat-icon>
+    <span *ngIf="isAdd">Add group</span>
+    <span *ngIf="!isAdd">Edit group</span>
+  </button>
+</div>
