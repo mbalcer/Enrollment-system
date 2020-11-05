@@ -35,7 +35,7 @@ export class SubjectGroup implements ISubjectGroup {
     this.nameTeacher = '';
     this.timeTableDTO = null;
     this.subjectDTO = null;
-    this.fieldsOfStudyDTO = null;
+    this.fieldsOfStudyDTO = [];
     this.studentsDTO = null;
   }
 }

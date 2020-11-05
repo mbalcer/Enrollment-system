@@ -35,6 +35,31 @@
     <input matInput type="number" [(ngModel)]="groupToAdd.numberOfPlaces" name="numberOfPlaces">
   </mat-form-field>
 
+  <mat-form-field appearance="standard" class="fieldOfStudy-chip-list">
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let fieldOfStudy of groupToAdd.fieldsOfStudyDTO" [selectable]="selectable" [removable]="removable"
+                (removed)="remove(fieldOfStudy)">
+        {{fieldOfStudy.name}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="Add field of study"
+        #subjectInput
+        [formControl]="fieldOfStudyCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur"
+        (matChipInputTokenEnd)="add($event)"
+      />
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let fieldsOfStudy of filteredFieldsOfStudy | async" [value]="fieldsOfStudy">
+        {{ fieldsOfStudy.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
   <button mat-button aria-label="Add group button" class="add-button" (click)="saveGroup()">
     <mat-icon>add_circle_outline</mat-icon>
     <span *ngIf="isAdd">Add group</span>
