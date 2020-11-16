@@ -40,7 +40,7 @@ public class StudentController {
     @GetMapping("/byUsername/{username}")
     public ResponseEntity<StudentDTO> getStudentByUsername(@PathVariable String username) {
         log.debug("REST request to get Student by username : {}", username);
-        StudentDTO studentDTO = studentService.findOneByUsername(username);
+        StudentDTO studentDTO = studentService.getDTOByUsername(username);
         return ResponseEntity.ok(studentDTO);
     }
 

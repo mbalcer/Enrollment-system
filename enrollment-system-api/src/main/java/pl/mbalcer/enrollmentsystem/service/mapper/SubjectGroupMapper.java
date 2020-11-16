@@ -3,9 +3,11 @@ package pl.mbalcer.enrollmentsystem.service.mapper;
 
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import pl.mbalcer.enrollmentsystem.model.Student;
 import pl.mbalcer.enrollmentsystem.model.SubjectGroup;
 import pl.mbalcer.enrollmentsystem.model.Teacher;
 import pl.mbalcer.enrollmentsystem.model.dto.SubjectGroupDTO;
+import pl.mbalcer.enrollmentsystem.service.StudentService;
 import pl.mbalcer.enrollmentsystem.service.TeacherService;
 
 import java.util.Optional;
@@ -15,6 +17,9 @@ public abstract class SubjectGroupMapper implements EntityMapper<SubjectGroupDTO
 
     @Autowired
     TeacherService teacherService;
+
+    @Autowired
+    StudentService studentService;
 
     @Mapping(target = "teacher", expression = "java(teacherFromFullName(dto.getNameTeacher()))")
     @Mapping(source = "fieldsOfStudyDTO", target = "fieldsOfStudy")
@@ -38,7 +43,7 @@ public abstract class SubjectGroupMapper implements EntityMapper<SubjectGroupDTO
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "teacher", expression = "java(teacherFromFullName(dto.getNameTeacher()))")
     @Mapping(source = "fieldsOfStudyDTO", target = "fieldsOfStudy")
-    @Mapping(source = "studentsDTO", target = "students")
+    @Mapping(target = "students", expression = "java(dto.getStudentsDTO().stream().map(studentDTO -> studentFromUsername(studentDTO.getUsername())). collect(java.util.stream.Collectors.toList()))")
     @Mapping(source = "subjectDTO", target = "subject")
     public abstract void updateSubjectGroup(SubjectGroupDTO dto, @MappingTarget SubjectGroup entity);
 
@@ -50,6 +55,17 @@ public abstract class SubjectGroupMapper implements EntityMapper<SubjectGroupDTO
             Teacher newTeacher = new Teacher();
             newTeacher.setFullName(fullName);
             return newTeacher;
+        }
+    }
+
+    Student studentFromUsername(String username) {
+        Optional<Student> student = studentService.findOneByUsername(username);
+        if (student.isPresent())
+            return student.get();
+        else {
+            Student newStudent = new Student();
+            newStudent.setUsername(username);
+            return newStudent;
         }
     }
 }

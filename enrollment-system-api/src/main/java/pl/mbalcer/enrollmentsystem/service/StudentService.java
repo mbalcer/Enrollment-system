@@ -70,9 +70,13 @@ public class StudentService implements CrudService<StudentDTO> {
         studentRepository.deleteById(id);
     }
 
-    public StudentDTO findOneByUsername(String username) {
+    public Optional<Student> findOneByUsername(String username) {
         log.debug("Request to get Student by username: {}", username);
-        Student student = studentRepository.findByUsername(username).orElseThrow(NotFoundException::new);
+        return studentRepository.findByUsername(username);
+    }
+
+    public StudentDTO getDTOByUsername(String username) {
+        Student student = findOneByUsername(username).orElseThrow(NotFoundException::new);
         return studentMapper.toDto(student);
     }
 }

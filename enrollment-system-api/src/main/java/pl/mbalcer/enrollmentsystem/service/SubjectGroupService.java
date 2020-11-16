@@ -36,7 +36,7 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
         log.debug("Request to get all SubjectsGroup");
         return subjectGroupRepository.findAll()
                 .stream()
-                .map(subjectGroupMapper::toDTOWithoutStudents)
+                .map(subjectGroupMapper::toDto)
                 .collect(Collectors.toList());
     }
 
