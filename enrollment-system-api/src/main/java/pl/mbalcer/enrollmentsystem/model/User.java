@@ -36,4 +36,9 @@ public class User {
     private Role role = Role.STUDENT;
     private Boolean isActive = false;
 
+    public User(@NotBlank @Size(max = 30) String username, @NotBlank @Size(max = 120) String password, @NotBlank @Size(max = 50) @Email String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 }
