@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../user/model/user.model';
-import {AccountService} from '../service/account.service';
+import {UserService} from '../user/service/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,13 +8,12 @@ import {AccountService} from '../service/account.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
   user = new User();
 
-  constructor(private accountService: AccountService) { }
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.accountService.getUser().subscribe(result => {
+    this.userService.getUser().subscribe(result => {
       this.user = result;
     });
   }
