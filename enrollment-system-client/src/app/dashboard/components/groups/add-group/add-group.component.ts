@@ -64,6 +64,10 @@ export class AddGroupComponent implements OnInit {
     this.getFieldsOfStudy();
   }
 
+  public objectComparisonFunction(option, value): boolean {
+    return option.id === value.id;
+  }
+
   getGroup(id) {
     this.subjectGroupService.getGroup(Number(id)).subscribe(result => {
       this.groupToAdd = result;
@@ -85,11 +89,11 @@ export class AddGroupComponent implements OnInit {
   getFieldsOfStudy() {
     this.fieldOfStudyService.getAllFieldsOfStudy().subscribe(result => {
       this.allFieldsOfStudy = result;
-      // if (this.groupToAdd.fieldsOfStudyDTO.length > 0) {
-      //   this.groupToAdd.fieldsOfStudyDTO.forEach(fieldOfStudy => {
-      //     this.allFieldsOfStudy.splice(this.allFieldsOfStudy.indexOf(fieldOfStudy), 1);
-      //   });
-      // }
+      if (this.groupToAdd.fieldsOfStudyDTO.length > 0) {
+        this.groupToAdd.fieldsOfStudyDTO.forEach(fieldOfStudy => {
+          this.allFieldsOfStudy.splice(this.allFieldsOfStudy.indexOf(fieldOfStudy), 1);
+        });
+      }
     }, error => console.log(error));
   }
 

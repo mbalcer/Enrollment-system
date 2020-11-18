@@ -27,4 +27,8 @@ export class SubjectGroupService {
   putGroup(group: ISubjectGroup, id: number): Observable<ISubjectGroup> {
     return this.httpClient.put<ISubjectGroup>(this.SUBJECT_GROUP_URL + '/' + id, group);
   }
+
+  deleteGroup(id: number): Observable<any> {
+    return this.httpClient.delete<any>(this.SUBJECT_GROUP_URL + '/' + id);
+  }
 }

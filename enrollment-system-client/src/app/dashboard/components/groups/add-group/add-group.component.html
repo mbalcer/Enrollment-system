@@ -4,7 +4,7 @@
 
   <mat-form-field appearance="standard">
     <mat-label>Subject</mat-label>
-    <mat-select [(ngModel)]="groupToAdd.subjectDTO" name="subject">
+    <mat-select [(ngModel)]="groupToAdd.subjectDTO" name="subject" [compareWith]="objectComparisonFunction">
       <mat-option *ngFor="let subject of subjects" [value]="subject">
         {{subject.name}}
       </mat-option>
