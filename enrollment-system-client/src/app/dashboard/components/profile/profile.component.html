@@ -1,1 +1,47 @@
-<p>profile works!</p>
+<div class="container-component">
+  <div class="top-info">
+    <h2>User info</h2>
+    <span class="space"></span>
+    <button mat-button aria-label="Edit profile" routerLink="add">
+      <mat-icon>edit</mat-icon>
+      <span>Edit profile</span>
+    </button>
+  </div>
+  <table class="table-details">
+<!--    USER INFO -->
+    <tr>
+      <th class="column-title"> Username </th>
+      <td> {{user.username}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Email </th>
+      <td> {{user.email}} </td>
+    </tr>
+
+    <tr>
+      <th class="column-title"> Full name </th>
+      <td> {{user.fullName}} </td>
+    </tr>
+<!--    STUDENT INFO -->
+    <tr *ngIf="student != null">
+      <th class="column-title"> Index Number </th>
+      <td> {{student.indexNumber}} </td>
+    </tr>
+
+    <tr *ngIf="student != null">
+      <th class="column-title"> Semester </th>
+      <td> {{student.semester}} </td>
+    </tr>
+
+    <tr *ngIf="student != null">
+      <th class="column-title"> Field of study </th>
+      <td> {{student.fieldOfStudyDTO.name}} </td>
+    </tr>
+<!--    TEACHER INFO-->
+    <tr *ngIf="teacher != null">
+      <th class="column-title"> Faculty </th>
+      <td> {{teacher.facultyDTO.name}} </td>
+    </tr>
+  </table>
+</div>
