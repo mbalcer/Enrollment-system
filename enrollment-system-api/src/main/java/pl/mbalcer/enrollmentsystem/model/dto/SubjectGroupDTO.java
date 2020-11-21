@@ -3,6 +3,7 @@ package pl.mbalcer.enrollmentsystem.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.mbalcer.enrollmentsystem.model.enumeration.GroupType;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -16,6 +17,7 @@ public class SubjectGroupDTO {
     private String place;
     private Integer numberOfPlaces;
     private String nameTeacher;
+    private GroupType type;
 
     private List<AppointmentDTO> timeTableDTO;
     private SubjectDTO subjectDTO;

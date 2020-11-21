@@ -26,6 +26,7 @@ public abstract class SubjectGroupMapper implements EntityMapper<SubjectGroupDTO
     @Mapping(source = "studentsDTO", target = "students")
     @Mapping(source = "subjectDTO", target = "subject")
     @Mapping(source = "timeTableDTO", target = "timeTable")
+    @Mapping(source = "type", target = "type")
     public abstract SubjectGroup toEntity(SubjectGroupDTO dto);
 
     @Mapping(source = "teacher.fullName", target = "nameTeacher")

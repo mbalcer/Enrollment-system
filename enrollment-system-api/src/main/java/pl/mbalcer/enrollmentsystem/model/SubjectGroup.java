@@ -3,6 +3,7 @@ package pl.mbalcer.enrollmentsystem.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.mbalcer.enrollmentsystem.model.enumeration.GroupType;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -20,6 +21,7 @@ public class SubjectGroup {
     private LocalTime courseTime;
     private String place;
     private Integer numberOfPlaces;
+    private GroupType type = GroupType.INACTIVE;
 
     @ManyToOne
     private Subject subject;

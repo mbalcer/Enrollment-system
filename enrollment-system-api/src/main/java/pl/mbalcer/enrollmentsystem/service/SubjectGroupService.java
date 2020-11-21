@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.errors.BadRequestException;
 import pl.mbalcer.enrollmentsystem.model.SubjectGroup;
 import pl.mbalcer.enrollmentsystem.model.dto.SubjectGroupDTO;
+import pl.mbalcer.enrollmentsystem.model.enumeration.GroupType;
 import pl.mbalcer.enrollmentsystem.repository.AppointmentRepository;
 import pl.mbalcer.enrollmentsystem.repository.SubjectGroupRepository;
 import pl.mbalcer.enrollmentsystem.service.mapper.AppointmentMapper;
@@ -102,5 +103,15 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
         if (groupById.isEmpty())
             throw new BadRequestException("Invalid id");
         subjectGroupRepository.deleteById(id);
+    }
+
+    public SubjectGroupDTO updateGroupType(GroupType groupType, Long id) {
+        log.debug("Request to update group type in SubjectGroup: {}", id);
+        Optional<SubjectGroup> groupOptional = subjectGroupRepository.findById(id);
+        if (groupOptional.isEmpty())
+            throw new BadRequestException("Group by ID " + id + " not found");
+        groupOptional.get().setType(groupType);
+
+        return subjectGroupMapper.toDto(groupOptional.get());
     }
 }

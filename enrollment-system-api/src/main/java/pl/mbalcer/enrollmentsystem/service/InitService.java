@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.model.*;
-import pl.mbalcer.enrollmentsystem.model.enumeration.CourseType;
-import pl.mbalcer.enrollmentsystem.model.enumeration.Role;
-import pl.mbalcer.enrollmentsystem.model.enumeration.StudyMode;
-import pl.mbalcer.enrollmentsystem.model.enumeration.StudyType;
+import pl.mbalcer.enrollmentsystem.model.enumeration.*;
 import pl.mbalcer.enrollmentsystem.repository.*;
 
 import javax.annotation.PostConstruct;
@@ -64,7 +61,7 @@ public class InitService {
         teacher = teacherRepository.save(teacher);
         userService.enableUser(teacher.getUsername());
 
-        SubjectGroup group1 = new SubjectGroup(0l, LocalTime.of(1, 30), "UTP", 14, subject, teacher, null, Arrays.asList(student), Arrays.asList(it));
+        SubjectGroup group1 = new SubjectGroup(0l, LocalTime.of(1, 30), "UTP", 14, GroupType.INACTIVE, subject, teacher, null, Arrays.asList(student), Arrays.asList(it));
         group1 = subjectGroupRepository.save(group1);
 
         for (int i=1; i<10; i++) {

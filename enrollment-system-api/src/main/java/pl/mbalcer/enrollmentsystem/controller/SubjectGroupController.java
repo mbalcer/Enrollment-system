@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mbalcer.enrollmentsystem.model.dto.SubjectGroupDTO;
+import pl.mbalcer.enrollmentsystem.model.enumeration.GroupType;
 import pl.mbalcer.enrollmentsystem.service.SubjectGroupService;
 
 import java.net.URI;
@@ -63,6 +64,13 @@ public class SubjectGroupController {
         log.debug("REST request to delete SubjectGroup : {}", id);
         subjectGroupService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    @PutMapping("/type/{id}")
+    public ResponseEntity<SubjectGroupDTO> updateTypeGroup(@RequestBody GroupType type, @PathVariable Long id) {
+        log.debug("REST request to update type SubjectGroup : {}", type);
+        SubjectGroupDTO result = subjectGroupService.updateGroupType(type, id);
+        return ResponseEntity.ok().body(result);
     }
 
 }
