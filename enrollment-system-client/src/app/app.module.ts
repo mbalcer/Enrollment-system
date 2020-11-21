@@ -29,6 +29,7 @@ import {MyGroupsComponent} from './dashboard/components/my-groups/my-groups.comp
 import {SubjectDetailsComponent} from './dashboard/components/subjects/subject-details/subject-details.component';
 import {GroupDetailsComponent} from './dashboard/components/groups/group-details/group-details.component';
 import {AddGroupComponent} from './dashboard/components/groups/add-group/add-group.component';
+import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,9 @@ import {AddGroupComponent} from './dashboard/components/groups/add-group/add-gro
     {
       provide: UrlSerializer,
       useClass: CleanUrlSerializer
-    }
+    },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
   ],
   bootstrap: [AppComponent]
 })
