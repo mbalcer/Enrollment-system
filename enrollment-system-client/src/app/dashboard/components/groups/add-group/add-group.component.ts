@@ -152,7 +152,7 @@ export class AddGroupComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    const value = this.allFieldsOfStudy.filter(fieldOfStudy => fieldOfStudy.name === event.option.viewValue)[0];
+    const value = this.allFieldsOfStudy.filter(fieldOfStudy => fieldOfStudy.name === event.option.value.name)[0];
     this.groupToAdd.fieldsOfStudyDTO.push(value);
     this.subjectInput.nativeElement.value = '';
     this.fieldOfStudyCtrl.setValue(null);

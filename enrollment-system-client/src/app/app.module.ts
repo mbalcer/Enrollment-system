@@ -30,6 +30,7 @@ import {SubjectDetailsComponent} from './dashboard/components/subjects/subject-d
 import {GroupDetailsComponent} from './dashboard/components/groups/group-details/group-details.component';
 import {AddGroupComponent} from './dashboard/components/groups/add-group/add-group.component';
 import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
+import {FieldOfStudyPipe} from './pipe/field-of-study.pipe';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
     MyGroupsComponent,
     SubjectDetailsComponent,
     GroupDetailsComponent,
-    AddGroupComponent
+    AddGroupComponent,
+    FieldOfStudyPipe
   ],
     imports: [
         BrowserModule,

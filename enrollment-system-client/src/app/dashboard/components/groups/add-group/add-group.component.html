@@ -39,7 +39,7 @@
     <mat-chip-list #chipList>
       <mat-chip *ngFor="let fieldOfStudy of groupToAdd.fieldsOfStudyDTO" [selectable]="selectable" [removable]="removable"
                 (removed)="remove(fieldOfStudy)">
-        {{fieldOfStudy.name}}
+        {{ fieldOfStudy| fieldOfStudy }}
         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
       </mat-chip>
       <input
@@ -55,7 +55,7 @@
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
       <mat-option *ngFor="let fieldsOfStudy of filteredFieldsOfStudy | async" [value]="fieldsOfStudy">
-        {{ fieldsOfStudy.name }}
+        {{ fieldsOfStudy | fieldOfStudy }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
