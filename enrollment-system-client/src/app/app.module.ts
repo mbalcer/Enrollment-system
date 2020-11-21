@@ -31,6 +31,7 @@ import {GroupDetailsComponent} from './dashboard/components/groups/group-details
 import {AddGroupComponent} from './dashboard/components/groups/add-group/add-group.component';
 import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
 import {FieldOfStudyPipe} from './pipe/field-of-study.pipe';
+import {ListFieldsOfStudyPipe} from './pipe/list-fields-of-study.pipe';
 
 @NgModule({
   declarations: [
@@ -53,18 +54,19 @@ import {FieldOfStudyPipe} from './pipe/field-of-study.pipe';
     SubjectDetailsComponent,
     GroupDetailsComponent,
     AddGroupComponent,
-    FieldOfStudyPipe
+    FieldOfStudyPipe,
+    ListFieldsOfStudyPipe
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MaterialModule,
-        OverlayModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+      BrowserModule,
+      FormsModule,
+      AppRoutingModule,
+      HttpClientModule,
+      BrowserAnimationsModule,
+      MaterialModule,
+      OverlayModule,
+      ReactiveFormsModule
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

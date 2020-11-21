@@ -33,15 +33,6 @@ export class GroupDetailsComponent implements OnInit {
     }, error => console.log(error));
   }
 
-  getListFieldsOfStudy(group: SubjectGroup) {
-    let list = '';
-    group.fieldsOfStudyDTO.forEach(fieldOfStudy => {
-      list += fieldOfStudy.name + ', ';
-    });
-    list = list.substr(0, list.length - 2);
-    return list;
-  }
-
   getTimeTable(group: SubjectGroup) {
     let listTimeTable = '';
     group.timeTableDTO.forEach(appointment => {

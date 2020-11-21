@@ -20,7 +20,7 @@
 
       <ng-container matColumnDef="fieldsOfStudy">
         <th mat-header-cell *matHeaderCellDef> Fields of study </th>
-        <td mat-cell *matCellDef="let element"> {{getListFieldsOfStudy(element)}} </td>
+        <td mat-cell *matCellDef="let element" [innerHTML]="element | listFieldsOfStudy" class="list-with-whitespace"></td>
       </ng-container>
 
       <ng-container matColumnDef="numberOfPlaces">

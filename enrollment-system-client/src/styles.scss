@@ -91,3 +91,7 @@ body {
     color: $success-color;
   }
 }
+
+.list-with-whitespace {
+  white-space: pre-line;
+}

@@ -31,15 +31,6 @@ export class GroupsComponent implements OnInit {
     }, error => console.log(error));
   }
 
-  getListFieldsOfStudy(group: SubjectGroup) {
-    let list = '';
-    group.fieldsOfStudyDTO.forEach(fieldOfStudy => {
-      list += fieldOfStudy.name + ', ';
-    });
-    list = list.substr(0, list.length - 2);
-    return list;
-  }
-
   deleteGroup(row: ISubjectGroup) {
     this.subjectGroupService.deleteGroup(row.id).subscribe(result => {
       this.groups.splice(this.groups.indexOf(row), 1);

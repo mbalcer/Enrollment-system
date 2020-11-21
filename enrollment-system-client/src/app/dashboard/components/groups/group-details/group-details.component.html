@@ -38,7 +38,7 @@
 
     <tr>
       <th class="column-title"> Fields of study </th>
-      <td> {{getListFieldsOfStudy(group)}} </td>
+      <td [innerHTML]="group | listFieldsOfStudy" class="list-with-whitespace"></td>
     </tr>
 
     <tr>

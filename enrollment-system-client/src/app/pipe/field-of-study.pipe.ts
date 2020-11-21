@@ -9,7 +9,7 @@ import {StudyMode} from '../model/enumeration/study-mode.enum';
 export class FieldOfStudyPipe implements PipeTransform {
 
   transform(value: FieldOfStudy): string {
-    return value.name + ', ' + StudyType[value.type] + ' ' + StudyMode[value.mode];
+    return value.name + ' ' + StudyType[value.type] + ' ' + StudyMode[value.mode];
   }
 
 }

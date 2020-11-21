@@ -12,7 +12,7 @@ import {GroupType} from '../../../model/enumeration/group-type.enum';
 export class RequestsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'subject', 'teacher', 'fieldsOfStudy', 'numberOfPlaces', 'actions'];
   dataSource = new MatTableDataSource<SubjectGroup>();
-  requests: ISubjectGroup[];
+  requests: ISubjectGroup[] = [];
 
   constructor(private subjectGroupService: SubjectGroupService) { }
 
@@ -43,14 +43,5 @@ export class RequestsComponent implements OnInit {
     this.subjectGroupService.updateTypeGroup(type, group.id).subscribe(result => {
       this.requests.splice(this.requests.indexOf(group), 1);
     }, error => console.log(error));
-  }
-
-  getListFieldsOfStudy(group: SubjectGroup) {
-    let list = '';
-    group.fieldsOfStudyDTO.forEach(fieldOfStudy => {
-      list += fieldOfStudy.name + ', ';
-    });
-    list = list.substr(0, list.length - 2);
-    return list;
   }
 }
