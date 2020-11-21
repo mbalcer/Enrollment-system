@@ -3,6 +3,7 @@ import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ISubjectGroup} from './subject-group.model';
+import {GroupType} from '../../../model/enumeration/group-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class SubjectGroupService {
 
   deleteGroup(id: number): Observable<any> {
     return this.httpClient.delete<any>(this.SUBJECT_GROUP_URL + '/' + id);
+  }
+
+  updateTypeGroup(type: GroupType, id: number): Observable<ISubjectGroup> {
+    return this.httpClient.put<ISubjectGroup>(this.SUBJECT_GROUP_URL + '/type/' + id, type);
   }
 }

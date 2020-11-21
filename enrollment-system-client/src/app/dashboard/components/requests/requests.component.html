@@ -1,1 +1,47 @@
-<p>requests works!</p>
+<div class="container-component">
+  <h2 *ngIf="requests.length > 0">Requests to accept the group</h2>
+  <h2 *ngIf="requests.length == 0" class="info-no-requests">No requests to accept the group</h2>
+  <div class="mat-elevation-z8 div-table-groups" *ngIf="requests.length > 0">
+    <table mat-table [dataSource]="dataSource" class="table">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> <a [routerLink]="'../groups/' + element.id"> {{element.id}} </a></td>
+      </ng-container>
+
+      <ng-container matColumnDef="subject">
+        <th mat-header-cell *matHeaderCellDef> Subject </th>
+        <td mat-cell *matCellDef="let element"> <a [routerLink]="'../subjects/' + element.subjectDTO.id"> {{element.subjectDTO.name}} </a></td>
+      </ng-container>
+
+      <ng-container matColumnDef="teacher">
+        <th mat-header-cell *matHeaderCellDef> Teacher </th>
+        <td mat-cell *matCellDef="let element"> {{element.nameTeacher}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fieldsOfStudy">
+        <th mat-header-cell *matHeaderCellDef> Fields of study </th>
+        <td mat-cell *matCellDef="let element"> {{getListFieldsOfStudy(element)}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="numberOfPlaces">
+        <th mat-header-cell *matHeaderCellDef> Number of places </th>
+        <td mat-cell *matCellDef="let element"> {{element.numberOfPlaces}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="column-actions"></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button aria-label="Accept button" matTooltip="Accept group" (click)="acceptGroup(row)">
+            <mat-icon>check_circle_outline</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Non accept button" matTooltip="Don't accept group" (click)="dontAcceptGroup(row)">
+            <mat-icon>block</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

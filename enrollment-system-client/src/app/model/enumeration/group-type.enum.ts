@@ -1,6 +1,7 @@
 export enum GroupType {
   INACTIVE,
-  ACTIVE,
+  ACCEPTED,
+  NON_ACCEPTED,
   FULL,
   IN_PROGRESS,
   DONE

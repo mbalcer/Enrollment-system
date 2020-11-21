@@ -119,7 +119,8 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
         if (groupOptional.isEmpty())
             throw new BadRequestException("Group by ID " + id + " not found");
         groupOptional.get().setType(groupType);
+        SubjectGroup saveGroup = subjectGroupRepository.save(groupOptional.get());
 
-        return subjectGroupMapper.toDto(groupOptional.get());
+        return subjectGroupMapper.toDto(saveGroup);
     }
 }
