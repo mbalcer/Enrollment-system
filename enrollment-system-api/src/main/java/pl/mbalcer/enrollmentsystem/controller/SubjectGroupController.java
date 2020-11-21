@@ -45,6 +45,13 @@ public class SubjectGroupController {
         return ResponseEntity.ok(allByTeacher);
     }
 
+    @GetMapping("/requests")
+    public ResponseEntity<List<SubjectGroupDTO>> getAllGroupsForRequests() {
+        log.debug("REST request to get SubjectGroup for requests");
+        List<SubjectGroupDTO> allRequests = subjectGroupService.findAllForRequests();
+        return ResponseEntity.ok(allRequests);
+    }
+
     @PostMapping
     public ResponseEntity<SubjectGroupDTO> createGroup(@RequestBody SubjectGroupDTO groupDTO) throws URISyntaxException {
         log.debug("REST request to save SubjectGroup : {}", groupDTO);

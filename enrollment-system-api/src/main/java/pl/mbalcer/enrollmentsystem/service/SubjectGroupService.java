@@ -49,6 +49,14 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
                 .collect(Collectors.toList());
     }
 
+    public List<SubjectGroupDTO> findAllForRequests() {
+        log.debug("Request to get all SubjectGroup for requests");
+        return subjectGroupRepository.findAllByType(GroupType.INACTIVE)
+                .stream()
+                .map(subjectGroupMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public Optional<SubjectGroupDTO> findOne(Long id) {
         log.debug("Request to get SubjectGroup : {}", id);
