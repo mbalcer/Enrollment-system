@@ -17,6 +17,8 @@ import java.util.List;
 @Entity(name = "teachers")
 @PrimaryKeyJoinColumn(name = "userId")
 public class Teacher extends User  {
+    private String room = "-";
+    private String consultations = "-";
 
     @ManyToOne
     private Faculty faculty;
@@ -25,12 +27,12 @@ public class Teacher extends User  {
     private List<SubjectGroup> subjectGroups;
 
     public Teacher(User user, Faculty faculty) {
-        super(user.getId(), user.getUsername(), user.getPassword(), user.getFullName(), user.getEmail(), Role.TEACHER, false);
+        super(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getFullName(), Role.TEACHER, false);
         this.faculty = faculty;
     }
 
     public Teacher(Faculty faculty, String username, String password, String fullName, String email) {
-        super(0l, username, password, fullName, email, Role.TEACHER, false);
+        super(0l, username, password, email, fullName, Role.TEACHER, false);
         this.faculty = faculty;
     }
 }

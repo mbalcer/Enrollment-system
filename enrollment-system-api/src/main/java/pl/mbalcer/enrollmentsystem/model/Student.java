@@ -30,14 +30,14 @@ public class Student extends User {
     private List<SubjectGroup> groups = new ArrayList<>();
 
     public Student(User user, FieldOfStudy fieldOfStudy, Long indexNumber, Integer semester) {
-        super(user.getId(), user.getUsername(), user.getPassword(), user.getFullName(), user.getEmail(), Role.STUDENT, false);
+        super(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getFullName(), Role.STUDENT, false);
         this.fieldOfStudy = fieldOfStudy;
         this.indexNumber = indexNumber;
         this.semester = semester;
     }
 
     public Student(Long id, String username, String password, String fullName, String email, Long indexNumber, Integer semester, FieldOfStudy fieldOfStudy) {
-        super(id, username, password, fullName, email, Role.STUDENT, false);
+        super(id, username, password, email, fullName, Role.STUDENT, false);
         this.indexNumber = indexNumber;
         this.semester = semester;
         this.fieldOfStudy = fieldOfStudy;

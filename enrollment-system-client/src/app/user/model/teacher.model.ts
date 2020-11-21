@@ -6,6 +6,8 @@ export interface ITeacher {
   email: string;
   role: string;
   isActive: boolean;
+  room: string;
+  consultations: string;
   facultyDTO: IFaculty;
 }
 
@@ -15,6 +17,8 @@ export class Teacher implements ITeacher {
   email: string;
   role: string;
   isActive: boolean;
+  room: string;
+  consultations: string;
   facultyDTO: IFaculty;
 
   constructor() {
@@ -23,6 +27,8 @@ export class Teacher implements ITeacher {
     this.email = '';
     this.role = '';
     this.isActive = false;
+    this.room = '';
+    this.consultations = '';
     this.facultyDTO = null;
   }
 }

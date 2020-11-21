@@ -50,7 +50,7 @@ public class InitService {
         FieldOfStudy it = new FieldOfStudy(0l, "IT", StudyType.FIRST_CYCLE, StudyMode.FULL_TIME, mathAndItFaculty, null);
         it = fieldOfStudyRepository.save(it);
 
-        User admin = new User(0l, "admin", passwordEncoder.encode("admin"), "Admin", "admin@utp.edu.pl", Role.ADMIN, true);
+        User admin = new User(0l, "admin", passwordEncoder.encode("admin"), "admin@utp.edu.pl", "Admin", Role.ADMIN, true);
         userRepository.save(admin);
 
         Student student = new Student(0L, "adamek", passwordEncoder.encode("adam123"), "Adam Kowalski", "adamrewrwer@utp.edu.pl", 111000L, 7, it);

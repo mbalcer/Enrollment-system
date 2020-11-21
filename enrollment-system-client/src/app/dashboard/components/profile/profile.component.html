@@ -1,6 +1,6 @@
 <div class="container-component">
   <div class="top-info">
-    <h2>User info</h2>
+    <h2>User profile</h2>
     <span class="space"></span>
     <button mat-button aria-label="Edit profile" routerLink="add">
       <mat-icon>edit</mat-icon>
@@ -42,6 +42,16 @@
     <tr *ngIf="teacher != null">
       <th class="column-title"> Faculty </th>
       <td> {{teacher.facultyDTO.name}} </td>
+    </tr>
+
+    <tr *ngIf="teacher != null">
+      <th class="column-title"> Room </th>
+      <td> {{teacher.room}} </td>
+    </tr>
+
+    <tr *ngIf="teacher != null">
+      <th class="column-title"> Consultations </th>
+      <td> {{teacher.consultations}} </td>
     </tr>
   </table>
 </div>
