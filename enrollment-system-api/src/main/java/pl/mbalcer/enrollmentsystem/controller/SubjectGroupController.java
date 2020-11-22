@@ -73,6 +73,13 @@ public class SubjectGroupController {
         return ResponseEntity.ok().body(result);
     }
 
+    @PatchMapping("/students")
+    public ResponseEntity<SubjectGroupDTO> updateStudentsInGroup(@RequestBody SubjectGroupDTO groupDTO) {
+        log.debug("REST request to update students in SubjectGroup : {}", groupDTO);
+        SubjectGroupDTO result = subjectGroupService.updateStudents(groupDTO);
+        return ResponseEntity.ok().body(result);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGroup(@PathVariable Long id) {
         log.debug("REST request to delete SubjectGroup : {}", id);

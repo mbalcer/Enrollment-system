@@ -105,6 +105,23 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
         return subjectGroupMapper.toDto(group);
     }
 
+    public SubjectGroupDTO updateStudents(SubjectGroupDTO dto) {
+        log.debug("Request to update students list in SubjectGroup : {}", dto);
+        if (!subjectGroupRepository.existsById(dto.getId())) {
+            throw new BadRequestException("Invalid id");
+        }
+        SubjectGroup group = subjectGroupRepository.findById(dto.getId()).get();
+        subjectGroupMapper.updateSubjectGroup(dto, group);
+        if (group.getStudents().size()==group.getNumberOfPlaces()) {
+            group.setType(GroupType.FULL);
+        } else {
+            group.setType(GroupType.ACCEPTED);
+        }
+        group = subjectGroupRepository.save(group);
+
+        return subjectGroupMapper.toDto(group);
+    }
+
     private void saveTimeTable(SubjectGroup group) {
         Optional.ofNullable(group.getTimeTable())
                 .orElse(Collections.emptyList())

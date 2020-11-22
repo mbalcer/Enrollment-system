@@ -61,7 +61,7 @@ public class InitService {
         teacher = teacherRepository.save(teacher);
         userService.enableUser(teacher.getUsername());
 
-        SubjectGroup group1 = new SubjectGroup(0l, LocalTime.of(1, 30), "UTP", 14, GroupType.INACTIVE, subject, teacher, null, Arrays.asList(student), Arrays.asList(it));
+        SubjectGroup group1 = new SubjectGroup(0l, LocalTime.of(1, 30), "UTP", 14, GroupType.ACCEPTED, subject, teacher, null, Arrays.asList(student), Arrays.asList(it));
         group1 = subjectGroupRepository.save(group1);
 
         for (int i=1; i<10; i++) {

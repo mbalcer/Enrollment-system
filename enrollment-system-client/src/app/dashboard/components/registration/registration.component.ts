@@ -45,10 +45,26 @@ export class RegistrationComponent implements OnInit {
   }
 
   addToGroup(row: ISubjectGroup) {
-
+    this.groups.splice(this.groups.indexOf(row), 1);
+    row.studentsDTO.push(this.student);
+    this.updateGroup(row);
   }
 
   removeFromGroup(row: ISubjectGroup) {
+    this.groups.splice(this.groups.indexOf(row), 1);
+    row.studentsDTO.splice(this.getIndexOfStudentInGroup(row), 1);
+    this.updateGroup(row);
+  }
 
+  updateGroup(row: ISubjectGroup) {
+    this.subjectGroupService.patchGroupToUpdateStudents(row).subscribe(result => {
+      this.groups.push(result);
+      this.refreshTable();
+    }, err => console.log(err));
+  }
+
+  getIndexOfStudentInGroup(group: ISubjectGroup) {
+    const iStudent = group.studentsDTO.find(student => student.username === this.student.username);
+    return group.studentsDTO.indexOf(iStudent);
   }
 }

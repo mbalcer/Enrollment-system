@@ -48,6 +48,10 @@ public abstract class SubjectGroupMapper implements EntityMapper<SubjectGroupDTO
     @Mapping(source = "subjectDTO", target = "subject")
     public abstract void updateSubjectGroup(SubjectGroupDTO dto, @MappingTarget SubjectGroup entity);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "students", expression = "java(dto.getStudentsDTO().stream().map(studentDTO -> studentFromUsername(studentDTO.getUsername())). collect(java.util.stream.Collectors.toList()))")
+    public abstract void updateStudentsInGroup(SubjectGroupDTO dto, @MappingTarget SubjectGroup entity);
+
     Teacher teacherFromFullName(String fullName) {
         Optional<Teacher> teacher = teacherService.findOneByFullName(fullName);
         if (teacher.isPresent())
