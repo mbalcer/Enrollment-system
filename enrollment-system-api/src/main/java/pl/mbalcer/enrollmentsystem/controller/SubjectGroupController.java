@@ -48,8 +48,15 @@ public class SubjectGroupController {
     @GetMapping("/requests")
     public ResponseEntity<List<SubjectGroupDTO>> getAllGroupsForRequests() {
         log.debug("REST request to get SubjectGroup for requests");
-        List<SubjectGroupDTO> allRequests = subjectGroupService.findAllForRequests();
+        List<SubjectGroupDTO> allRequests = subjectGroupService.findAllByType(GroupType.INACTIVE);
         return ResponseEntity.ok(allRequests);
+    }
+
+    @GetMapping("/registration/{fieldOfStudyId}")
+    public ResponseEntity<List<SubjectGroupDTO>> getAllGroupsForRegistration(@PathVariable Long fieldOfStudyId) {
+        log.debug("REST request to get SubjectGroup for registration");
+        List<SubjectGroupDTO> allGroups = subjectGroupService.findAllRegistration(fieldOfStudyId);
+        return ResponseEntity.ok(allGroups);
     }
 
     @PostMapping

@@ -25,6 +25,10 @@ export class SubjectGroupService {
     return this.httpClient.get<ISubjectGroup[]>(this.SUBJECT_GROUP_URL + '/requests');
   }
 
+  getAllRegistration(fieldOfStudyId: number): Observable<ISubjectGroup[]> {
+    return this.httpClient.get<ISubjectGroup[]>(this.SUBJECT_GROUP_URL + '/registration/' + fieldOfStudyId);
+  }
+
   postGroup(group: ISubjectGroup): Observable<ISubjectGroup> {
     return this.httpClient.post<ISubjectGroup>(this.SUBJECT_GROUP_URL, group);
   }

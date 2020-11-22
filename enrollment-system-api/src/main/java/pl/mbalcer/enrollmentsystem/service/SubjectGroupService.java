@@ -42,18 +42,28 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
     }
 
     public List<SubjectGroupDTO> findAllByTeacher(String teacher) {
-        log.debug("Request to get all SubjectsGroup by Teacher");
+        log.debug("Request to get all SubjectsGroup by Teacher: {}", teacher);
         return subjectGroupRepository.findAllByTeacherUsername(teacher)
                 .stream()
                 .map(subjectGroupMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public List<SubjectGroupDTO> findAllForRequests() {
-        log.debug("Request to get all SubjectGroup for requests");
-        return subjectGroupRepository.findAllByType(GroupType.INACTIVE)
+    public List<SubjectGroupDTO> findAllByType(GroupType type) {
+        log.debug("Request to get all SubjectGroup by type: {}", type);
+        return subjectGroupRepository.findAllByType(type)
                 .stream()
                 .map(subjectGroupMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<SubjectGroupDTO> findAllRegistration(Long id) {
+        log.debug("Request to get all SubjectGroup for registration by FieldOfStudy id: {}", id);
+        return findAllByType(GroupType.ACCEPTED)
+                .stream()
+                .filter(group -> group.getFieldsOfStudyDTO()
+                        .stream()
+                        .anyMatch(fieldOfStudy -> fieldOfStudy.getId() == id))
                 .collect(Collectors.toList());
     }
 
