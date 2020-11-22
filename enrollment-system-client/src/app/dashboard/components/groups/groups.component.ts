@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 export class GroupsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'subject', 'teacher', 'fieldsOfStudy', 'numberOfEnrolled', 'numberOfPlaces', 'actions'];
   dataSource = new MatTableDataSource<SubjectGroup>();
-  groups: ISubjectGroup[];
+  groups: ISubjectGroup[] = [];
 
   constructor(private subjectGroupService: SubjectGroupService, private router: Router) { }
 
