@@ -12,6 +12,7 @@ import pl.mbalcer.enrollmentsystem.service.mapper.AppointmentMapper;
 import pl.mbalcer.enrollmentsystem.service.mapper.SubjectGroupMapper;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,11 +60,12 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
 
     public List<SubjectGroupDTO> findAllRegistration(Long id) {
         log.debug("Request to get all SubjectGroup for registration by FieldOfStudy id: {}", id);
-        return findAllByType(GroupType.ACCEPTED)
-                .stream()
+        return findAll().stream()
+                .filter(group -> group.getType().equals(GroupType.ACCEPTED) || group.getType().equals(GroupType.FULL))
                 .filter(group -> group.getFieldsOfStudyDTO()
                         .stream()
                         .anyMatch(fieldOfStudy -> fieldOfStudy.getId() == id))
+                .sorted(Comparator.comparing(SubjectGroupDTO::getType))
                 .collect(Collectors.toList());
     }
 

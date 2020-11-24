@@ -31,6 +31,19 @@ export class RegistrationComponent implements OnInit {
 
   refreshTable() {
     this.dataSource = new MatTableDataSource<SubjectGroup>(this.groups);
+    this.sortTable();
+  }
+
+  sortTable() {
+    this.groups.sort((g1, g2) => {
+      if (this.checkStudentInGroup(g1) === this.checkStudentInGroup(g2)) {
+        return 0;
+      } else if (this.checkStudentInGroup(g1)) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
   }
 
   getAllGroupToRegistration(fieldOfStudyId: number) {
