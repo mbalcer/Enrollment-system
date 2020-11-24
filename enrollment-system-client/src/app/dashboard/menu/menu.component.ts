@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit, AfterViewChecked {
     } else if (role === 'TEACHER') {
       menu = [
         { routerLink: ['my-groups'], svgIcon: 'groups', name: 'My Groups'},
-        { routerLink: ['groups', 'add'], svgIcon: 'groups', name: 'Add new group'}
+        { routerLink: ['groups', 'add'], fontAwesomeIcon: 'add_circle_outline', name: 'Add group'}
       ];
     } else if (role === 'ADMIN') {
       menu = [
@@ -68,6 +68,7 @@ export class MenuComponent implements OnInit, AfterViewChecked {
 
 export interface MenuViewModel {
   routerLink: string[];
-  svgIcon: string;
+  svgIcon?: string;
+  fontAwesomeIcon?: string;
   name: string;
 }

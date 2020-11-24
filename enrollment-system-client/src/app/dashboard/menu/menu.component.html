@@ -5,7 +5,8 @@
   </a></li>
   <li *ngFor="let menuItem of menu">
     <a [routerLink]="[{ outlets: { panel: menuItem.routerLink }}]">
-      <mat-icon [svgIcon]="menuItem.svgIcon" aria-hidden="false"></mat-icon>
+      <mat-icon *ngIf="menuItem.svgIcon" [svgIcon]="menuItem.svgIcon" aria-hidden="false"></mat-icon>
+      <mat-icon *ngIf="menuItem.fontAwesomeIcon">{{menuItem.fontAwesomeIcon}}</mat-icon>
       <span>{{menuItem.name}}</span>
     </a>
   </li>
