@@ -14,6 +14,7 @@ import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {IFieldOfStudy} from '../../university/field-of-study.model';
 import {FieldOfStudyService} from '../../university/field-of-study.service';
+import {TokenStorageService} from '../../../../user/auth/token-storage.service';
 
 @Component({
   selector: 'app-add-group',
@@ -21,6 +22,7 @@ import {FieldOfStudyService} from '../../university/field-of-study.service';
   styleUrls: ['./add-group.component.scss']
 })
 export class AddGroupComponent implements OnInit {
+  teacherUsername: string = null;
   groupToAdd = new SubjectGroup();
   isAdd = true;
   subjects: ISubject[];
@@ -43,7 +45,8 @@ export class AddGroupComponent implements OnInit {
               private teacherService: TeacherService,
               private fieldOfStudyService: FieldOfStudyService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private tokenStorage: TokenStorageService) {
     this.filteredFieldsOfStudy = this.fieldOfStudyCtrl.valueChanges.pipe(
       startWith(null),
       map((fieldOfStudy: string | null) =>
@@ -59,6 +62,10 @@ export class AddGroupComponent implements OnInit {
       this.getGroup(id);
     }
 
+    const teacher = this.tokenStorage.getUser();
+    if (teacher.role === 'TEACHER') {
+      this.teacherUsername = teacher.username;
+    }
     this.getSubjects();
     this.getTeachers();
     this.getFieldsOfStudy();
@@ -83,6 +90,10 @@ export class AddGroupComponent implements OnInit {
   getTeachers() {
     this.teacherService.getAllTeachers().subscribe(result => {
       this.teachers = result;
+      if (this.teacherUsername !== null) {
+        this.teachers = this.teachers.filter(teacher => teacher.username === this.teacherUsername);
+        this.groupToAdd.nameTeacher = this.teachers[0].fullName;
+      }
     }, error => console.log(error));
   }
 

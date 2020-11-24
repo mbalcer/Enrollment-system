@@ -13,7 +13,7 @@
 
   <mat-form-field appearance="standard">
     <mat-label>Teacher</mat-label>
-    <mat-select [(ngModel)]="groupToAdd.nameTeacher" name="teacher">
+    <mat-select [(ngModel)]="groupToAdd.nameTeacher" name="teacher" [disabled]="teacherUsername">
       <mat-option *ngFor="let teacher of teachers" [value]="teacher.fullName">
         {{teacher.fullName}}
       </mat-option>

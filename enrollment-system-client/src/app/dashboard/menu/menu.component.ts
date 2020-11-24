@@ -33,23 +33,26 @@ export class MenuComponent implements OnInit, AfterViewChecked {
     let menu: MenuViewModel[] = [];
     if (role === 'STUDENT') {
       menu = [
-        { routerLink: 'registration', svgIcon: 'registration', name: 'Registration' },
-        { routerLink: 'subjects', svgIcon: 'subjects', name: 'Subjects'}
+        { routerLink: ['registration'], svgIcon: 'registration', name: 'Registration' },
+        { routerLink: ['subjects'], svgIcon: 'subjects', name: 'Subjects'}
       ];
     } else if (role === 'TEACHER') {
-      menu = [ { routerLink: 'my-groups', svgIcon: 'groups', name: 'My Groups'} ];
+      menu = [
+        { routerLink: ['my-groups'], svgIcon: 'groups', name: 'My Groups'},
+        { routerLink: ['groups', 'add'], svgIcon: 'groups', name: 'Add new group'}
+      ];
     } else if (role === 'ADMIN') {
       menu = [
-        { routerLink: 'university', svgIcon: 'university', name: 'University' },
-        { routerLink: 'groups', svgIcon: 'groups', name: 'Groups' },
-        { routerLink: 'users', svgIcon: 'users', name: 'Users' },
-        { routerLink: 'requests', svgIcon: 'requests', name: 'Requests' },
-        { routerLink: 'settings', svgIcon: 'settings', name: 'Settings' }
+        { routerLink: ['university'], svgIcon: 'university', name: 'University' },
+        { routerLink: ['groups'], svgIcon: 'groups', name: 'Groups' },
+        { routerLink: ['users'], svgIcon: 'users', name: 'Users' },
+        { routerLink: ['requests'], svgIcon: 'requests', name: 'Requests' },
+        { routerLink: ['settings'], svgIcon: 'settings', name: 'Settings' }
       ];
     }
 
     if (menu.length !== 0) {
-      menu = menu.concat({routerLink: 'profile', svgIcon: 'profile', name: 'Profile'});
+      menu = menu.concat({routerLink: ['profile'], svgIcon: 'profile', name: 'Profile'});
     }
 
     return menu;
@@ -64,7 +67,7 @@ export class MenuComponent implements OnInit, AfterViewChecked {
 }
 
 export interface MenuViewModel {
-  routerLink: string;
+  routerLink: string[];
   svgIcon: string;
   name: string;
 }

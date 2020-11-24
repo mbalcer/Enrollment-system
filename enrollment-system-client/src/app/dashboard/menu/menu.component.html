@@ -4,7 +4,7 @@
     <span>Home</span>
   </a></li>
   <li *ngFor="let menuItem of menu">
-    <a [routerLink]="[{ outlets: { panel: [menuItem.routerLink] }}]">
+    <a [routerLink]="[{ outlets: { panel: menuItem.routerLink }}]">
       <mat-icon [svgIcon]="menuItem.svgIcon" aria-hidden="false"></mat-icon>
       <span>{{menuItem.name}}</span>
     </a>
