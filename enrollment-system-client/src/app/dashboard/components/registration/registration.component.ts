@@ -77,7 +77,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   getIndexOfStudentInGroup(group: ISubjectGroup) {
-    const iStudent = group.studentsDTO.find(student => student.username === this.student.username);
-    return group.studentsDTO.indexOf(iStudent);
+    return group.studentsDTO.findIndex(student => student.username === this.student.username);
   }
 }

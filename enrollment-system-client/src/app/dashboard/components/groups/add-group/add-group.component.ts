@@ -102,7 +102,8 @@ export class AddGroupComponent implements OnInit {
       this.allFieldsOfStudy = result;
       if (this.groupToAdd.fieldsOfStudyDTO.length > 0) {
         this.groupToAdd.fieldsOfStudyDTO.forEach(fieldOfStudy => {
-          this.allFieldsOfStudy.splice(this.allFieldsOfStudy.indexOf(fieldOfStudy), 1);
+          const index = this.allFieldsOfStudy.findIndex(f => f.id === fieldOfStudy.id);
+          this.allFieldsOfStudy.splice(index, 1);
         });
       }
     }, error => console.log(error));
