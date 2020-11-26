@@ -32,14 +32,4 @@ export class GroupDetailsComponent implements OnInit {
       this.refreshTableStudent();
     }, error => console.log(error));
   }
-
-  getTimeTable(group: SubjectGroup) {
-    let listTimeTable = '';
-    group.timeTableDTO.forEach(appointment => {
-      listTimeTable += appointment.startTime + ' - ' + appointment.endTime + '<br>';
-    });
-    listTimeTable = listTimeTable.substr(0, listTimeTable.length - 2);
-    return listTimeTable;
-  }
-
 }

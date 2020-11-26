@@ -32,6 +32,7 @@ import {AddGroupComponent} from './dashboard/components/groups/add-group/add-gro
 import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
 import {FieldOfStudyPipe} from './pipe/field-of-study.pipe';
 import {ListFieldsOfStudyPipe} from './pipe/list-fields-of-study.pipe';
+import {TimeTablePipe} from './pipe/time-table.pipe';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import {ListFieldsOfStudyPipe} from './pipe/list-fields-of-study.pipe';
     GroupDetailsComponent,
     AddGroupComponent,
     FieldOfStudyPipe,
-    ListFieldsOfStudyPipe
+    ListFieldsOfStudyPipe,
+    TimeTablePipe
   ],
   imports: [
       BrowserModule,

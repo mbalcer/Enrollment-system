@@ -43,7 +43,7 @@
 
     <tr>
       <th class="column-title"> Time Table </th>
-      <td [innerHTML]="getTimeTable(group)"> </td>
+      <td [innerHTML]="group | timeTable" class="list-with-whitespace"> </td>
     </tr>
 
   </table>
