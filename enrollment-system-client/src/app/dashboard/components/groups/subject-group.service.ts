@@ -17,6 +17,10 @@ export class SubjectGroupService {
     return this.httpClient.get<ISubjectGroup[]>(this.SUBJECT_GROUP_URL);
   }
 
+  getAllGroupByTeacher(teacher: string): Observable<ISubjectGroup[]> {
+    return this.httpClient.get<ISubjectGroup[]>(this.SUBJECT_GROUP_URL + '/byTeacher/' + teacher);
+  }
+
   getGroup(id: number): Observable<ISubjectGroup> {
     return this.httpClient.get<ISubjectGroup>(this.SUBJECT_GROUP_URL + '/' + id);
   }
