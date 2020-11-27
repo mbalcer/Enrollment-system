@@ -33,6 +33,8 @@ import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
 import {FieldOfStudyPipe} from './pipe/field-of-study.pipe';
 import {ListFieldsOfStudyPipe} from './pipe/list-fields-of-study.pipe';
 import {TimeTablePipe} from './pipe/time-table.pipe';
+import {NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
+import {AppointmentPipe} from './pipe/appointment.pipe';
 
 @NgModule({
   declarations: [
@@ -57,17 +59,21 @@ import {TimeTablePipe} from './pipe/time-table.pipe';
     AddGroupComponent,
     FieldOfStudyPipe,
     ListFieldsOfStudyPipe,
-    TimeTablePipe
+    TimeTablePipe,
+    AppointmentPipe
   ],
   imports: [
-      BrowserModule,
-      FormsModule,
-      AppRoutingModule,
-      HttpClientModule,
-      BrowserAnimationsModule,
-      MaterialModule,
-      OverlayModule,
-      ReactiveFormsModule
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    OverlayModule,
+    ReactiveFormsModule,
+    NgxMatNativeDateModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule
   ],
   providers: [
     {

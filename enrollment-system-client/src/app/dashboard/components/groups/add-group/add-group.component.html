@@ -60,6 +60,43 @@
     </mat-autocomplete>
   </mat-form-field>
 
+  <div class="time-table-form">
+    <form (ngSubmit)="timeTableForm.form.valid && addAppointment(timeTableForm)" #timeTableForm="ngForm">
+      <mat-form-field appearance="standard">
+        <mat-label>Start time</mat-label>
+        <input matInput [ngxMatDatetimePicker]="pickerStart" placeholder="Choose a date" name="startDate" ngModel="startDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #pickerStart></ngx-mat-datetime-picker>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>End time</mat-label>
+        <input matInput [ngxMatDatetimePicker]="pickerEnd" placeholder="Choose a date" name="endDate" ngModel="endDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #pickerEnd></ngx-mat-datetime-picker>
+      </mat-form-field>
+
+      <button mat-icon-button aria-label="Add group button" class="add-button" matTooltip="Add appointment">
+        <mat-icon>add</mat-icon>
+      </button>
+    </form>
+  </div>
+
+  <div class="time-table">
+    <h2 *ngIf="timeTable.length > 0">Time table</h2>
+    <mat-selection-list #appointmentsList>
+      <mat-list-option *ngFor="let appointment of timeTable" [value]="appointment">
+        {{appointment | appointment}}
+      </mat-list-option>
+    </mat-selection-list>
+    <div class="delete-button">
+      <span class="space"></span>
+      <button *ngIf="timeTable.length > 0" mat-icon-button (click)="deleteAppointments(appointmentsList.selectedOptions.selected)" matTooltip="Delete selected appointments">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
   <button mat-button aria-label="Add group button" class="add-button" (click)="saveGroup()">
     <mat-icon>add_circle_outline</mat-icon>
     <span *ngIf="isAdd">Add group</span>

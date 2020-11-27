@@ -6,7 +6,7 @@ import {ISubject} from '../../subjects/subject.model';
 import {ITeacher} from '../../../../user/model/teacher.model';
 import {SubjectService} from '../../subjects/subject.service';
 import {TeacherService} from '../../../../user/service/teacher.service';
-import {FormControl} from '@angular/forms';
+import {FormControl, NgForm} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {map, startWith} from 'rxjs/operators';
@@ -15,6 +15,9 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {IFieldOfStudy} from '../../university/field-of-study.model';
 import {FieldOfStudyService} from '../../university/field-of-study.service';
 import {TokenStorageService} from '../../../../user/auth/token-storage.service';
+import {IAppointment} from '../appointment.model';
+import {DatePipe} from '@angular/common';
+import {MatListOption} from '@angular/material/list';
 
 @Component({
   selector: 'app-add-group',
@@ -25,9 +28,10 @@ export class AddGroupComponent implements OnInit {
   teacherUsername: string = null;
   groupToAdd = new SubjectGroup();
   isAdd = true;
-  subjects: ISubject[];
-  teachers: ITeacher[];
-  allFieldsOfStudy: IFieldOfStudy[];
+  subjects: ISubject[] = [];
+  teachers: ITeacher[] = [];
+  allFieldsOfStudy: IFieldOfStudy[] = [];
+  timeTable: IAppointment[] = [];
 
   visible = true;
   selectable = true;
@@ -78,6 +82,7 @@ export class AddGroupComponent implements OnInit {
   getGroup(id) {
     this.subjectGroupService.getGroup(Number(id)).subscribe(result => {
       this.groupToAdd = result;
+      this.timeTable = this.groupToAdd.timeTableDTO;
     }, error => console.log(error));
   }
 
@@ -110,6 +115,7 @@ export class AddGroupComponent implements OnInit {
   }
 
   saveGroup() {
+    this.groupToAdd.timeTableDTO = this.timeTable;
     if (this.isAdd) {
       this.subjectGroupService.postGroup(this.groupToAdd).subscribe(result => {
         // success message
@@ -123,6 +129,19 @@ export class AddGroupComponent implements OnInit {
         this.router.navigateByUrl('/dashboard/groups/add');
       }, error => console.log(error));
     }
+  }
+
+  addAppointment(timeTableForm: NgForm) {
+    const startDate = new DatePipe('en-US').transform(timeTableForm.form.value.startDate, 'yyyy-MM-ddTHH:mm:ss');
+    const endDate = new DatePipe('en-US').transform(timeTableForm.form.value.endDate, 'yyyy-MM-ddTHH:mm:ss');
+
+    const appointment: IAppointment = {
+      startTime: startDate,
+      endTime: endDate
+    };
+
+    this.timeTable.push(appointment);
+    timeTableForm.resetForm();
   }
 
   add(event: MatChipInputEvent): void {
@@ -169,5 +188,12 @@ export class AddGroupComponent implements OnInit {
     this.subjectInput.nativeElement.value = '';
     this.fieldOfStudyCtrl.setValue(null);
     this.allFieldsOfStudy.splice(this.allFieldsOfStudy.indexOf(value), 1);
+  }
+
+  deleteAppointments(selected: MatListOption[]) {
+    selected.forEach(option => {
+      const appointment: IAppointment = option.value;
+      this.timeTable.splice(this.timeTable.indexOf(appointment), 1);
+    });
   }
 }
