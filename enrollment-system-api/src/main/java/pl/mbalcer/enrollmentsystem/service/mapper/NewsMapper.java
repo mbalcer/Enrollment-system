@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import pl.mbalcer.enrollmentsystem.model.News;
 import pl.mbalcer.enrollmentsystem.model.dto.NewsDTO;
 
-@Mapper
+@Mapper(componentModel = "spring", uses = {})
 public interface NewsMapper extends EntityMapper<NewsDTO, News> {
 
     @Mapping(source = "title", target = "title")
