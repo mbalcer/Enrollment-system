@@ -15,7 +15,7 @@ public class TeacherDTO {
     private Role role;
     private Boolean isActive;
 
-    private String room = "-";
-    private String consultations = "-";
+    private String room;
+    private String consultations;
     private FacultyDTO facultyDTO;
 }
