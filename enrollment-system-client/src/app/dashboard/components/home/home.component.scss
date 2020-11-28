@@ -1,0 +1,24 @@
+.news {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0.5em;
+  background-color: #d8d8d8;
+}
+
+.description {
+  padding: 0.5em;
+  background-color: #ececec;
+}
+
+.timeOfPublication {
+  font-size: 10px;
+  color: #b3b3b3;
+  text-align: right;
+}

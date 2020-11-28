@@ -1,1 +1,10 @@
-<p>home works!</p>
+<div class="container-component">
+  <h2 *ngIf="news.length == 0" class="text-center">No news to display</h2>
+  <h2 *ngIf="news.length > 0">Latest news</h2>
+
+  <div class="news" *ngFor="let newsItem of news">
+    <div class="title">{{newsItem.title}}</div>
+    <div class="description" [innerHTML]="newsItem.description"></div>
+    <div class="timeOfPublication">{{newsItem.timeOfPublication | date: 'yyyy-MM-dd, HH:mm'}}</div>
+  </div>
+</div>
