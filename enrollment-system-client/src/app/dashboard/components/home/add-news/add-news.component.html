@@ -1,1 +1,23 @@
-<p>add-news works!</p>
+<div class="container-component">
+  <h2 *ngIf="isAdd">Add news</h2>
+  <h2 *ngIf="!isAdd">Edit news</h2>
+  <div class="news-form">
+    <form>
+      <mat-form-field appearance="standard">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="newsToEdit.title" name="title">
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="newsToEdit.description" name="description"></textarea>
+      </mat-form-field>
+
+      <button mat-button aria-label="Add news button" class="add-button" (click)="saveNews()">
+        <mat-icon>add_circle_outline</mat-icon>
+        <span *ngIf="isAdd">Add news</span>
+        <span *ngIf="!isAdd">Edit news</span>
+      </button>
+    </form>
+  </div>
+</div>
