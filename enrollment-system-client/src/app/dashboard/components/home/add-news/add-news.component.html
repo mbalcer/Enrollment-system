@@ -8,10 +8,8 @@
         <input matInput [(ngModel)]="newsToEdit.title" name="title">
       </mat-form-field>
 
-      <mat-form-field appearance="standard">
-        <mat-label>Description</mat-label>
-        <textarea matInput [(ngModel)]="newsToEdit.description" name="description"></textarea>
-      </mat-form-field>
+      <label>Description</label>
+      <angular-editor [config]="editorConfig" [(ngModel)]="newsToEdit.description" name="description"></angular-editor>
 
       <button mat-button aria-label="Add news button" class="add-button" (click)="saveNews()">
         <mat-icon>add_circle_outline</mat-icon>

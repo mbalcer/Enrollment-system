@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NewsService} from '../news.service';
 import {News} from '../news.model';
+import {AngularEditorConfig} from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-add-news',
@@ -11,6 +12,26 @@ import {News} from '../news.model';
 export class AddNewsComponent implements OnInit {
   isAdd = true;
   newsToEdit = new News();
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    placeholder: 'Enter the news description...',
+    toolbarHiddenButtons: [
+      [
+        'undo',
+        'redo',
+        'subscript',
+        'superscript',
+        'indent',
+        'outdent',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+      ]
+    ]
+  };
 
   constructor(private route: ActivatedRoute, private newsService: NewsService, private router: Router) { }
 
