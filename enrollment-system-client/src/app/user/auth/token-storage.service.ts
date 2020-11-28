@@ -47,4 +47,8 @@ export class TokenStorageService {
       this.signOut();
     }
   }
+
+  public isRole(role: string) {
+    return this.getUser().role === role;
+  }
 }
