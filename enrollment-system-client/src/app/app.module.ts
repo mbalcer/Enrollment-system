@@ -35,6 +35,7 @@ import {ListFieldsOfStudyPipe} from './pipe/list-fields-of-study.pipe';
 import {TimeTablePipe} from './pipe/time-table.pipe';
 import {NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
 import {AppointmentPipe} from './pipe/appointment.pipe';
+import {AddNewsComponent} from './dashboard/components/home/add-news/add-news.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {AppointmentPipe} from './pipe/appointment.pipe';
     SubjectDetailsComponent,
     GroupDetailsComponent,
     AddGroupComponent,
+    AddNewsComponent,
     FieldOfStudyPipe,
     ListFieldsOfStudyPipe,
     TimeTablePipe,

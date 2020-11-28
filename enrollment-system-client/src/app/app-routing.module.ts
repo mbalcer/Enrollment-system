@@ -17,6 +17,7 @@ import {MyGroupsComponent} from './dashboard/components/my-groups/my-groups.comp
 import {SubjectDetailsComponent} from './dashboard/components/subjects/subject-details/subject-details.component';
 import {GroupDetailsComponent} from './dashboard/components/groups/group-details/group-details.component';
 import {AddGroupComponent} from './dashboard/components/groups/add-group/add-group.component';
+import {AddNewsComponent} from './dashboard/components/home/add-news/add-news.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,6 +26,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], children: [
       { path: '', component: HomeComponent, outlet: 'panel', pathMatch: 'full' },
+      { path: 'news/add', component: AddNewsComponent, outlet: 'panel' },
+      { path: 'news/:id/edit', component: AddNewsComponent, outlet: 'panel' },
       { path: 'registration', component: RegistrationComponent, outlet: 'panel' },
       { path: 'subjects', component: SubjectsComponent, outlet: 'panel' },
       { path: 'subjects/:id', component: SubjectDetailsComponent, outlet: 'panel'},

@@ -3,7 +3,7 @@
     <h2 *ngIf="news.length == 0" class="text-center">No news to display</h2>
     <h2 *ngIf="news.length > 0">Latest news</h2>
     <span class="space"></span>
-    <button mat-button aria-label="Add News button" class="add-button" routerLink="add" *ngIf="checkUserIsAdmin()">
+    <button mat-button aria-label="Add News button" class="add-button" [routerLink]="[{ outlets: { panel: ['news', 'add'] }}]" *ngIf="checkUserIsAdmin()">
       <mat-icon>add_circle_outline</mat-icon>
       <span>Add news</span>
     </button>
@@ -12,7 +12,7 @@
   <div class="news" *ngFor="let newsItem of news">
     <div class="actions" *ngIf="checkUserIsAdmin()">
       <span class="space"></span>
-      <button mat-icon-button aria-label="Edit news button" [routerLink]="newsItem.id + '/edit'" matTooltip="Edit news">
+      <button mat-icon-button aria-label="Edit news button" [routerLink]="[{ outlets: { panel: ['news', newsItem.id, 'edit'] }}]" matTooltip="Edit news">
         <mat-icon>create</mat-icon>
       </button>
       <button mat-icon-button aria-label="Delete news button" (click)="deleteNews(newsItem)" matTooltip="Delete news">
