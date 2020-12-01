@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NewsService} from '../news.service';
 import {News} from '../news.model';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-add-news',
@@ -49,7 +50,7 @@ export class AddNewsComponent implements OnInit {
     }, error => console.log(error));
   }
 
-  saveNews() {
+  saveNews(form: NgForm) {
     if (this.isAdd) {
       this.newsService.postNews(this.newsToEdit).subscribe(result => {
         this.newsToEdit = new News();
@@ -59,5 +60,6 @@ export class AddNewsComponent implements OnInit {
         this.router.navigateByUrl('/dashboard/news/add');
       }, error => console.log(error));
     }
+    form.resetForm();
   }
 }

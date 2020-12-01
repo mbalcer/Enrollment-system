@@ -8,6 +8,7 @@ import pl.mbalcer.enrollmentsystem.model.dto.NewsDTO;
 import pl.mbalcer.enrollmentsystem.repository.NewsRepository;
 import pl.mbalcer.enrollmentsystem.service.mapper.NewsMapper;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,7 @@ public class NewsService implements CrudService<NewsDTO> {
         }
 
         News news = newsMapper.toEntity(dto);
+        news.setTimeOfPublication(LocalDateTime.now());
         news = newsRepository.save(news);
         return newsMapper.toDto(news);
     }
@@ -70,6 +72,7 @@ public class NewsService implements CrudService<NewsDTO> {
 
         dto.setId(id);
         News news = newsMapper.toEntity(dto);
+        news.setTimeOfPublication(LocalDateTime.now());
         news = newsRepository.save(news);
         return newsMapper.toDto(news);
     }

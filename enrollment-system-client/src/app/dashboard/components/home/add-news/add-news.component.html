@@ -2,16 +2,32 @@
   <h2 *ngIf="isAdd">Add news</h2>
   <h2 *ngIf="!isAdd">Edit news</h2>
   <div class="news-form">
-    <form>
+    <form (ngSubmit)="f.form.valid && saveNews(f)" #f="ngForm" novalidate>
       <mat-form-field appearance="standard">
         <mat-label>Title</mat-label>
-        <input matInput [(ngModel)]="newsToEdit.title" name="title">
+        <input matInput [(ngModel)]="newsToEdit.title" name="title"
+               required minlength="6" maxlength="100" #title="ngModel">
+        <mat-hint align="end">{{title.value.length}} / 100</mat-hint>
       </mat-form-field>
 
-      <label>Description</label>
-      <angular-editor [config]="editorConfig" [(ngModel)]="newsToEdit.description" name="description"></angular-editor>
+      <div class="message-container" *ngIf="f.submitted && title.invalid">
+        <span class="message error" *ngIf="title.errors.required">Title is required!</span>
+        <span class="message error" *ngIf="title.errors.minlength">Title must be at least 6 characters</span>
+      </div>
 
-      <button mat-button aria-label="Add news button" class="add-button" (click)="saveNews()">
+      <label for="description">Description</label>
+      <angular-editor [config]="editorConfig" [(ngModel)]="newsToEdit.description" name="description"
+                      #description="ngModel" required maxlength="8000"></angular-editor>
+      <div class="hint-container">
+        <div class="message-container" *ngIf="f.submitted && description.invalid">
+          <span class="message error" *ngIf="description.errors.required">Description is required!</span>
+          <span class="message error" *ngIf="description.errors.maxlength">Description must be max 8000 characters with HTML tags!</span>
+        </div>
+        <span class="space"></span>
+        <mat-hint align="end" class="small-hint">{{newsToEdit.description.length}} / 8000</mat-hint>
+      </div>
+
+      <button mat-button aria-label="Add news button" class="add-button">
         <mat-icon>add_circle_outline</mat-icon>
         <span *ngIf="isAdd">Add news</span>
         <span *ngIf="!isAdd">Edit news</span>
