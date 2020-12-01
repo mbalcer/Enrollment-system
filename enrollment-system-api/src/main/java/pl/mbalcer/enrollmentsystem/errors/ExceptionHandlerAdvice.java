@@ -33,4 +33,10 @@ public class ExceptionHandlerAdvice {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.badRequest().body(ex);
     }
+
+    @ExceptionHandler(StudentRegistrationException.class)
+    public ResponseEntity handleStudentRegistrationException(StudentRegistrationException ex) {
+        log.error(ex.getMessage(), ex);
+        return ResponseEntity.badRequest().body(ex);
+    }
 }

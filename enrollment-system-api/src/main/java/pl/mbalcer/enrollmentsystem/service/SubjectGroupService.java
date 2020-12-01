@@ -3,10 +3,14 @@ package pl.mbalcer.enrollmentsystem.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.errors.BadRequestException;
+import pl.mbalcer.enrollmentsystem.errors.StudentRegistrationException;
+import pl.mbalcer.enrollmentsystem.errors.UserNotFoundException;
+import pl.mbalcer.enrollmentsystem.model.Student;
 import pl.mbalcer.enrollmentsystem.model.SubjectGroup;
 import pl.mbalcer.enrollmentsystem.model.dto.SubjectGroupDTO;
 import pl.mbalcer.enrollmentsystem.model.enumeration.GroupType;
 import pl.mbalcer.enrollmentsystem.repository.AppointmentRepository;
+import pl.mbalcer.enrollmentsystem.repository.StudentRepository;
 import pl.mbalcer.enrollmentsystem.repository.SubjectGroupRepository;
 import pl.mbalcer.enrollmentsystem.service.mapper.AppointmentMapper;
 import pl.mbalcer.enrollmentsystem.service.mapper.SubjectGroupMapper;
@@ -25,12 +29,14 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
     private final SubjectGroupMapper subjectGroupMapper;
     private final AppointmentRepository appointmentRepository;
     private final AppointmentMapper appointmentMapper;
+    private final StudentRepository studentRepository;
 
-    public SubjectGroupService(SubjectGroupRepository subjectGroupRepository, SubjectGroupMapper subjectGroupMapper, AppointmentRepository appointmentRepository, AppointmentMapper appointmentMapper) {
+    public SubjectGroupService(SubjectGroupRepository subjectGroupRepository, SubjectGroupMapper subjectGroupMapper, AppointmentRepository appointmentRepository, AppointmentMapper appointmentMapper, StudentRepository studentRepository) {
         this.subjectGroupRepository = subjectGroupRepository;
         this.subjectGroupMapper = subjectGroupMapper;
         this.appointmentRepository = appointmentRepository;
         this.appointmentMapper = appointmentMapper;
+        this.studentRepository = studentRepository;
     }
 
     @Override
@@ -107,21 +113,35 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
         return subjectGroupMapper.toDto(group);
     }
 
-    public SubjectGroupDTO updateStudents(SubjectGroupDTO dto) {
-        log.debug("Request to update students list in SubjectGroup : {}", dto);
-        if (!subjectGroupRepository.existsById(dto.getId())) {
-            throw new BadRequestException("Invalid id");
+    public SubjectGroupDTO addStudentToGroup(SubjectGroupDTO dto, String usernameStudent) {
+        log.debug("Request to add Student to SubjectGroup : {}", dto);
+        Student student = studentRepository.findByUsername(usernameStudent).orElseThrow(UserNotFoundException::new);
+        final SubjectGroup group = subjectGroupRepository.findById(dto.getId()).orElseThrow(() -> new BadRequestException("Invalid id"));
+
+        if (student.getGroups().stream()
+                .anyMatch(g -> group.getSubject().getId().equals(g.getSubject().getId()))) {
+            throw new StudentRegistrationException("The student cannot be in a group from a subject in which he/she already participates");
         }
-        SubjectGroup group = subjectGroupRepository.findById(dto.getId()).get();
-        subjectGroupMapper.updateSubjectGroup(dto, group);
+
+        group.addStudent(student);
         if (group.getStudents().size()==group.getNumberOfPlaces()) {
             group.setType(GroupType.FULL);
-        } else {
+        }
+        SubjectGroup saveGroup = subjectGroupRepository.save(group);
+        return subjectGroupMapper.toDto(saveGroup);
+    }
+
+    public SubjectGroupDTO removeStudentFromGroup(SubjectGroupDTO dto, String usernameStudent) {
+        log.debug("Request to remove Student from SubjectGroup : {}", dto);
+        Student student = studentRepository.findByUsername(usernameStudent).orElseThrow(UserNotFoundException::new);
+        final SubjectGroup group = subjectGroupRepository.findById(dto.getId()).orElseThrow(() -> new BadRequestException("Invalid id"));
+
+        if (group.getStudents().size()==group.getNumberOfPlaces()) {
             group.setType(GroupType.ACCEPTED);
         }
-        group = subjectGroupRepository.save(group);
-
-        return subjectGroupMapper.toDto(group);
+        group.removeStudent(student);
+        SubjectGroup saveGroup = subjectGroupRepository.save(group);
+        return subjectGroupMapper.toDto(saveGroup);
     }
 
     private void saveTimeTable(SubjectGroup group) {

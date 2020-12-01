@@ -73,10 +73,17 @@ public class SubjectGroupController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PatchMapping("/students")
-    public ResponseEntity<SubjectGroupDTO> updateStudentsInGroup(@RequestBody SubjectGroupDTO groupDTO) {
-        log.debug("REST request to update students in SubjectGroup : {}", groupDTO);
-        SubjectGroupDTO result = subjectGroupService.updateStudents(groupDTO);
+    @PutMapping("/add/student/{username}")
+    public ResponseEntity<SubjectGroupDTO> addStudentToGroup(@RequestBody SubjectGroupDTO groupDTO, @PathVariable String username) {
+        log.debug("REST request to add student {} to group {}", username, groupDTO);
+        SubjectGroupDTO result = subjectGroupService.addStudentToGroup(groupDTO, username);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PutMapping("/remove/student/{username}")
+    public ResponseEntity<SubjectGroupDTO> removeStudentFromGroup(@RequestBody SubjectGroupDTO groupDTO, @PathVariable String username) {
+        log.debug("REST request to remove student {} to group {}", username, groupDTO);
+        SubjectGroupDTO result = subjectGroupService.removeStudentFromGroup(groupDTO, username);
         return ResponseEntity.ok().body(result);
     }
 
