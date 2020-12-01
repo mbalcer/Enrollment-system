@@ -5,6 +5,8 @@ import {TokenStorageService} from '../../../user/auth/token-storage.service';
 import {ISubjectGroup, SubjectGroup} from '../groups/subject-group.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {Student} from '../../../user/model/student.model';
+import {FormMessage} from '../../../model/form-message.model';
+import {TypeMessage} from '../../../model/enumeration/type-message.enum';
 
 @Component({
   selector: 'app-registration',
@@ -12,10 +14,12 @@ import {Student} from '../../../user/model/student.model';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
+  public TypeMessage = TypeMessage;
   displayedColumns: string[] = ['id', 'subject', 'teacher', 'numberOfEnrolled', 'numberOfPlaces', 'actions'];
   dataSource = new MatTableDataSource<SubjectGroup>();
   groups: ISubjectGroup[] = [];
   student = new Student();
+  registrationMessage = new FormMessage();
 
   constructor(private tokenStorage: TokenStorageService,
               private studentService: StudentService,
@@ -50,7 +54,7 @@ export class RegistrationComponent implements OnInit {
     this.subjectGroupService.getAllRegistration(fieldOfStudyId).subscribe(result => {
       this.groups = result;
       this.refreshTable();
-    }, err => console.log(err));
+    }, err => this.setErrorMessage(err));
   }
 
   checkStudentInGroup(group: ISubjectGroup) {
@@ -59,24 +63,37 @@ export class RegistrationComponent implements OnInit {
 
   addToGroup(row: ISubjectGroup) {
     this.groups.splice(this.groups.indexOf(row), 1);
-    row.studentsDTO.push(this.student);
-    this.updateGroup(row);
+    this.subjectGroupService.addStudentToGroup(row, this.student.username).subscribe(result => {
+      this.groups.push(result);
+      this.refreshTable();
+      this.setSuccessMessage("You have been added to the group");
+    }, error => this.setErrorMessage(error));
   }
 
   removeFromGroup(row: ISubjectGroup) {
     this.groups.splice(this.groups.indexOf(row), 1);
-    row.studentsDTO.splice(this.getIndexOfStudentInGroup(row), 1);
-    this.updateGroup(row);
-  }
-
-  updateGroup(row: ISubjectGroup) {
-    this.subjectGroupService.patchGroupToUpdateStudents(row).subscribe(result => {
+    this.subjectGroupService.removeStudentFromGroup(row, this.student.username).subscribe(result => {
       this.groups.push(result);
       this.refreshTable();
-    }, err => console.log(err));
+      this.setSuccessMessage("You have been removed from the group");
+    }, error => this.setErrorMessage(error))
   }
 
   getIndexOfStudentInGroup(group: ISubjectGroup) {
     return group.studentsDTO.findIndex(student => student.username === this.student.username);
+  }
+
+  setErrorMessage(error) {
+    this.registrationMessage = {
+      message: error.error.message,
+      type: TypeMessage.ERROR
+    }
+  }
+
+  setSuccessMessage(success) {
+    this.registrationMessage = {
+      message: success,
+      type: TypeMessage.SUCCESS
+    }
   }
 }

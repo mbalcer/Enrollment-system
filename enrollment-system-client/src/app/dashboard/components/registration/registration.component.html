@@ -1,4 +1,8 @@
 <div class="container-component">
+  <div class="message-container text-center">
+    <p class="message error" *ngIf="registrationMessage.type === TypeMessage.ERROR">{{registrationMessage.message}}</p>
+    <p class="message success" *ngIf="registrationMessage.type === TypeMessage.SUCCESS">{{registrationMessage.message}}</p>
+  </div>
   <div class="mat-elevation-z8 div-table-groups">
     <table mat-table [dataSource]="dataSource" class="table">
       <ng-container matColumnDef="id">

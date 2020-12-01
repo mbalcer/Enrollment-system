@@ -120,12 +120,14 @@ export class AddGroupComponent implements OnInit {
       this.subjectGroupService.postGroup(this.groupToAdd).subscribe(result => {
         // success message
         this.groupToAdd = new SubjectGroup();
+        this.timeTable = [];
       }, error => console.log(error));
     } else {
       this.subjectGroupService.putGroup(this.groupToAdd, this.groupToAdd.id).subscribe(result => {
         // success message
         this.groupToAdd = new SubjectGroup();
         this.isAdd = true;
+        this.timeTable = [];
         this.router.navigateByUrl('/dashboard/groups/add');
       }, error => console.log(error));
     }

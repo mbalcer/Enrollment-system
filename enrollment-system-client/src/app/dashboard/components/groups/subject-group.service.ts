@@ -41,8 +41,12 @@ export class SubjectGroupService {
     return this.httpClient.put<ISubjectGroup>(this.SUBJECT_GROUP_URL + '/' + id, group);
   }
 
-  patchGroupToUpdateStudents(group: ISubjectGroup): Observable<ISubjectGroup> {
-    return this.httpClient.patch<ISubjectGroup>(this.SUBJECT_GROUP_URL + '/students', group);
+  addStudentToGroup(group: ISubjectGroup, usernameStudent: string): Observable<ISubjectGroup> {
+    return this.httpClient.put<ISubjectGroup>(this.SUBJECT_GROUP_URL + '/add/student/' + usernameStudent, group);
+  }
+
+  removeStudentFromGroup(group: ISubjectGroup, usernameStudent: string): Observable<ISubjectGroup> {
+    return this.httpClient.put<ISubjectGroup>(this.SUBJECT_GROUP_URL + "/remove/student/" + usernameStudent, group);
   }
 
   deleteGroup(id: number): Observable<any> {
