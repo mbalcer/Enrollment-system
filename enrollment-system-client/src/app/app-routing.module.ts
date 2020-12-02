@@ -18,6 +18,7 @@ import {SubjectDetailsComponent} from './dashboard/components/subjects/subject-d
 import {GroupDetailsComponent} from './dashboard/components/groups/group-details/group-details.component';
 import {AddGroupComponent} from './dashboard/components/groups/add-group/add-group.component';
 import {AddNewsComponent} from './dashboard/components/home/add-news/add-news.component';
+import {EditProfileComponent} from './dashboard/components/profile/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
       { path: 'subjects/:id', component: SubjectDetailsComponent, outlet: 'panel'},
       { path: 'my-groups', component: MyGroupsComponent, outlet: 'panel' },
       { path: 'profile', component: ProfileComponent, outlet: 'panel' },
+      { path: 'profile/edit', component: EditProfileComponent, outlet: 'panel' },
       { path: 'university', component: UniversityComponent, outlet: 'panel' },
       { path: 'groups', component: GroupsComponent, outlet: 'panel' },
       { path: 'groups/add', component: AddGroupComponent, outlet: 'panel'},

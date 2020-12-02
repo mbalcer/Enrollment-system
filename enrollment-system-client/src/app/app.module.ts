@@ -37,6 +37,7 @@ import {NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModu
 import {AppointmentPipe} from './pipe/appointment.pipe';
 import {AddNewsComponent} from './dashboard/components/home/add-news/add-news.component';
 import {AngularEditorModule} from '@kolkov/angular-editor';
+import {EditProfileComponent} from './dashboard/components/profile/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import {AngularEditorModule} from '@kolkov/angular-editor';
     FieldOfStudyPipe,
     ListFieldsOfStudyPipe,
     TimeTablePipe,
-    AppointmentPipe
+    AppointmentPipe,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,
