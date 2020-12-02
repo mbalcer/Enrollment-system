@@ -118,9 +118,11 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
         Student student = studentRepository.findByUsername(usernameStudent).orElseThrow(UserNotFoundException::new);
         final SubjectGroup group = subjectGroupRepository.findById(dto.getId()).orElseThrow(() -> new BadRequestException("Invalid id"));
 
-        if (student.getGroups().stream()
-                .anyMatch(g -> group.getSubject().getId().equals(g.getSubject().getId()))) {
+        if (student.getGroups().stream().anyMatch(g -> group.getSubject().getId().equals(g.getSubject().getId()))) {
             throw new StudentRegistrationException("The student cannot be in a group from a subject in which he/she already participates");
+        }
+        if (group.getType().equals(GroupType.FULL)) {
+            throw new StudentRegistrationException("Unfortunately you are late. The list of students for this group is already full. ");
         }
 
         group.addStudent(student);

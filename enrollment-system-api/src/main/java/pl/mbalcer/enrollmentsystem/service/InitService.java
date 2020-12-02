@@ -1,6 +1,8 @@
 package pl.mbalcer.enrollmentsystem.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.model.*;
@@ -14,7 +16,11 @@ import java.time.LocalTime;
 import java.util.Arrays;
 
 @Service
+@Slf4j
 public class InitService {
+    @Value("${spring.jpa.hibernate.ddl-auto}")
+    private String hibernateType;
+
     private final UserRepository userRepository;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -41,7 +47,16 @@ public class InitService {
     }
 
     @PostConstruct
-    public void init() {
+    public void isInit() {
+        if (hibernateType.equals("create") || hibernateType.equals("create-drop")) {
+            log.info("The data was initialized");
+            init();
+        } else {
+            log.info("The data wasn't initialized");
+        }
+    }
+
+    private void init() {
         Faculty mathAndItFaculty = new Faculty(0l, "Faculty mathematics and IT", "Bydgoszcz", "MaI", null);
         mathAndItFaculty = facultyRepository.save(mathAndItFaculty);
         FieldOfStudy it = new FieldOfStudy(0l, "IT", StudyType.FIRST_CYCLE, StudyMode.FULL_TIME, mathAndItFaculty, null);
