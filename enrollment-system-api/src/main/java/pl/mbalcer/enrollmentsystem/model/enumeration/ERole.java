@@ -1,5 +1,5 @@
 package pl.mbalcer.enrollmentsystem.model.enumeration;
 
-public enum Role {
+public enum ERole {
     STUDENT, TEACHER, ADMIN
 }

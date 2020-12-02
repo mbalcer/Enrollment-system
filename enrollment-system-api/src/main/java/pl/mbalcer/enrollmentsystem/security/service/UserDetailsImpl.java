@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import pl.mbalcer.enrollmentsystem.model.User;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -30,8 +30,9 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public static UserDetailsImpl build(User user) {
-        Set<GrantedAuthority> authorities = Collections.singleton(
-                new SimpleGrantedAuthority(user.getRole().name()));
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
 
         return new UserDetailsImpl(
                 user.getId(),

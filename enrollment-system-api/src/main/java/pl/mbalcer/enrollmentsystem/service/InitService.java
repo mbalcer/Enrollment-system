@@ -1,7 +1,6 @@
 package pl.mbalcer.enrollmentsystem.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +13,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -31,9 +32,9 @@ public class InitService {
     private final SubjectGroupRepository subjectGroupRepository;
     private final TeacherRepository teacherRepository;
     private final AppointmentRepository appointmentRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    public InitService(UserRepository userRepository, UserService userService, PasswordEncoder passwordEncoder, StudentRepository studentRepository, FacultyRepository facultyRepository, FieldOfStudyRepository fieldOfStudyRepository, SubjectRepository subjectRepository, SubjectGroupRepository subjectGroupRepository, TeacherRepository teacherRepository, AppointmentRepository appointmentRepository) {
+    public InitService(UserRepository userRepository, UserService userService, PasswordEncoder passwordEncoder, StudentRepository studentRepository, FacultyRepository facultyRepository, FieldOfStudyRepository fieldOfStudyRepository, SubjectRepository subjectRepository, SubjectGroupRepository subjectGroupRepository, TeacherRepository teacherRepository, AppointmentRepository appointmentRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
@@ -44,6 +45,7 @@ public class InitService {
         this.subjectGroupRepository = subjectGroupRepository;
         this.teacherRepository = teacherRepository;
         this.appointmentRepository = appointmentRepository;
+        this.roleRepository = roleRepository;
     }
 
     @PostConstruct
@@ -57,30 +59,45 @@ public class InitService {
     }
 
     private void init() {
+        Role student = new Role(0l, ERole.STUDENT);
+        Role teacher = new Role(0l, ERole.TEACHER);
+        Role admin = new Role(0l, ERole.ADMIN);
+
+        student = roleRepository.save(student);
+        teacher = roleRepository.save(teacher);
+        admin = roleRepository.save(admin);
+
+        Set<Role> studentRole = new HashSet<>();
+        studentRole.add(student);
+        Set<Role> teacherRole = new HashSet<>();
+        teacherRole.add(teacher);
+        Set<Role> adminRole = new HashSet<>();
+        adminRole.add(admin);
+
         Faculty mathAndItFaculty = new Faculty(0l, "Faculty mathematics and IT", "Bydgoszcz", "MaI", null);
         mathAndItFaculty = facultyRepository.save(mathAndItFaculty);
         FieldOfStudy it = new FieldOfStudy(0l, "IT", StudyType.FIRST_CYCLE, StudyMode.FULL_TIME, mathAndItFaculty, null);
         it = fieldOfStudyRepository.save(it);
 
-        User admin = new User(0l, "admin", passwordEncoder.encode("admin"), "admin@utp.edu.pl", "Admin", Role.ADMIN, true);
-        userRepository.save(admin);
+        User adminUser = new User(0l, "admin", passwordEncoder.encode("admin"), "admin@utp.edu.pl", "Admin", adminRole, true);
+        userRepository.save(adminUser);
 
-        Student student = new Student(0L, "adamek", passwordEncoder.encode("adam123"), "Adam Kowalski", "adamrewrwer@utp.edu.pl", 111000L, 7, it);
-        student = studentRepository.save(student);
-        userService.enableUser(student.getUsername());
+        Student studentUser = new Student(0L, "adamek", passwordEncoder.encode("adam123"), "Adam Kowalski", "adamrewrwer@utp.edu.pl", studentRole, 111000L, 7, it);
+        studentUser = studentRepository.save(studentUser);
+        userService.enableUser(studentUser.getUsername());
 
         Subject subject = new Subject(0l, "Graduation seminar", "description", Duration.ofHours(30), CourseType.SEMINAR, 4);
         subject = subjectRepository.save(subject);
 
-        Teacher teacher = new Teacher(mathAndItFaculty, "janek", passwordEncoder.encode("janek"), "Jan Kowalski", "jankow111@wp.pl");
-        teacher = teacherRepository.save(teacher);
-        userService.enableUser(teacher.getUsername());
+        Teacher teacherUser = new Teacher(mathAndItFaculty, "janek", passwordEncoder.encode("janek"), "Jan Kowalski", "jankow111@wp.pl", teacherRole);
+        teacherUser = teacherRepository.save(teacherUser);
+        userService.enableUser(teacherUser.getUsername());
 
-        SubjectGroup group1 = new SubjectGroup(0l, LocalTime.of(1, 30), "UTP", 14, GroupType.ACCEPTED, subject, teacher, null, Arrays.asList(student), Arrays.asList(it));
+        SubjectGroup group1 = new SubjectGroup(0l, LocalTime.of(1, 30), "UTP", 14, GroupType.ACCEPTED, subject, teacherUser, null, Arrays.asList(studentUser), Arrays.asList(it));
         group1 = subjectGroupRepository.save(group1);
 
         for (int i=1; i<10; i++) {
-            Student newStudent = new Student(0L, "adamek"+i, passwordEncoder.encode("adam123"), "Adam "+ i +" Nowak", "adam"+i+"@utp.edu.pl", 111000L + i, 7, it);
+            Student newStudent = new Student(0L, "adamek"+i, passwordEncoder.encode("adam123"), "Adam "+ i +" Nowak", "adam"+i+"@utp.edu.pl", studentRole, 111000L + i, 7, it);
             newStudent = studentRepository.save(newStudent);
 
             group1.addStudent(newStudent);

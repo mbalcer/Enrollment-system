@@ -30,11 +30,4 @@ public class UserController {
     public ResponseEntity getUser(@PathVariable String username) {
         return userService.getUser(username);
     }
-
-    @PatchMapping("/role")
-    public ResponseEntity<UserDTO> changeRole(@RequestBody UserDTO userDTO) {
-        log.debug("REST request to change role for user: " + userDTO.getUsername());
-        return ResponseEntity.ok(userService.changeRole(userDTO));
-    }
-
 }

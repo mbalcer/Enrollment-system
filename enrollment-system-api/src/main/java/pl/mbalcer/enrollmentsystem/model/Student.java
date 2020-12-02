@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import pl.mbalcer.enrollmentsystem.model.enumeration.Role;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -12,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -29,15 +29,8 @@ public class Student extends User {
     @ManyToMany(mappedBy = "students")
     private List<SubjectGroup> groups = new ArrayList<>();
 
-    public Student(User user, FieldOfStudy fieldOfStudy, Long indexNumber, Integer semester) {
-        super(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getFullName(), Role.STUDENT, false);
-        this.fieldOfStudy = fieldOfStudy;
-        this.indexNumber = indexNumber;
-        this.semester = semester;
-    }
-
-    public Student(Long id, String username, String password, String fullName, String email, Long indexNumber, Integer semester, FieldOfStudy fieldOfStudy) {
-        super(id, username, password, email, fullName, Role.STUDENT, false);
+    public Student(Long id, String username, String password, String fullName, String email, Set<Role> roles, Long indexNumber, Integer semester, FieldOfStudy fieldOfStudy) {
+        super(id, username, password, email, fullName, roles, true);
         this.indexNumber = indexNumber;
         this.semester = semester;
         this.fieldOfStudy = fieldOfStudy;

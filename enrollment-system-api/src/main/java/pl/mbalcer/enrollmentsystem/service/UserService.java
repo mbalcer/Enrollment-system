@@ -41,16 +41,6 @@ public class UserService {
         return userMapper.toDto(all);
     }
 
-    public UserDTO changeRole(UserDTO userDTO) {
-        Optional<User> userByUsername = userRepository.findUserByUsername(userDTO.getUsername());
-        if(userByUsername.isEmpty())
-            throw new UserNotFoundException();
-
-        User user = userByUsername.get();
-        user.setRole(userDTO.getRole());
-        return userMapper.toDto(userRepository.save(user));
-    }
-
     public void enableUser(String username) {
         Optional<User> optionalUser = userRepository.findUserByUsername(username);
         if(optionalUser.isEmpty())
