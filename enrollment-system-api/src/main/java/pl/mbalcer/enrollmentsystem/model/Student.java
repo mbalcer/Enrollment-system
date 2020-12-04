@@ -29,6 +29,14 @@ public class Student extends User {
     @ManyToMany(mappedBy = "students")
     private List<SubjectGroup> groups = new ArrayList<>();
 
+    public Student(User user, Long indexNumber, Integer semester, FieldOfStudy fieldOfStudy, List<SubjectGroup> groups) {
+        super(user.getId(), user.getUsername(), user.getPassword(), user.getFullName(), user.getEmail(), user.getRoles(), user.getIsActive());
+        this.indexNumber = indexNumber;
+        this.semester = semester;
+        this.fieldOfStudy = fieldOfStudy;
+        this.groups = groups;
+    }
+
     public Student(Long id, String username, String password, String fullName, String email, Set<Role> roles, Long indexNumber, Integer semester, FieldOfStudy fieldOfStudy) {
         super(id, username, password, email, fullName, roles, true);
         this.indexNumber = indexNumber;

@@ -21,13 +21,6 @@ public class ExceptionHandlerAdvice {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.badRequest().body(ex);
     }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity handleUserNotFoundException(UserNotFoundException ex) {
-        log.error(ex.getMessage(), ex);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex);
-    }
-
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity handleBadRequestException(BadRequestException ex) {
         log.error(ex.getMessage(), ex);
@@ -38,5 +31,17 @@ public class ExceptionHandlerAdvice {
     public ResponseEntity handleStudentRegistrationException(StudentRegistrationException ex) {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.badRequest().body(ex);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity handleUserNotFoundException(UserNotFoundException ex) {
+        log.error(ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex);
+    }
+
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity handleRoleNotFoundException(RoleNotFoundException ex) {
+        log.error(ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex);
     }
 }
