@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.user.roles = [];
     this.userService.getUser().subscribe(result => {
       this.user = result;
     });

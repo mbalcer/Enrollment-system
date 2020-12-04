@@ -4,7 +4,7 @@ export interface IStudent {
   username: string;
   fullName: string;
   email: string;
-  role: string;
+  roles: string[];
   isActive: boolean;
   indexNumber: number;
   semester: number;
@@ -15,7 +15,7 @@ export class Student implements IStudent {
   username: string;
   fullName: string;
   email: string;
-  role: string;
+  roles: string[];
   isActive: boolean;
   indexNumber: number;
   semester: number;
@@ -25,7 +25,7 @@ export class Student implements IStudent {
     this.username = '';
     this.fullName = '';
     this.email = '';
-    this.role = '';
+    this.roles = [];
     this.isActive = false;
     this.indexNumber = 0;
     this.semester = 0;

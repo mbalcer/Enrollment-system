@@ -4,7 +4,7 @@ export interface ITeacher {
   username: string;
   fullName: string;
   email: string;
-  role: string;
+  roles: string[];
   isActive: boolean;
   room: string;
   consultations: string;
@@ -15,7 +15,7 @@ export class Teacher implements ITeacher {
   username: string;
   fullName: string;
   email: string;
-  role: string;
+  roles: string[];
   isActive: boolean;
   room: string;
   consultations: string;
@@ -25,7 +25,7 @@ export class Teacher implements ITeacher {
     this.username = '';
     this.fullName = '';
     this.email = '';
-    this.role = '';
+    this.roles = [];
     this.isActive = false;
     this.room = '';
     this.consultations = '';

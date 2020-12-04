@@ -59,8 +59,9 @@ export class MenuComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (this.menu.length === 0) {
-      this.menu = this.getMenuForRole(this.user.role);
+    if (this.menu.length === 0 && this.user.roles.length !== 0) {
+      const firstRole = this.user.roles[0];
+      this.menu = this.getMenuForRole(firstRole);
       this.cdr.detectChanges();
     }
   }

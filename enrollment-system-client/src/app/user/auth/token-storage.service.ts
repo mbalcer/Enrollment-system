@@ -49,6 +49,11 @@ export class TokenStorageService {
   }
 
   public isRole(role: string) {
-    return this.getUser().role === role;
+    let isRole = false;
+    this.getUser().role.forEach(r => {
+      if (r === role)
+        isRole = true;
+    });
+    return isRole;
   }
 }

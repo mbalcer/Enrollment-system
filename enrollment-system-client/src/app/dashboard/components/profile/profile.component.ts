@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../user/service/user.service';
-import {IUser} from '../../../user/model/user.model';
+import {IUser, User} from '../../../user/model/user.model';
 import {TokenStorageService} from '../../../user/auth/token-storage.service';
 import {StudentService} from '../../../user/service/student.service';
 import {TeacherService} from '../../../user/service/teacher.service';
@@ -13,7 +13,7 @@ import {ITeacher} from '../../../user/model/teacher.model';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user: IUser = null;
+  user: IUser = new User();
   student: IStudent = null;
   teacher: ITeacher = null;
 
@@ -28,12 +28,13 @@ export class ProfileComponent implements OnInit {
 
   getUser() {
     const user = this.tokenStorageService.getUser();
-    if (user.role === 'STUDENT') {
+    const firstRole = user.role[0];
+    if (firstRole === 'STUDENT') {
       this.studentService.getStudentByUsername(user.username).subscribe(result => {
         this.user = result;
         this.student = result;
       }, err => console.log(err));
-    } else if (user.role === 'TEACHER') {
+    } else if (firstRole === 'TEACHER') {
       this.teacherService.getTeacherByUsername(user.username).subscribe(result => {
         this.user = result;
         this.teacher = result;
