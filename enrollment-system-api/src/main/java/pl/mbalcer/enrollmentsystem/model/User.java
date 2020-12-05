@@ -16,6 +16,10 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
