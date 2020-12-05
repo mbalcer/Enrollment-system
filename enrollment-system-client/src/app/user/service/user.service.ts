@@ -25,4 +25,19 @@ export class UserService {
   getUserByUsername(username: string): Observable<IUser> {
     return this.httpClient.get<IUser>(this.USER_URL + '/' + username);
   }
+
+  addRoleToUser(username: string, role: string): Observable<IUser> {
+    return this.httpClient.put<IUser>(this.CHANGE_ROLE_URL + '/add/' + username, this.getJsonForRoleResponseBody(role));
+  }
+
+  removeRoleFromUser(username: string, role: string): Observable<IUser> {
+    return this.httpClient.put<IUser>(this.CHANGE_ROLE_URL + '/remove/' + username, this.getJsonForRoleResponseBody(role));
+  }
+
+  getJsonForRoleResponseBody(role: string) {
+    const roleModel = {
+      "name": role
+    }
+    return roleModel;
+  }
 }

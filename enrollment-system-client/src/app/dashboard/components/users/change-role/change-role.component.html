@@ -5,7 +5,7 @@
     <mat-list-item role="listitem" *ngFor="let role of user.roles" class="list-item">
       <span>{{role}}</span>
       <span class="space"></span>
-      <button mat-icon-button [matTooltip]="'Remove ' + role + ' role'" (click)="removeRole(role)">
+      <button mat-icon-button [matTooltip]="'Remove ' + role + ' role'" (click)="removeRole(role)" *ngIf="user.roles.length > 1">
         <mat-icon>delete</mat-icon>
       </button>
     </mat-list-item>

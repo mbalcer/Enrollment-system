@@ -10,7 +10,7 @@ import {MatPaginator} from '@angular/material/paginator';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['username', 'email', 'fullName', 'role', 'active'];
+  displayedColumns: string[] = ['username', 'email', 'fullName', 'role', 'active', 'actions'];
   dataSource = new MatTableDataSource<User>();
   users: IUser[];
 

@@ -36,10 +36,18 @@ export class ChangeRoleComponent implements OnInit {
   }
 
   removeRole(role: string) {
-    console.log(role);
+    if (confirm("Are you sure you want to remove the role? This operation remove data typically for this role.")) {
+      this.userService.removeRoleFromUser(this.user.username, role).subscribe(result => {
+        this.user = result;
+        console.log("The role has been correctly removed from " + this.user.fullName);
+      }, error => console.log(error));
+    }
   }
 
   addRole(value: string) {
-    console.log(value);
+    this.userService.addRoleToUser(this.user.username, value).subscribe(result => {
+      this.user = result;
+      console.log("The role has been correctly added to " + this.user.fullName);
+    }, error => console.log(error));
   }
 }
