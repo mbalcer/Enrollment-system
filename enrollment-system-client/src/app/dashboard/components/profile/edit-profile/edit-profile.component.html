@@ -1,1 +1,58 @@
-<p>edit-profile works!</p>
+<div class="container-component">
+  <h2>Edit profile</h2>
+  <div class="user-change">
+    <mat-list>
+      <mat-list-item>Username: {{user.username}}</mat-list-item>
+      <mat-list-item>Email: {{user.email}}</mat-list-item>
+    </mat-list>
+    <mat-form-field appearance="standard">
+      <mat-label>Full name</mat-label>
+      <input matInput [(ngModel)]="user.fullName" name="fullName">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="editUser()">Edit user</button>
+  </div>
+  <mat-divider *ngIf="student != null"></mat-divider>
+  <div class="student-change" *ngIf="student != null">
+    <mat-form-field appearance="standard">
+      <mat-label>Index number</mat-label>
+      <input matInput [(ngModel)]="student.indexNumber" name="indexNumber">
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Semester</mat-label>
+      <input matInput [(ngModel)]="student.semester" name="semester">
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Field of study</mat-label>
+      <mat-select [(ngModel)]="student.fieldOfStudyDTO" name="fieldOfStudy" [compareWith]="objectComparisonFunction">
+        <mat-option *ngFor="let fieldOfStudy of fieldsOfStudy" [value]="fieldOfStudy">
+          {{fieldOfStudy | fieldOfStudy}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="editStudent()">Edit student</button>
+  </div>
+  <mat-divider *ngIf="teacher != null"></mat-divider>
+  <div class="teacher-change" *ngIf="teacher != null">
+    <mat-form-field appearance="standard">
+      <mat-label>Room</mat-label>
+      <input matInput [(ngModel)]="teacher.room" name="room">
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Consultations</mat-label>
+      <input matInput [(ngModel)]="teacher.consultations" name="consultations">
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Faculty</mat-label>
+      <mat-select [(ngModel)]="teacher.facultyDTO" name="faculty" [compareWith]="objectComparisonFunction">
+        <mat-option *ngFor="let faculty of faculties" [value]="faculty">
+          {{faculty.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="editTeacher()">Edit teacher</button>
+  </div>
+</div>
