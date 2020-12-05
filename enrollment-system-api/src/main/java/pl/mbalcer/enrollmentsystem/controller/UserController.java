@@ -3,6 +3,7 @@ package pl.mbalcer.enrollmentsystem.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.mbalcer.enrollmentsystem.model.Role;
 import pl.mbalcer.enrollmentsystem.model.dto.UserDTO;
 import pl.mbalcer.enrollmentsystem.service.UserService;
 
@@ -29,5 +30,19 @@ public class UserController {
     @GetMapping("/{username}")
     public ResponseEntity getUser(@PathVariable String username) {
         return userService.getUser(username);
+    }
+
+    @PutMapping("/role/add/{username}")
+    public ResponseEntity<UserDTO> addRoleToUser(@RequestBody Role role, @PathVariable String username) {
+        log.debug("REST request to add role {} to user {}", role.getName(), username);
+        UserDTO userDTO = userService.addRole(username, role.getName());
+        return ResponseEntity.ok(userDTO);
+    }
+
+    @PutMapping("/role/remove/{username}")
+    public ResponseEntity<UserDTO> removeRoleFromUser(@RequestBody Role role, @PathVariable String username) {
+        log.debug("REST request to remove role {} from user {}", role.getName(), username);
+        UserDTO userDTO = userService.removeRole(username, role.getName());
+        return ResponseEntity.ok(userDTO);
     }
 }
