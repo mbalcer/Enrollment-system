@@ -3,6 +3,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
+const ACTIVE_ROLE_KEY = 'auth-active-role';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,14 @@ export class TokenStorageService {
 
   public getUser() {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
+  }
+
+  public saveActiveRole(role: string) {
+    window.sessionStorage.setItem(ACTIVE_ROLE_KEY, role);
+  }
+
+  public getActiveRole() {
+    return sessionStorage.getItem(ACTIVE_ROLE_KEY);
   }
 
   public isLogged() {

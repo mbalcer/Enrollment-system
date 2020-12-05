@@ -2,6 +2,7 @@ import {AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit} from '@an
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
 import {IUser} from '../../user/model/user.model';
+import {TokenStorageService} from '../../user/auth/token-storage.service';
 
 @Component({
   selector: 'app-menu',
@@ -14,7 +15,8 @@ export class MenuComponent implements OnInit, AfterViewChecked {
 
   menu: MenuViewModel[] = [];
 
-  constructor(private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
+  constructor(private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+              private cdr: ChangeDetectorRef, private tokenStorage: TokenStorageService) {
     iconRegistry.addSvgIcon('registration', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/web.svg'));
     iconRegistry.addSvgIcon('subjects', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/book.svg'));
     iconRegistry.addSvgIcon('profile', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/user.svg'));
@@ -60,8 +62,7 @@ export class MenuComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (this.menu.length === 0 && this.user.roles.length !== 0) {
-      const firstRole = this.user.roles[0];
-      this.menu = this.getMenuForRole(firstRole);
+      this.menu = this.getMenuForRole(this.tokenStorage.getActiveRole());
       this.cdr.detectChanges();
     }
   }

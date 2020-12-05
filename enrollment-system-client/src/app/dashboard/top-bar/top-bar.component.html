@@ -4,6 +4,15 @@
 <!--  </button>-->
   <span class="logo">Enrollment system</span>
   <span class="spacer"></span>
+  <button mat-mini-fab color="primary" (click)="changeActiveRole('STUDENT')" *ngIf="buttonChangeRole.student" matTooltip="Student panel" class="button-change-role">
+    <mat-icon>school</mat-icon>
+  </button>
+  <button mat-mini-fab color="primary" (click)="changeActiveRole('TEACHER')" *ngIf="buttonChangeRole.teacher" matTooltip="Teacher panel" class="button-change-role">
+    <mat-icon>work</mat-icon>
+  </button>
+  <button mat-mini-fab color="primary" (click)="changeActiveRole('ADMIN')" *ngIf="buttonChangeRole.admin" matTooltip="Admin panel" class="button-change-role">
+    <mat-icon>settings_applications</mat-icon>
+  </button>
   <span class="user-info">You are logged as <span class="user">{{user.fullName}}</span></span>
   |
   <button mat-button class="sign-out" aria-label="Sign out button" (click)="logout()">

@@ -67,7 +67,7 @@ export class AddGroupComponent implements OnInit {
     }
 
     const teacher = this.tokenStorage.getUser();
-    if (teacher.role[0] === 'TEACHER') {
+    if (this.tokenStorage.getActiveRole() === 'TEACHER') {
       this.teacherUsername = teacher.username;
     }
     this.getSubjects();

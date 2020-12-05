@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.userToLogin).subscribe(result => {
       this.tokenStorage.saveToken(result.jwt);
       this.tokenStorage.saveUser(result);
+      this.tokenStorage.saveActiveRole(result.role[0]);
       this.router.navigate(['/dashboard']);
     }, errorResponse => {
       this.messageLogin = {

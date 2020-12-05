@@ -28,13 +28,13 @@ export class ProfileComponent implements OnInit {
 
   getUser() {
     const user = this.tokenStorageService.getUser();
-    const firstRole = user.role[0];
-    if (firstRole === 'STUDENT') {
+    const role = this.tokenStorageService.getActiveRole();
+    if (role === 'STUDENT') {
       this.studentService.getStudentByUsername(user.username).subscribe(result => {
         this.user = result;
         this.student = result;
       }, err => console.log(err));
-    } else if (firstRole === 'TEACHER') {
+    } else if (role === 'TEACHER') {
       this.teacherService.getTeacherByUsername(user.username).subscribe(result => {
         this.user = result;
         this.teacher = result;
