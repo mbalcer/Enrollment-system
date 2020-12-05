@@ -19,6 +19,7 @@ import {GroupDetailsComponent} from './dashboard/components/groups/group-details
 import {AddGroupComponent} from './dashboard/components/groups/add-group/add-group.component';
 import {AddNewsComponent} from './dashboard/components/home/add-news/add-news.component';
 import {EditProfileComponent} from './dashboard/components/profile/edit-profile/edit-profile.component';
+import {ChangeRoleComponent} from './dashboard/components/users/change-role/change-role.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
       { path: 'groups/:id', component: GroupDetailsComponent, outlet: 'panel'},
       { path: 'groups/:id/edit', component: AddGroupComponent, outlet: 'panel'},
       { path: 'users', component: UsersComponent, outlet: 'panel' },
+      { path: 'users/:id/role', component: ChangeRoleComponent, outlet: 'panel' },
       { path: 'requests', component: RequestsComponent, outlet: 'panel' },
       { path: 'settings', component: SettingsComponent, outlet: 'panel' }
   ]}

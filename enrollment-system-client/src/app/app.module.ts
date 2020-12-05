@@ -38,6 +38,7 @@ import {AppointmentPipe} from './pipe/appointment.pipe';
 import {AddNewsComponent} from './dashboard/components/home/add-news/add-news.component';
 import {AngularEditorModule} from '@kolkov/angular-editor';
 import {EditProfileComponent} from './dashboard/components/profile/edit-profile/edit-profile.component';
+import {ChangeRoleComponent} from './dashboard/components/users/change-role/change-role.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import {EditProfileComponent} from './dashboard/components/profile/edit-profile/
     ListFieldsOfStudyPipe,
     TimeTablePipe,
     AppointmentPipe,
-    EditProfileComponent
+    EditProfileComponent,
+    ChangeRoleComponent
   ],
   imports: [
     BrowserModule,
