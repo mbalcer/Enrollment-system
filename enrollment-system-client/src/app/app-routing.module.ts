@@ -42,7 +42,7 @@ const routes: Routes = [
       { path: 'groups/:id', component: GroupDetailsComponent, outlet: 'panel'},
       { path: 'groups/:id/edit', component: AddGroupComponent, outlet: 'panel'},
       { path: 'users', component: UsersComponent, outlet: 'panel' },
-      { path: 'users/:id/role', component: ChangeRoleComponent, outlet: 'panel' },
+      { path: 'users/:username/role', component: ChangeRoleComponent, outlet: 'panel' },
       { path: 'requests', component: RequestsComponent, outlet: 'panel' },
       { path: 'settings', component: SettingsComponent, outlet: 'panel' }
   ]}

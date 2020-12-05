@@ -1,1 +1,30 @@
-<p>change-role works!</p>
+<div class="container-component">
+  <h2>{{user.fullName}}</h2>
+  <h3>Roles:</h3>
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let role of user.roles" class="list-item">
+      <span>{{role}}</span>
+      <span class="space"></span>
+      <button mat-icon-button [matTooltip]="'Remove ' + role + ' role'" (click)="removeRole(role)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+  <mat-divider></mat-divider>
+  <div class="add-role-form">
+    <h3>Add role</h3>
+    <mat-form-field appearance="standard">
+      <mat-label>Role</mat-label>
+      <mat-select name="role" #roleSelect>
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{role}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addRole(roleSelect.value)">Add role</button>
+  </div>
+
+
+
+
+</div>

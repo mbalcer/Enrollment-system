@@ -18,11 +18,11 @@ export class UserService {
     return this.httpClient.get<IUser[]>(this.USER_URL);
   }
 
-  changeRole(user: IUser): Observable<IUser> {
-    return this.httpClient.patch<IUser>(this.CHANGE_ROLE_URL, user);
-  }
-
   getUser(): Observable<IUser> {
     return this.httpClient.get(this.USER_URL + '/' + this.tokenStorageService.getUser().username);
+  }
+
+  getUserByUsername(username: string): Observable<IUser> {
+    return this.httpClient.get<IUser>(this.USER_URL + '/' + username);
   }
 }
