@@ -55,6 +55,14 @@ public class UserService {
         return userMapper.toDto(all);
     }
 
+    public UserDTO update(UserDTO dto, String username) {
+        log.debug("Request to update User by username: {}", dto);
+        User user = userRepository.findUserByUsername(username).orElseThrow(UserNotFoundException::new);
+        userMapper.updateUser(dto, user);
+        user = userRepository.save(user);
+        return userMapper.toDto(user);
+    }
+
     public void enableUser(String username) {
         Optional<User> optionalUser = userRepository.findUserByUsername(username);
         if(optionalUser.isEmpty())

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.errors.BadRequestException;
 import pl.mbalcer.enrollmentsystem.errors.NotFoundException;
+import pl.mbalcer.enrollmentsystem.errors.UserNotFoundException;
 import pl.mbalcer.enrollmentsystem.model.Teacher;
 import pl.mbalcer.enrollmentsystem.model.dto.TeacherDTO;
 import pl.mbalcer.enrollmentsystem.repository.TeacherRepository;
@@ -57,6 +58,14 @@ public class TeacherService implements CrudService<TeacherDTO> {
         }
         Teacher teacher = teacherMapper.toEntity(dto);
         teacher.setId(id);
+        teacher = teacherRepository.save(teacher);
+        return teacherMapper.toDto(teacher);
+    }
+
+    public TeacherDTO updateByUsername(TeacherDTO dto, String username) {
+        log.debug("Request to update Teacher by username: {}", dto);
+        Teacher teacher = teacherRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+        teacherMapper.updateTeacher(dto, teacher);
         teacher = teacherRepository.save(teacher);
         return teacherMapper.toDto(teacher);
     }

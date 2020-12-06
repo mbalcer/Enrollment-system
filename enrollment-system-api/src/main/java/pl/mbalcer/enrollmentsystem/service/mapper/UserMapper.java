@@ -1,7 +1,6 @@
 package pl.mbalcer.enrollmentsystem.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import pl.mbalcer.enrollmentsystem.model.Role;
 import pl.mbalcer.enrollmentsystem.model.User;
 import pl.mbalcer.enrollmentsystem.model.dto.UserDTO;
@@ -19,6 +18,10 @@ public interface UserMapper extends EntityMapper<UserDTO, User> {
 
     @Mapping(target = "roles", expression = "java(getRolesEnum(entity))")
     UserDTO toDto(User entity);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "roles", ignore = true)
+    void updateUser(UserDTO dto, @MappingTarget User entity);
 
     default Set<ERole> getRolesEnum(User user) {
         return user.getRoles()

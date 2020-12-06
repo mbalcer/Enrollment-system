@@ -1,7 +1,6 @@
 package pl.mbalcer.enrollmentsystem.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import pl.mbalcer.enrollmentsystem.model.Role;
 import pl.mbalcer.enrollmentsystem.model.Teacher;
 import pl.mbalcer.enrollmentsystem.model.dto.TeacherDTO;
@@ -20,6 +19,11 @@ public interface TeacherMapper extends EntityMapper<TeacherDTO, Teacher> {
     @Mapping(source = "faculty", target = "facultyDTO")
     @Mapping(target = "roles", expression = "java(getRolesEnum(entity))")
     TeacherDTO toDto(Teacher entity);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "facultyDTO", target = "faculty")
+    @Mapping(target = "roles", ignore = true)
+    void updateTeacher(TeacherDTO dto, @MappingTarget Teacher entity);
 
     default Set<ERole> getRolesEnum(Teacher teacher) {
         return teacher.getRoles()

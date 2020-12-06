@@ -32,6 +32,13 @@ public class UserController {
         return userService.getUser(username);
     }
 
+    @PutMapping("/user/{username}")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable String username) {
+        log.debug("REST request to update User : {}", userDTO);
+        UserDTO result = userService.update(userDTO, username);
+        return ResponseEntity.ok().body(result);
+    }
+
     @PutMapping("/role/add/{username}")
     public ResponseEntity<UserDTO> addRoleToUser(@RequestBody Role role, @PathVariable String username) {
         log.debug("REST request to add role {} to user {}", role.getName(), username);

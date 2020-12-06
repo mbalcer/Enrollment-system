@@ -51,10 +51,10 @@ public class TeacherController {
         return ResponseEntity.created(new URI("/api/teacher/" + result.getUsername())).body(result);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody TeacherDTO teacherDTO, @PathVariable Long id) throws URISyntaxException {
+    @PutMapping("/{username}")
+    public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody TeacherDTO teacherDTO, @PathVariable String username) throws URISyntaxException {
         log.debug("REST request to update Teacher : {}", teacherDTO);
-        TeacherDTO result = teacherService.update(teacherDTO, id);
+        TeacherDTO result = teacherService.updateByUsername(teacherDTO, username);
         return ResponseEntity.ok().body(result);
     }
 
