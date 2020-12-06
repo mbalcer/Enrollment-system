@@ -19,4 +19,8 @@ export class TeacherService {
   getTeacherByUsername(username: string): Observable<Teacher> {
     return this.httpClient.get<Teacher>(this.TEACHER_URL + '/byUsername/' + username);
   }
+
+  putTeacher(teacher: ITeacher, username: string): Observable<Teacher> {
+    return this.httpClient.put<Teacher>(this.TEACHER_URL + '/' + username, teacher);
+  }
 }

@@ -26,6 +26,10 @@ export class UserService {
     return this.httpClient.get<IUser>(this.USER_URL + '/' + username);
   }
 
+  putUser(user: IUser, username: string): Observable<IUser> {
+    return this.httpClient.put<IUser>(this.USER_URL + '/user/' + username, user);
+  }
+
   addRoleToUser(username: string, role: string): Observable<IUser> {
     return this.httpClient.put<IUser>(this.CHANGE_ROLE_URL + '/add/' + username, this.getJsonForRoleResponseBody(role));
   }

@@ -75,14 +75,20 @@ export class EditProfileComponent implements OnInit {
   }
 
   editUser() {
-
+    this.userService.putUser(this.user, this.user.username).subscribe(result => {
+      this.user = result;
+    }, error => console.log(error));
   }
 
   editStudent() {
-
+    this.studentService.putStudent(this.student, this.student.username).subscribe(result => {
+      this.student = result;
+    }, error => console.log(error));
   }
 
   editTeacher() {
-
+    this.teacherService.putTeacher(this.teacher, this.teacher.username).subscribe(result => {
+      this.teacher = result;
+    }, error => console.log(error));
   }
 }
