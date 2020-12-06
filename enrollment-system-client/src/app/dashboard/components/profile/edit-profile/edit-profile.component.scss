@@ -2,11 +2,16 @@ mat-form-field, button {
   margin: 0 16px;
 }
 
-.student-change, .user-change, .teacher-change {
+.student-change > form, .user-change > form, .teacher-change > form {
   display: flex;
   flex-direction: column;
 }
 
 mat-divider {
   margin: 3em 0;
+}
+
+.invalid-messages {
+  padding: 0 16px;
+  margin-bottom: 0.5em;
 }

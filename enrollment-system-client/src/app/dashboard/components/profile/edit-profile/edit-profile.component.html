@@ -1,58 +1,85 @@
 <div class="container-component">
   <h2>Edit profile</h2>
   <div class="user-change">
-    <mat-list>
-      <mat-list-item>Username: {{user.username}}</mat-list-item>
-      <mat-list-item>Email: {{user.email}}</mat-list-item>
-    </mat-list>
-    <mat-form-field appearance="standard">
-      <mat-label>Full name</mat-label>
-      <input matInput [(ngModel)]="user.fullName" name="fullName">
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="editUser()">Edit user</button>
+    <form (ngSubmit)="userForm.form.valid && editUser()" #userForm="ngForm">
+      <mat-list>
+        <mat-list-item>Username: {{user.username}}</mat-list-item>
+        <mat-list-item>Email: {{user.email}}</mat-list-item>
+      </mat-list>
+      <mat-form-field appearance="standard">
+        <mat-label>Full name</mat-label>
+        <input matInput [(ngModel)]="user.fullName" name="fullName" #fullName="ngModel" required minlength="4">
+      </mat-form-field>
+      <div class="message-container invalid-messages" *ngIf="userForm.submitted && fullName.invalid">
+        <span class="message error" *ngIf="fullName.errors.required">Full name is required!</span>
+        <span class="message error" *ngIf="fullName.errors.minlength">Full name must be at least 4 characters</span>
+      </div>
+
+      <button mat-raised-button color="primary">Edit user</button>
+    </form>
   </div>
   <mat-divider *ngIf="student != null"></mat-divider>
   <div class="student-change" *ngIf="student != null">
-    <mat-form-field appearance="standard">
-      <mat-label>Index number</mat-label>
-      <input matInput [(ngModel)]="student.indexNumber" name="indexNumber">
-    </mat-form-field>
+    <form (ngSubmit)="studentForm.form.valid && editStudent()" #studentForm="ngForm">
+      <mat-form-field appearance="standard">
+        <mat-label>Index number</mat-label>
+        <input matInput [(ngModel)]="student.indexNumber" name="indexNumber" #index="ngModel" required>
+      </mat-form-field>
+      <div class="message-container invalid-messages" *ngIf="studentForm.submitted && index.invalid">
+        <span class="message error" *ngIf="index.errors.required">Index number is required!</span>
+      </div>
 
-    <mat-form-field appearance="standard">
-      <mat-label>Semester</mat-label>
-      <input matInput [(ngModel)]="student.semester" name="semester">
-    </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Semester</mat-label>
+        <input matInput [(ngModel)]="student.semester" name="semester" #semester="ngModel" required>
+      </mat-form-field>
+      <div class="message-container invalid-messages" *ngIf="studentForm.submitted && semester.invalid">
+        <span class="message error" *ngIf="semester.errors.required">Semester is required!</span>
+      </div>
 
-    <mat-form-field appearance="standard">
-      <mat-label>Field of study</mat-label>
-      <mat-select [(ngModel)]="student.fieldOfStudyDTO" name="fieldOfStudy" [compareWith]="objectComparisonFunction">
-        <mat-option *ngFor="let fieldOfStudy of fieldsOfStudy" [value]="fieldOfStudy">
-          {{fieldOfStudy | fieldOfStudy}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="editStudent()">Edit student</button>
+      <mat-form-field appearance="standard">
+        <mat-label>Field of study</mat-label>
+        <mat-select [(ngModel)]="student.fieldOfStudyDTO" name="fieldOfStudy" [compareWith]="objectComparisonFunction"
+                    #fieldOfStudy="ngModel" required>
+          <mat-option *ngFor="let fieldOfStudy of fieldsOfStudy" [value]="fieldOfStudy">
+            {{fieldOfStudy | fieldOfStudy}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="message-container invalid-messages" *ngIf="studentForm.submitted && fieldOfStudy.invalid">
+        <span class="message error" *ngIf="fieldOfStudy.errors.required">Field of study is required!</span>
+      </div>
+
+      <button mat-raised-button color="primary">Edit student</button>
+    </form>
   </div>
   <mat-divider *ngIf="teacher != null"></mat-divider>
   <div class="teacher-change" *ngIf="teacher != null">
-    <mat-form-field appearance="standard">
-      <mat-label>Room</mat-label>
-      <input matInput [(ngModel)]="teacher.room" name="room">
-    </mat-form-field>
+    <form (ngSubmit)="teacherForm.form.valid && editTeacher()" #teacherForm="ngForm">
+      <mat-form-field appearance="standard">
+        <mat-label>Room</mat-label>
+        <input matInput [(ngModel)]="teacher.room" name="room">
+      </mat-form-field>
 
-    <mat-form-field appearance="standard">
-      <mat-label>Consultations</mat-label>
-      <input matInput [(ngModel)]="teacher.consultations" name="consultations">
-    </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Consultations</mat-label>
+        <input matInput [(ngModel)]="teacher.consultations" name="consultations">
+      </mat-form-field>
 
-    <mat-form-field appearance="standard">
-      <mat-label>Faculty</mat-label>
-      <mat-select [(ngModel)]="teacher.facultyDTO" name="faculty" [compareWith]="objectComparisonFunction">
-        <mat-option *ngFor="let faculty of faculties" [value]="faculty">
-          {{faculty.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="editTeacher()">Edit teacher</button>
+      <mat-form-field appearance="standard">
+        <mat-label>Faculty</mat-label>
+        <mat-select [(ngModel)]="teacher.facultyDTO" name="faculty" [compareWith]="objectComparisonFunction"
+                    #faculty="ngModel" required>
+          <mat-option *ngFor="let faculty of faculties" [value]="faculty">
+            {{faculty.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="message-container invalid-messages" *ngIf="teacherForm.submitted && faculty.invalid">
+        <span class="message error" *ngIf="faculty.errors.required">Faculty is required!</span>
+      </div>
+
+      <button mat-raised-button color="primary">Edit teacher</button>
+    </form>
   </div>
 </div>
