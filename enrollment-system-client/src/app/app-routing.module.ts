@@ -20,6 +20,10 @@ import {AddGroupComponent} from './dashboard/components/groups/add-group/add-gro
 import {AddNewsComponent} from './dashboard/components/home/add-news/add-news.component';
 import {EditProfileComponent} from './dashboard/components/profile/edit-profile/edit-profile.component';
 import {ChangeRoleComponent} from './dashboard/components/users/change-role/change-role.component';
+import {AdminGuard} from './user/auth/admin.guard';
+import {StudentGuard} from './user/auth/student.guard';
+import {TeacherGuard} from './user/auth/teacher.guard';
+import {TeacherAdminGuard} from './user/auth/teacher-admin.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -28,23 +32,23 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], children: [
       { path: '', component: HomeComponent, outlet: 'panel', pathMatch: 'full' },
-      { path: 'news/add', component: AddNewsComponent, outlet: 'panel' },
-      { path: 'news/:id/edit', component: AddNewsComponent, outlet: 'panel' },
-      { path: 'registration', component: RegistrationComponent, outlet: 'panel' },
+      { path: 'news/add', component: AddNewsComponent, outlet: 'panel', canActivate: [AdminGuard] },
+      { path: 'news/:id/edit', component: AddNewsComponent, outlet: 'panel', canActivate: [AdminGuard] },
+      { path: 'registration', component: RegistrationComponent, outlet: 'panel', canActivate: [StudentGuard] },
       { path: 'subjects', component: SubjectsComponent, outlet: 'panel' },
       { path: 'subjects/:id', component: SubjectDetailsComponent, outlet: 'panel'},
-      { path: 'my-groups', component: MyGroupsComponent, outlet: 'panel' },
+      { path: 'my-groups', component: MyGroupsComponent, outlet: 'panel', canActivate: [TeacherGuard] },
       { path: 'profile', component: ProfileComponent, outlet: 'panel' },
       { path: 'profile/edit', component: EditProfileComponent, outlet: 'panel' },
-      { path: 'university', component: UniversityComponent, outlet: 'panel' },
+      { path: 'university', component: UniversityComponent, outlet: 'panel', canActivate: [AdminGuard] },
       { path: 'groups', component: GroupsComponent, outlet: 'panel' },
-      { path: 'groups/add', component: AddGroupComponent, outlet: 'panel'},
-      { path: 'groups/:id', component: GroupDetailsComponent, outlet: 'panel'},
-      { path: 'groups/:id/edit', component: AddGroupComponent, outlet: 'panel'},
-      { path: 'users', component: UsersComponent, outlet: 'panel' },
-      { path: 'users/:username/role', component: ChangeRoleComponent, outlet: 'panel' },
-      { path: 'requests', component: RequestsComponent, outlet: 'panel' },
-      { path: 'settings', component: SettingsComponent, outlet: 'panel' }
+      { path: 'groups/add', component: AddGroupComponent, outlet: 'panel', canActivate: [TeacherAdminGuard]},
+      { path: 'groups/:id', component: GroupDetailsComponent, outlet: 'panel' },
+      { path: 'groups/:id/edit', component: AddGroupComponent, outlet: 'panel', canActivate: [TeacherAdminGuard]},
+      { path: 'users', component: UsersComponent, outlet: 'panel', canActivate: [AdminGuard] },
+      { path: 'users/:username/role', component: ChangeRoleComponent, outlet: 'panel', canActivate: [AdminGuard] },
+      { path: 'requests', component: RequestsComponent, outlet: 'panel', canActivate: [AdminGuard] },
+      { path: 'settings', component: SettingsComponent, outlet: 'panel', canActivate: [AdminGuard] }
   ]}
 ];
 
