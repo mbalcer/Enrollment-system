@@ -65,15 +65,15 @@
       <mat-form-field appearance="standard">
         <mat-label>Start time</mat-label>
         <input matInput [ngxMatDatetimePicker]="pickerStart" placeholder="Choose a date" name="startDate" ngModel="startDate">
-        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #pickerStart></ngx-mat-datetime-picker>
+        <mat-datepicker-toggle matSuffix [for]="pickerStart" ></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #pickerStart showSeconds="true"></ngx-mat-datetime-picker>
       </mat-form-field>
 
       <mat-form-field appearance="standard">
         <mat-label>End time</mat-label>
         <input matInput [ngxMatDatetimePicker]="pickerEnd" placeholder="Choose a date" name="endDate" ngModel="endDate">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #pickerEnd></ngx-mat-datetime-picker>
+        <ngx-mat-datetime-picker #pickerEnd showSeconds="true"></ngx-mat-datetime-picker>
       </mat-form-field>
 
       <button mat-icon-button aria-label="Add group button" class="add-button" matTooltip="Add appointment">

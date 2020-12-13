@@ -4,6 +4,7 @@ import {NewsService} from '../news.service';
 import {News} from '../news.model';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 import {NgForm} from '@angular/forms';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-add-news',
@@ -34,7 +35,10 @@ export class AddNewsComponent implements OnInit {
     ]
   };
 
-  constructor(private route: ActivatedRoute, private newsService: NewsService, private router: Router) { }
+  constructor(private route: ActivatedRoute,
+              private newsService: NewsService,
+              private router: Router,
+              private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -53,10 +57,11 @@ export class AddNewsComponent implements OnInit {
   saveNews(form: NgForm) {
     if (this.isAdd) {
       this.newsService.postNews(this.newsToEdit).subscribe(result => {
-        this.newsToEdit = new News();
+        this.notificationService.success('New news', 'You added news with the title: ' + result.title);
       }, error => console.log(error));
     } else {
       this.newsService.putNews(this.newsToEdit, this.newsToEdit.id).subscribe(result => {
+        this.notificationService.success('Edit news', 'You updated news with the title: ' + result.title);
         this.router.navigateByUrl('/dashboard/news/add');
       }, error => console.log(error));
     }

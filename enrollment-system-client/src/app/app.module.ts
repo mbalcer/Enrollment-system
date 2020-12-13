@@ -39,6 +39,7 @@ import {AddNewsComponent} from './dashboard/components/home/add-news/add-news.co
 import {AngularEditorModule} from '@kolkov/angular-editor';
 import {EditProfileComponent} from './dashboard/components/profile/edit-profile/edit-profile.component';
 import {ChangeRoleComponent} from './dashboard/components/users/change-role/change-role.component';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import {ChangeRoleComponent} from './dashboard/components/users/change-role/chan
     NgxMatNativeDateModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
-    AngularEditorModule
+    AngularEditorModule,
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [
     {
