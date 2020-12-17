@@ -51,19 +51,19 @@ export class AddNewsComponent implements OnInit {
   getNews(id: number) {
     this.newsService.getNews(id).subscribe(result => {
       this.newsToEdit = result;
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   saveNews(form: NgForm) {
     if (this.isAdd) {
       this.newsService.postNews(this.newsToEdit).subscribe(result => {
         this.notificationService.success('New news', 'You added news with the title: ' + result.title);
-      }, error => console.log(error));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     } else {
       this.newsService.putNews(this.newsToEdit, this.newsToEdit.id).subscribe(result => {
         this.notificationService.success('Edit news', 'You updated news with the title: ' + result.title);
         this.router.navigateByUrl('/dashboard/news/add');
-      }, error => console.log(error));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     }
     form.resetForm();
   }

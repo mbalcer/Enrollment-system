@@ -4,6 +4,7 @@ import {SubjectGroupService} from '../subject-group.service';
 import {ActivatedRoute} from '@angular/router';
 import {MatTableDataSource} from '@angular/material/table';
 import {Student} from '../../../../user/model/student.model';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-group-details',
@@ -16,7 +17,9 @@ export class GroupDetailsComponent implements OnInit {
 
   group = new SubjectGroup();
 
-  constructor(private subjectGroupService: SubjectGroupService, private route: ActivatedRoute) { }
+  constructor(private subjectGroupService: SubjectGroupService,
+              private route: ActivatedRoute,
+              private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getGroup(this.route.snapshot.paramMap.get('id'));
@@ -30,6 +33,6 @@ export class GroupDetailsComponent implements OnInit {
     this.subjectGroupService.getGroup(Number(id)).subscribe(result => {
       this.group = result;
       this.refreshTableStudent();
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 }

@@ -48,9 +48,10 @@
 
   </table>
 
-  <h2 class="title-students">Students:</h2>
+  <h2 class="title-students" *ngIf="group.studentsDTO.length > 0">Students:</h2>
+  <h2 class="title-students" *ngIf="group.studentsDTO.length == 0">No student has yet enrolled in the group</h2>
 
-  <div class="mat-elevation-z8">
+  <div class="mat-elevation-z8" *ngIf="group.studentsDTO.length > 0">
     <table mat-table [dataSource]="dataSourceStudents" class="table">
       <ng-container matColumnDef="fullName">
         <th mat-header-cell *matHeaderCellDef> Full Name </th>
@@ -70,4 +71,5 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+  </div>
 </div>

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ISubjectGroup, SubjectGroup} from './subject-group.model';
 import {SubjectGroupService} from './subject-group.service';
-import {Router} from '@angular/router';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-groups',
@@ -14,7 +14,7 @@ export class GroupsComponent implements OnInit {
   dataSource = new MatTableDataSource<SubjectGroup>();
   groups: ISubjectGroup[] = [];
 
-  constructor(private subjectGroupService: SubjectGroupService, private router: Router) { }
+  constructor(private subjectGroupService: SubjectGroupService, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getGroups();
@@ -28,13 +28,18 @@ export class GroupsComponent implements OnInit {
     this.subjectGroupService.getAllGroups().subscribe(result => {
       this.groups = result;
       this.refreshTable();
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   deleteGroup(row: ISubjectGroup) {
-    this.subjectGroupService.deleteGroup(row.id).subscribe(result => {
-      this.groups.splice(this.groups.indexOf(row), 1);
-      this.refreshTable();
-    }, error => console.log(error));
+    if (confirm('Are you sure you want to delete the group with id "' + row.id + '"?')) {
+      this.subjectGroupService.deleteGroup(row.id).subscribe(result => {
+        this.groups.splice(this.groups.indexOf(row), 1);
+        this.refreshTable();
+        this.notificationService.success("Delete group", "The group with id " + row.id + " was deleted.");
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
+    } else {
+      this.notificationService.info("Delete group", "The group wasn't deleted");
+    }
   }
 }

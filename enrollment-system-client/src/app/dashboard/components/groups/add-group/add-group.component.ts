@@ -18,6 +18,7 @@ import {TokenStorageService} from '../../../../user/auth/token-storage.service';
 import {IAppointment} from '../appointment.model';
 import {DatePipe} from '@angular/common';
 import {MatListOption} from '@angular/material/list';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-add-group',
@@ -50,7 +51,8 @@ export class AddGroupComponent implements OnInit {
               private fieldOfStudyService: FieldOfStudyService,
               private route: ActivatedRoute,
               private router: Router,
-              private tokenStorage: TokenStorageService) {
+              private tokenStorage: TokenStorageService,
+              private notificationService: NotificationsService) {
     this.filteredFieldsOfStudy = this.fieldOfStudyCtrl.valueChanges.pipe(
       startWith(null),
       map((fieldOfStudy: string | null) =>
@@ -83,13 +85,13 @@ export class AddGroupComponent implements OnInit {
     this.subjectGroupService.getGroup(Number(id)).subscribe(result => {
       this.groupToAdd = result;
       this.timeTable = this.groupToAdd.timeTableDTO;
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   getSubjects() {
     this.subjectService.getAllSubjects().subscribe(result => {
       this.subjects = result;
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   getTeachers() {
@@ -99,7 +101,7 @@ export class AddGroupComponent implements OnInit {
         this.teachers = this.teachers.filter(teacher => teacher.username === this.teacherUsername);
         this.groupToAdd.nameTeacher = this.teachers[0].fullName;
       }
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   getFieldsOfStudy() {
@@ -111,25 +113,25 @@ export class AddGroupComponent implements OnInit {
           this.allFieldsOfStudy.splice(index, 1);
         });
       }
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   saveGroup() {
     this.groupToAdd.timeTableDTO = this.timeTable;
     if (this.isAdd) {
       this.subjectGroupService.postGroup(this.groupToAdd).subscribe(result => {
-        // success message
+        this.notificationService.success("Add group", "You added the new group with id " + result.id);
         this.groupToAdd = new SubjectGroup();
         this.timeTable = [];
-      }, error => console.log(error));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     } else {
       this.subjectGroupService.putGroup(this.groupToAdd, this.groupToAdd.id).subscribe(result => {
-        // success message
+        this.notificationService.success("Update group", "You updated the group with id " + result.id);
         this.groupToAdd = new SubjectGroup();
         this.isAdd = true;
         this.timeTable = [];
         this.router.navigateByUrl('/dashboard/groups/add');
-      }, error => console.log(error));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     }
   }
 
@@ -144,6 +146,7 @@ export class AddGroupComponent implements OnInit {
 
     this.timeTable.push(appointment);
     timeTableForm.resetForm();
+    this.notificationService.info("Add appointment", "You added the appointment to time table.");
   }
 
   add(event: MatChipInputEvent): void {
@@ -197,5 +200,6 @@ export class AddGroupComponent implements OnInit {
       const appointment: IAppointment = option.value;
       this.timeTable.splice(this.timeTable.indexOf(appointment), 1);
     });
+    this.notificationService.info("Delete appointments", "You removed the appointments from time table.");
   }
 }
