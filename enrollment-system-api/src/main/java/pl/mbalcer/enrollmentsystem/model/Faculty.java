@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,6 +21,8 @@ public class Faculty {
     private String name;
     private String address;
     private String abbreviation;
+
+    private LocalDateTime startRegistration;
 
     @OneToMany(mappedBy = "faculty")
     @ToString.Exclude

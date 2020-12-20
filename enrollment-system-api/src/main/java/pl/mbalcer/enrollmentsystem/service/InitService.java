@@ -74,7 +74,7 @@ public class InitService {
         Set<Role> adminRole = new HashSet<>();
         adminRole.add(admin);
 
-        Faculty mathAndItFaculty = new Faculty(0l, "Faculty mathematics and IT", "Bydgoszcz", "MaI", null);
+        Faculty mathAndItFaculty = new Faculty(0l, "Faculty mathematics and IT", "Bydgoszcz", "MaI", null, null);
         mathAndItFaculty = facultyRepository.save(mathAndItFaculty);
         FieldOfStudy it = new FieldOfStudy(0l, "IT", StudyType.FIRST_CYCLE, StudyMode.FULL_TIME, mathAndItFaculty, null);
         it = fieldOfStudyRepository.save(it);

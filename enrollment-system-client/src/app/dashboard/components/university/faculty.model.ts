@@ -3,6 +3,7 @@ export interface IFaculty {
   name: string;
   address: string;
   abbreviation: string;
+  startRegistration: string;
 }
 
 export class Faculty implements IFaculty {
@@ -10,11 +11,13 @@ export class Faculty implements IFaculty {
   name: string;
   address: string;
   abbreviation: string;
+  startRegistration: string;
 
   constructor() {
     this.id = null;
     this.name = '';
     this.address = '';
     this.abbreviation = '';
+    this.startRegistration = '';
   }
 }

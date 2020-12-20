@@ -10,6 +10,7 @@ import {IFaculty} from './faculty.model';
 export class FacultyService {
   private FACULTY_URL = environment.basePath + '/faculty';
   private GET_ALL_FACULTY_URL = this.FACULTY_URL;
+  private GET_REGISTRATION_IS_BLOCKED_URL = this.FACULTY_URL + '/blocked/';
   private POST_FACULTY_URL = this.FACULTY_URL;
   private PUT_FACULTY_URL = this.FACULTY_URL;
   private DELETE_FACULTY_URL = this.FACULTY_URL;
@@ -18,6 +19,10 @@ export class FacultyService {
 
   getAllFaculties(): Observable<IFaculty[]> {
     return this.httpClient.get<IFaculty[]>(this.GET_ALL_FACULTY_URL);
+  }
+
+  isBlocked(abbreviation: string): Observable<any> {
+    return this.httpClient.get<any>(this.GET_REGISTRATION_IS_BLOCKED_URL + abbreviation);
   }
 
   postFaculty(faculty: IFaculty): Observable<IFaculty> {
