@@ -2,10 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {Faculty, IFaculty} from './faculty.model';
 import {FacultyService} from './faculty.service';
-import {FormMessage} from '../../../model/form-message.model';
-import {TypeMessage} from '../../../model/enumeration/type-message.enum';
 import {FieldOfStudy, IFieldOfStudy} from './field-of-study.model';
 import {FieldOfStudyService} from './field-of-study.service';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-university',
@@ -13,24 +12,22 @@ import {FieldOfStudyService} from './field-of-study.service';
   styleUrls: ['./university.component.scss']
 })
 export class UniversityComponent implements OnInit {
-  public TypeMessage = TypeMessage;
-
   displayedColumnsFacultyTable: string[] = ['id', 'name', 'address', 'abbreviation', 'actions'];
   dataSourceFaculties = new MatTableDataSource<Faculty>();
   faculties: IFaculty[];
   facultyToSave = new Faculty();
-  facultyMessage = new FormMessage();
 
   displayedColumnsFieldOfStudyTable: string[] = ['id', 'name', 'type', 'mode', 'abbreviationFaculty', 'actions'];
   dataSourceFieldsOfStudy = new MatTableDataSource<FieldOfStudy>();
   fieldsOfStudy: IFieldOfStudy[];
   fieldOfStudyToSave = new FieldOfStudy();
-  fieldOfStudyMessage = new FormMessage();
 
   studyTypes = ['FIRST_CYCLE', 'SECOND_CYCLE', 'THIRD_CYCLE', 'LONG_CYCLE'];
   studyModes = ['FULL_TIME', 'PART_TIME'];
 
-  constructor(private facultyService: FacultyService, private fieldOfStudyService: FieldOfStudyService) { }
+  constructor(private facultyService: FacultyService,
+              private fieldOfStudyService: FieldOfStudyService,
+              private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getFaculties();
@@ -42,23 +39,19 @@ export class UniversityComponent implements OnInit {
     this.dataSourceFieldsOfStudy = new MatTableDataSource<FieldOfStudy>(this.fieldsOfStudy);
   }
 
-  clearMessages() {
-    this.facultyMessage = new FormMessage();
-    this.fieldOfStudyMessage = new FormMessage();
-  }
-
-  processError(message: FormMessage, error) {
-    message.type = TypeMessage.ERROR;
-    if (error.error.message == null || error.error.message.length === 0) {
-      message.message = 'Server error. Try again later.';
+  processError(err) {
+    let message;
+    if (err.error.message == null || err.error.message.length === 0) {
+      message = 'Server error. Try again later.';
     } else {
-      message.message = error.error.message;
+      message = err.error.message;
     }
+
+    this.notificationService.error(err.status + ': ' + err.error.status, message);
   }
 
-  processSuccess(message: FormMessage, text) {
-    message.type = TypeMessage.SUCCESS;
-    message.message = text;
+  processSuccess(title, text) {
+    this.notificationService.success(title, text);
   }
 
   createSuccessMessage(object: string, operation: string) {
@@ -69,37 +62,41 @@ export class UniversityComponent implements OnInit {
     this.facultyService.getAllFaculties().subscribe(result => {
       this.faculties = result;
       this.refreshTables();
-    }, error => this.processError(this.facultyMessage, error));
+    }, error => this.processError(error));
   }
 
   deleteFaculty(row: IFaculty) {
-    this.clearMessages();
-    this.facultyService.deleteFaculty(row.id).subscribe(result => {
-      this.faculties.splice(this.faculties.indexOf(row), 1);
-      this.refreshTables();
-      this.processSuccess(this.facultyMessage, this.createSuccessMessage('faculty', 'deleted'));
-    }, error => this.processError(this.facultyMessage, error));
+    if (confirm("Are you sure you want to delete the faculty with the name'" + row.name + "'?")) {
+      this.facultyService.deleteFaculty(row.id).subscribe(result => {
+        this.faculties.splice(this.faculties.indexOf(row), 1);
+        this.refreshTables();
+        this.processSuccess('Delete faculty', this.createSuccessMessage('faculty', 'deleted'));
+      }, error => this.processError(error));
+    } else {
+      this.notificationService.info("Delete Faculty", "The Faculty wasn't deleted");
+    }
   }
 
   editFaculty(row: IFaculty) {
-    this.clearMessages();
     this.facultyToSave = row;
   }
 
-  saveFaculty() {
-    this.clearMessages();
+  saveFaculty(form) {
     if (this.facultyToSave.id != null && typeof this.facultyToSave.id === 'number') {
       this.facultyService.putFaculty(this.facultyToSave).subscribe(result => {
         this.facultyToSave = new Faculty();
-        this.processSuccess(this.facultyMessage, this.createSuccessMessage('faculty', 'updated'));
-      }, error => this.processError(this.facultyMessage, error));
+        this.refreshTables();
+        this.processSuccess('Update faculty', this.createSuccessMessage('faculty', 'updated'));
+        form.resetForm();
+      }, error => this.processError(error));
     } else {
       this.facultyService.postFaculty(this.facultyToSave).subscribe(result => {
         this.faculties.push(result);
         this.facultyToSave = new Faculty();
         this.refreshTables();
-        this.processSuccess(this.facultyMessage, this.createSuccessMessage('faculty', 'added'));
-      }, error => this.processError(this.facultyMessage, error));
+        this.processSuccess('Create faculty', this.createSuccessMessage('faculty', 'added'));
+        form.resetForm();
+      }, error => this.processError(error));
     }
   }
 
@@ -107,37 +104,40 @@ export class UniversityComponent implements OnInit {
     this.fieldOfStudyService.getAllFieldsOfStudy().subscribe(result => {
       this.fieldsOfStudy = result;
       this.refreshTables();
-    }, error => this.processError(this.fieldOfStudyMessage, error));
+    }, error => this.processError(error));
   }
 
   editFieldOfStudy(row: IFieldOfStudy) {
-    this.clearMessages();
     this.fieldOfStudyToSave = row;
   }
 
   deleteFieldOfStudy(row: IFieldOfStudy) {
-    this.clearMessages();
-    this.fieldOfStudyService.deleteFieldOfStudy(row.id).subscribe(result => {
-      this.fieldsOfStudy.splice(this.fieldsOfStudy.indexOf(row), 1);
-      this.refreshTables();
-      this.processSuccess(this.fieldOfStudyMessage, this.createSuccessMessage('field of study', 'deleted'));
-    }, error => this.processError(this.fieldOfStudyMessage, error));
+    if (confirm("Are you sure you want to delete the field of study with the name'" + row.name + "'?")) {
+      this.fieldOfStudyService.deleteFieldOfStudy(row.id).subscribe(result => {
+        this.fieldsOfStudy.splice(this.fieldsOfStudy.indexOf(row), 1);
+        this.refreshTables();
+        this.processSuccess('Delete Field of Study', this.createSuccessMessage('field of study', 'deleted'));
+      }, error => this.processError(error));
+    } else {
+      this.notificationService.info("Delete Field of Study", "The Field of Study wasn't deleted");
+    }
   }
 
-  saveFieldOfStudy() {
-    this.clearMessages();
+  saveFieldOfStudy(form) {
     if (this.fieldOfStudyToSave.id != null && typeof this.fieldOfStudyToSave.id === 'number') {
       this.fieldOfStudyService.putFieldOfStudy(this.fieldOfStudyToSave).subscribe(result => {
         this.fieldOfStudyToSave = new FieldOfStudy();
-        this.processSuccess(this.fieldOfStudyMessage, this.createSuccessMessage('field of study', 'updated'));
-      }, error => this.processError(this.fieldOfStudyMessage, error));
+        form.resetForm();
+        this.processSuccess('Update Field of Study', this.createSuccessMessage('field of study', 'updated'));
+      }, error => this.processError(error));
     } else {
       this.fieldOfStudyService.postFieldOfStudy(this.fieldOfStudyToSave).subscribe(result => {
         this.fieldsOfStudy.push(result);
         this.fieldOfStudyToSave = new FieldOfStudy();
         this.refreshTables();
-        this.processSuccess(this.fieldOfStudyMessage, this.createSuccessMessage('field of study', 'added'));
-      }, error => this.processError(this.fieldOfStudyMessage, error));
+        form.resetForm();
+        this.processSuccess('Create Field of Study', this.createSuccessMessage('field of study', 'added'));
+      }, error => this.processError(error));
     }
   }
 }

@@ -19,8 +19,8 @@ export class FieldOfStudy implements IFieldOfStudy {
   constructor() {
     this.id = null;
     this.name = '';
-    this.type = StudyType.FIRST_CYCLE;
-    this.mode = StudyMode.FULL_TIME;
+    this.type = null;
+    this.mode = null;
     this.abbreviationFaculty = '';
   }
 }

@@ -2,26 +2,43 @@
   <mat-tab label="Faculty">
     <div class="container-component">
       <div class="form-add-faculty">
-        <mat-form-field appearance="standard">
-          <mat-label>Name</mat-label>
-          <input matInput [(ngModel)]="facultyToSave.name" name="name">
-        </mat-form-field>
-        <mat-form-field appearance="standard">
-          <mat-label>Address</mat-label>
-          <input matInput [(ngModel)]="facultyToSave.address" name="address">
-        </mat-form-field>
-        <mat-form-field appearance="standard">
-          <mat-label>Abbreviation</mat-label>
-          <input matInput [(ngModel)]="facultyToSave.abbreviation" name="abbreviation">
-        </mat-form-field>
-        <button mat-button aria-label="Add Faculty button" class="add-button" (click)="saveFaculty()">
-          <mat-icon>add_circle_outline</mat-icon>
-          <span>Save Faculty</span>
-        </button>
-      </div>
-      <div class="message-container text-center">
-        <p class="message error" *ngIf="facultyMessage.type === TypeMessage.ERROR">{{facultyMessage.message}}</p>
-        <p class="message success" *ngIf="facultyMessage.type === TypeMessage.SUCCESS">{{facultyMessage.message}}</p>
+        <form (ngSubmit)="fFaculty.form.valid && saveFaculty(fFaculty)" #fFaculty="ngForm" novalidate>
+          <div class="input-item">
+            <mat-form-field appearance="standard">
+              <mat-label>Name</mat-label>
+              <input matInput [(ngModel)]="facultyToSave.name" name="name"
+                     required minlength="5" maxlength="100" #nameFaculty="ngModel">
+            </mat-form-field>
+            <div class="message-container" *ngIf="fFaculty.submitted && nameFaculty.invalid">
+              <span class="message error" *ngIf="nameFaculty.errors.required">Name is required!</span>
+              <span class="message error" *ngIf="nameFaculty.errors.minlength">Name must be at least 5 characters</span>
+            </div>
+          </div>
+
+          <div class="input-item">
+            <mat-form-field appearance="standard">
+              <mat-label>Address</mat-label>
+              <input matInput [(ngModel)]="facultyToSave.address" name="address" maxlength="100">
+            </mat-form-field>
+          </div>
+
+          <div class="input-item">
+            <mat-form-field appearance="standard">
+              <mat-label>Abbreviation</mat-label>
+              <input matInput [(ngModel)]="facultyToSave.abbreviation" name="abbreviation"
+                     required minlength="2" maxlength="20" #abbreviationFaculty="ngModel">
+            </mat-form-field>
+            <div class="message-container" *ngIf="fFaculty.submitted && abbreviationFaculty.invalid">
+              <span class="message error" *ngIf="abbreviationFaculty.errors.required">Abbreviation is required!</span>
+              <span class="message error" *ngIf="abbreviationFaculty.errors.minlength">Abbreviation must be at least 2 characters</span>
+            </div>
+          </div>
+
+          <button mat-button aria-label="Add Faculty button" class="add-button">
+            <mat-icon>add_circle_outline</mat-icon>
+            <span>Save Faculty</span>
+          </button>
+        </form>
       </div>
       <table mat-table [dataSource]="dataSourceFaculties" class="mat-elevation-z8 table">
         <ng-container matColumnDef="id">
@@ -65,38 +82,65 @@
   <mat-tab label="Field of study">
     <div class="container-component">
       <div class="form-add-fieldOfStudy">
-        <mat-form-field appearance="standard">
-          <mat-label>Name</mat-label>
-          <input matInput [(ngModel)]="fieldOfStudyToSave.name" name="name">
-        </mat-form-field>
-        <mat-form-field appearance="standard">
-          <mat-label>Type</mat-label>
-          <mat-select [(ngModel)]="fieldOfStudyToSave.type" name="type">
-            <mat-option *ngFor="let type of studyTypes" [value]="type"> {{type}} </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="standard">
-          <mat-label>Mode</mat-label>
-          <mat-select [(ngModel)]="fieldOfStudyToSave.mode" name="mode">
-            <mat-option *ngFor="let mode of studyModes" [value]="mode"> {{mode}} </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="standard">
-          <mat-label>Faculty</mat-label>
-          <mat-select [(ngModel)]="fieldOfStudyToSave.abbreviationFaculty" name="abbreviationFaculty">
-            <mat-option *ngFor="let faculty of faculties" [value]="faculty.abbreviation">
-              {{faculty.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <button mat-button aria-label="Add FieldOfStudy button" class="add-button" (click)="saveFieldOfStudy()">
-          <mat-icon>add_circle_outline</mat-icon>
-          <span>Save Field Of Study</span>
-        </button>
-      </div>
-      <div class="message-container text-center">
-        <p class="message error" *ngIf="fieldOfStudyMessage.type === TypeMessage.ERROR">{{fieldOfStudyMessage.message}}</p>
-        <p class="message success" *ngIf="fieldOfStudyMessage.type === TypeMessage.SUCCESS">{{fieldOfStudyMessage.message}}</p>
+        <form (ngSubmit)="fFieldOfStudy.form.valid && saveFieldOfStudy(fFieldOfStudy)" #fFieldOfStudy="ngForm" novalidate>
+          <div class="input-item">
+            <mat-form-field appearance="standard">
+              <mat-label>Name</mat-label>
+              <input matInput [(ngModel)]="fieldOfStudyToSave.name" name="name"
+                     required minlength="2" maxlength="100" #nameFieldOfStudy="ngModel">
+            </mat-form-field>
+            <div class="message-container" *ngIf="fFieldOfStudy.submitted && nameFieldOfStudy.invalid">
+              <span class="message error" *ngIf="nameFieldOfStudy.errors.required">Name is required!</span>
+              <span class="message error" *ngIf="nameFieldOfStudy.errors.minlength">Name must be at least 2 characters</span>
+            </div>
+          </div>
+
+          <div class="input-item">
+            <mat-form-field appearance="standard">
+              <mat-label>Type</mat-label>
+              <mat-select [(ngModel)]="fieldOfStudyToSave.type" name="type"
+                          required #studyType="ngModel">
+                <mat-option *ngFor="let type of studyTypes" [value]="type"> {{type}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="message-container" *ngIf="fFieldOfStudy.submitted && studyType.invalid">
+              <span class="message error" *ngIf="studyType.errors.required">Type is required!</span>
+            </div>
+          </div>
+
+          <div class="input-item">
+            <mat-form-field appearance="standard">
+              <mat-label>Mode</mat-label>
+              <mat-select [(ngModel)]="fieldOfStudyToSave.mode" name="mode"
+                          required #mode="ngModel">
+                <mat-option *ngFor="let mode of studyModes" [value]="mode"> {{mode}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="message-container" *ngIf="fFieldOfStudy.submitted && mode.invalid">
+              <span class="message error" *ngIf="mode.errors.required">Mode is required!</span>
+            </div>
+          </div>
+
+          <div class="input-item">
+            <mat-form-field appearance="standard">
+              <mat-label>Faculty</mat-label>
+              <mat-select [(ngModel)]="fieldOfStudyToSave.abbreviationFaculty" name="abbreviationFaculty"
+                          required #faculty="ngModel">
+                <mat-option *ngFor="let faculty of faculties" [value]="faculty.abbreviation">
+                  {{faculty.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="message-container" *ngIf="fFieldOfStudy.submitted && faculty.invalid">
+              <span class="message error" *ngIf="faculty.errors.required">Faculty is required!</span>
+            </div>
+          </div>
+
+          <button mat-button aria-label="Add FieldOfStudy button" class="add-button">
+            <mat-icon>add_circle_outline</mat-icon>
+            <span>Save Field Of Study</span>
+          </button>
+        </form>
       </div>
       <table mat-table [dataSource]="dataSourceFieldsOfStudy" class="mat-elevation-z8 table">
         <ng-container matColumnDef="id">
