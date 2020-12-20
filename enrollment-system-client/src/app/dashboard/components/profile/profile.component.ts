@@ -6,6 +6,7 @@ import {StudentService} from '../../../user/service/student.service';
 import {TeacherService} from '../../../user/service/teacher.service';
 import {IStudent} from '../../../user/model/student.model';
 import {ITeacher} from '../../../user/model/teacher.model';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +21,8 @@ export class ProfileComponent implements OnInit {
   constructor(private tokenStorageService: TokenStorageService,
               private userService: UserService,
               private studentService: StudentService,
-              private teacherService: TeacherService) { }
+              private teacherService: TeacherService,
+              private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -33,16 +35,16 @@ export class ProfileComponent implements OnInit {
       this.studentService.getStudentByUsername(user.username).subscribe(result => {
         this.user = result;
         this.student = result;
-      }, err => console.log(err));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     } else if (role === 'TEACHER') {
       this.teacherService.getTeacherByUsername(user.username).subscribe(result => {
         this.user = result;
         this.teacher = result;
-      }, err => console.log(err));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     } else {
       this.userService.getUser().subscribe(result => {
         this.user = result;
-      }, err => console.log(err));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     }
   }
 

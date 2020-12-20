@@ -10,6 +10,7 @@ import {FieldOfStudyService} from '../../university/field-of-study.service';
 import {IFieldOfStudy} from '../../university/field-of-study.model';
 import {FacultyService} from '../../university/faculty.service';
 import {IFaculty} from '../../university/faculty.model';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-edit-profile',
@@ -29,7 +30,8 @@ export class EditProfileComponent implements OnInit {
               private studentService: StudentService,
               private teacherService: TeacherService,
               private fieldOfStudyService: FieldOfStudyService,
-              private facultyService: FacultyService) {
+              private facultyService: FacultyService,
+              private notificationService: NotificationsService) {
   }
 
   ngOnInit(): void {
@@ -45,13 +47,13 @@ export class EditProfileComponent implements OnInit {
   getFieldsOfStudy() {
     this.fieldOfStudyService.getAllFieldsOfStudy().subscribe(result => {
       this.fieldsOfStudy = result;
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   getFaculties() {
     this.facultyService.getAllFaculties().subscribe(result => {
       this.faculties = result;
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   getUser() {
@@ -61,34 +63,37 @@ export class EditProfileComponent implements OnInit {
       this.studentService.getStudentByUsername(user.username).subscribe(result => {
         this.user = result;
         this.student = result;
-      }, err => console.log(err));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     } else if (role === 'TEACHER') {
       this.teacherService.getTeacherByUsername(user.username).subscribe(result => {
         this.user = result;
         this.teacher = result;
-      }, err => console.log(err));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     } else {
       this.userService.getUser().subscribe(result => {
         this.user = result;
-      }, err => console.log(err));
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     }
   }
 
   editUser() {
     this.userService.putUser(this.user, this.user.username).subscribe(result => {
       this.user = result;
-    }, error => console.log(error));
+      this.notificationService.success("Edit user", "You have updated your profile");
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   editStudent() {
     this.studentService.putStudent(this.student, this.student.username).subscribe(result => {
       this.student = result;
-    }, error => console.log(error));
+      this.notificationService.success("Edit student", "You have updated your profile");
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   editTeacher() {
     this.teacherService.putTeacher(this.teacher, this.teacher.username).subscribe(result => {
       this.teacher = result;
-    }, error => console.log(error));
+      this.notificationService.success("Edit teacher", "You have updated your profile");
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 }

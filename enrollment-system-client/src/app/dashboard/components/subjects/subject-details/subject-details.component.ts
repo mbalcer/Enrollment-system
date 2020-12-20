@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SubjectService} from '../subject.service';
 import {ActivatedRoute} from '@angular/router';
 import {Subject} from '../subject.model';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-subject-details',
@@ -11,7 +12,7 @@ import {Subject} from '../subject.model';
 export class SubjectDetailsComponent implements OnInit {
   subject = new Subject();
 
-  constructor(private subjectService: SubjectService, private route: ActivatedRoute) { }
+  constructor(private subjectService: SubjectService, private route: ActivatedRoute, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getSubject(this.route.snapshot.paramMap.get('id'));
@@ -20,6 +21,6 @@ export class SubjectDetailsComponent implements OnInit {
   getSubject(id: string) {
     this.subjectService.getSubject(Number(id)).subscribe(result => {
       this.subject = result;
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 }

@@ -3,6 +3,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ISubject, Subject} from './subject.model';
 import {SubjectService} from './subject.service';
 import {MatPaginator} from '@angular/material/paginator';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-subjects',
@@ -16,7 +17,7 @@ export class SubjectsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private subjectService: SubjectService) { }
+  constructor(private subjectService: SubjectService, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getSubjects();
@@ -33,7 +34,7 @@ export class SubjectsComponent implements OnInit {
       this.subjects = result;
       console.log(this.subjects);
       this.refreshTable();
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
 }

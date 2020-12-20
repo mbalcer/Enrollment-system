@@ -7,6 +7,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {Student} from '../../../user/model/student.model';
 import {FormMessage} from '../../../model/form-message.model';
 import {TypeMessage} from '../../../model/enumeration/type-message.enum';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-registration',
@@ -23,14 +24,15 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private tokenStorage: TokenStorageService,
               private studentService: StudentService,
-              private subjectGroupService: SubjectGroupService) { }
+              private subjectGroupService: SubjectGroupService,
+              private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     const user = this.tokenStorage.getUser();
     this.studentService.getStudentByUsername(user.username).subscribe(result => {
       this.student = result;
       this.getAllGroupToRegistration(result.fieldOfStudyDTO.id);
-    });
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   refreshTable() {
@@ -54,7 +56,7 @@ export class RegistrationComponent implements OnInit {
     this.subjectGroupService.getAllRegistration(fieldOfStudyId).subscribe(result => {
       this.groups = result;
       this.refreshTable();
-    }, err => this.setErrorMessage(err));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   checkStudentInGroup(group: ISubjectGroup) {
@@ -66,8 +68,8 @@ export class RegistrationComponent implements OnInit {
     this.subjectGroupService.addStudentToGroup(row, this.student.username).subscribe(result => {
       this.groups.push(result);
       this.refreshTable();
-      this.setSuccessMessage("You have been added to the group");
-    }, error => this.setErrorMessage(error));
+      this.notificationService.success("Add to group", "You have been added to the group");
+    }, err => this.notificationService.error(err.error.status, err.error.message));
   }
 
   removeFromGroup(row: ISubjectGroup) {
@@ -75,25 +77,11 @@ export class RegistrationComponent implements OnInit {
     this.subjectGroupService.removeStudentFromGroup(row, this.student.username).subscribe(result => {
       this.groups.push(result);
       this.refreshTable();
-      this.setSuccessMessage("You have been removed from the group");
-    }, error => this.setErrorMessage(error))
+      this.notificationService.success("Remove from group", "You have been removed from the group");
+    }, err => this.notificationService.error(err.error.status, err.error.message));
   }
 
   getIndexOfStudentInGroup(group: ISubjectGroup) {
     return group.studentsDTO.findIndex(student => student.username === this.student.username);
-  }
-
-  setErrorMessage(error) {
-    this.registrationMessage = {
-      message: error.error.message,
-      type: TypeMessage.ERROR
-    }
-  }
-
-  setSuccessMessage(success) {
-    this.registrationMessage = {
-      message: success,
-      type: TypeMessage.SUCCESS
-    }
   }
 }

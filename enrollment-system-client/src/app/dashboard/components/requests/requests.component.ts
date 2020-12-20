@@ -3,6 +3,7 @@ import {SubjectGroupService} from '../groups/subject-group.service';
 import {ISubjectGroup, SubjectGroup} from '../groups/subject-group.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {GroupType} from '../../../model/enumeration/group-type.enum';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-requests',
@@ -14,7 +15,7 @@ export class RequestsComponent implements OnInit {
   dataSource = new MatTableDataSource<SubjectGroup>();
   requests: ISubjectGroup[] = [];
 
-  constructor(private subjectGroupService: SubjectGroupService) { }
+  constructor(private subjectGroupService: SubjectGroupService, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getRequests();
@@ -28,7 +29,7 @@ export class RequestsComponent implements OnInit {
     this.subjectGroupService.getAllRequests().subscribe(result => {
       this.requests = result;
       this.refreshTable();
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   acceptGroup(row: ISubjectGroup) {
@@ -42,6 +43,11 @@ export class RequestsComponent implements OnInit {
   updateTypeGroup(type: GroupType, group: ISubjectGroup) {
     this.subjectGroupService.updateTypeGroup(type, group.id).subscribe(result => {
       this.requests.splice(this.requests.indexOf(group), 1);
-    }, error => console.log(error));
+      if (type == GroupType.ACCEPTED) {
+        this.notificationService.success("Request", "You have accepted the new group");
+      } else {
+        this.notificationService.success("Request", "You have don't accepted the new group");
+      }
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 }

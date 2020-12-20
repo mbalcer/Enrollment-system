@@ -3,6 +3,7 @@ import {SubjectGroupService} from '../groups/subject-group.service';
 import {TokenStorageService} from '../../../user/auth/token-storage.service';
 import {ISubjectGroup, SubjectGroup} from '../groups/subject-group.model';
 import {MatTableDataSource} from '@angular/material/table';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-my-groups',
@@ -14,7 +15,9 @@ export class MyGroupsComponent implements OnInit {
   dataSource = new MatTableDataSource<SubjectGroup>();
   groups: ISubjectGroup[] = [];
 
-  constructor(private subjectGroupService: SubjectGroupService, private tokenStorage: TokenStorageService) { }
+  constructor(private subjectGroupService: SubjectGroupService,
+              private tokenStorage: TokenStorageService,
+              private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getMyGroups();
@@ -29,7 +32,7 @@ export class MyGroupsComponent implements OnInit {
     this.subjectGroupService.getAllGroupByTeacher(teacherUsername).subscribe(result => {
       this.groups = result;
       this.refreshTable();
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
 }

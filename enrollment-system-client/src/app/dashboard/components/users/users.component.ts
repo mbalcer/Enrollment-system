@@ -3,6 +3,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {IUser, User} from '../../../user/model/user.model';
 import {UserService} from '../../../user/service/user.service';
 import {MatPaginator} from '@angular/material/paginator';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-users',
@@ -16,7 +17,7 @@ export class UsersComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -25,9 +26,8 @@ export class UsersComponent implements OnInit {
   getUsers() {
     this.userService.getAllUsers().subscribe(result => {
       this.users = result;
-      console.log(result);
       this.refreshTables();
-    }, error => console.log(error));
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   refreshTables() {
