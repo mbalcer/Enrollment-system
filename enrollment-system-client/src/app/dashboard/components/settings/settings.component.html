@@ -1,1 +1,18 @@
-<p>settings works!</p>
+<div class="container-component">
+  <h2>Settings</h2>
+  <div class="faculty-registration-date" *ngFor="let faculty of faculties">
+    <span class="faculty-name">{{faculty.name}}</span>
+    <span class="space"></span>
+
+    <mat-form-field appearance="standard" class="start-registration">
+      <mat-label>Start registration</mat-label>
+      <input matInput [(ngModel)]="faculty.startRegistration" [ngxMatDatetimePicker]="pickerRegistration" placeholder="Choose a date" name="startRegistration" ngModel="startRegistration">
+      <mat-datepicker-toggle matSuffix [for]="pickerRegistration"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #pickerRegistration showSeconds="true"></ngx-mat-datetime-picker>
+    </mat-form-field>
+
+    <span class="save-button">
+      <button mat-raised-button color="primary" (click)="saveRegistrationDate(faculty)">Save</button>
+    </span>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+.faculty-registration-date {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #dee2e6;
+  padding: 1em;
+  margin-top: 1em;
+}
+
+.faculty-name {
+  padding: 1.25em 0;
+  font-size: 18px;
+}
+
+.start-registration {
+  margin-right: 1em;
+  width: calc(100%/3);
+}
+
+.save-button {
+  padding: 1.25em 0;
+}
