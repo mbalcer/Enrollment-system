@@ -5,9 +5,9 @@ import {TokenStorageService} from '../../../user/auth/token-storage.service';
 import {ISubjectGroup, SubjectGroup} from '../groups/subject-group.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {Student} from '../../../user/model/student.model';
-import {FormMessage} from '../../../model/form-message.model';
-import {TypeMessage} from '../../../model/enumeration/type-message.enum';
 import {NotificationsService} from 'angular2-notifications';
+import {FacultyService} from '../university/faculty.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-registration',
@@ -15,22 +15,24 @@ import {NotificationsService} from 'angular2-notifications';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
-  public TypeMessage = TypeMessage;
   displayedColumns: string[] = ['id', 'subject', 'teacher', 'numberOfEnrolled', 'numberOfPlaces', 'actions'];
   dataSource = new MatTableDataSource<SubjectGroup>();
   groups: ISubjectGroup[] = [];
   student = new Student();
-  registrationMessage = new FormMessage();
+  blockedRegistration = false;
+  messageBlockedRegistration = '';
 
   constructor(private tokenStorage: TokenStorageService,
               private studentService: StudentService,
               private subjectGroupService: SubjectGroupService,
+              private facultyService: FacultyService,
               private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     const user = this.tokenStorage.getUser();
     this.studentService.getStudentByUsername(user.username).subscribe(result => {
       this.student = result;
+      this.isBlockedRegistration(this.student.fieldOfStudyDTO.abbreviationFaculty);
       this.getAllGroupToRegistration(result.fieldOfStudyDTO.id);
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
@@ -50,6 +52,18 @@ export class RegistrationComponent implements OnInit {
         return 1;
       }
     });
+  }
+
+  isBlockedRegistration(abbreviation: string) {
+    this.facultyService.isBlocked(abbreviation).subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.blockedRegistration = true;
+        this.messageBlockedRegistration = 'Registration is currently blocked. \nThe registration opening date: <b>' + new DatePipe("en-US").transform(result, 'yyyy-MM-dd HH:mm') + '</b>';
+      } else {
+        this.blockedRegistration = false;
+      }
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   getAllGroupToRegistration(fieldOfStudyId: number) {

@@ -3,8 +3,10 @@ package pl.mbalcer.enrollmentsystem.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.mbalcer.enrollmentsystem.model.Faculty;
 import pl.mbalcer.enrollmentsystem.model.dto.FacultyDTO;
 import pl.mbalcer.enrollmentsystem.service.FacultyService;
+import pl.mbalcer.enrollmentsystem.service.mapper.FacultyMapper;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,7 +18,6 @@ import java.util.Optional;
 @RequestMapping("/api/faculty")
 @Slf4j
 public class FacultyController {
-
     private final FacultyService facultyService;
 
     public FacultyController(FacultyService facultyService) {
@@ -36,6 +37,12 @@ public class FacultyController {
         Optional<FacultyDTO> facultyDTO = facultyService.findOne(id);
         if (facultyDTO.isPresent()) return ResponseEntity.ok().body(facultyDTO.get());
         else return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/blocked/{abbreviation}")
+    public ResponseEntity<?> getFacultyByAbbreviation(@PathVariable String abbreviation) {
+        log.debug("REST request to check if registration is blocked by faculty: {}", abbreviation);
+        return facultyService.isBlockedRegistration(abbreviation);
     }
 
     @PostMapping

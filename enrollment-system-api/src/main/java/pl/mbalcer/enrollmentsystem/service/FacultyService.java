@@ -1,6 +1,7 @@
 package pl.mbalcer.enrollmentsystem.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.errors.BadRequestException;
 import pl.mbalcer.enrollmentsystem.model.Faculty;
@@ -8,6 +9,7 @@ import pl.mbalcer.enrollmentsystem.model.dto.FacultyDTO;
 import pl.mbalcer.enrollmentsystem.repository.FacultyRepository;
 import pl.mbalcer.enrollmentsystem.service.mapper.FacultyMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,5 +78,18 @@ public class FacultyService implements CrudService<FacultyDTO> {
     public Optional<Faculty> findOneByAbbreviation(String abbreviation) {
         log.debug("Request to get Faculty by abbreviation : {}", abbreviation);
         return facultyRepository.findByAbbreviation(abbreviation);
+    }
+
+    public ResponseEntity<?> isBlockedRegistration(String abbreviation) {
+        log.debug("Request to check if registration is blocked");
+        Optional<Faculty> optionalFaculty = findOneByAbbreviation(abbreviation);
+        if (optionalFaculty.isPresent()) {
+            Faculty faculty = optionalFaculty.get();
+            if (faculty.getStartRegistration() != null && faculty.getStartRegistration().isAfter(LocalDateTime.now())) {
+                return ResponseEntity.ok(faculty.getStartRegistration());
+            }
+        }
+
+        return ResponseEntity.ok(false);
     }
 }
