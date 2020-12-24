@@ -25,6 +25,12 @@ export class EditProfileComponent implements OnInit {
   fieldsOfStudy: IFieldOfStudy[] = [];
   faculties: IFaculty[] = [];
 
+  changePasswordModel: ChangePasswordViewModel = {
+    oldPassword: '',
+    newPassword: '',
+    confirmNewPassword: ''
+  }
+
   constructor(private tokenStorageService: TokenStorageService,
               private userService: UserService,
               private studentService: StudentService,
@@ -96,4 +102,14 @@ export class EditProfileComponent implements OnInit {
       this.notificationService.success("Edit teacher", "You have updated your profile");
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
+
+  changePassword() {
+    return false;
+  }
+}
+
+export interface ChangePasswordViewModel {
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
 }

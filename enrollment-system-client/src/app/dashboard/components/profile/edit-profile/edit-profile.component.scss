@@ -2,7 +2,10 @@ mat-form-field, button {
   margin: 0 16px;
 }
 
-.student-change > form, .user-change > form, .teacher-change > form {
+.student-change > form,
+.user-change > form,
+.teacher-change > form,
+.change-password > form {
   display: flex;
   flex-direction: column;
 }
