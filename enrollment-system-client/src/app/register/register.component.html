@@ -25,10 +25,11 @@
                #registerPassword="ngModel"
                [ngClass]="{ 'is-invalid': registerForm.submitted && registerPassword.invalid }"
                required minlength="8" maxlength="40"
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$"
         />
         <p class="message error invalid" *ngIf="registerForm.submitted && registerPassword.invalid">
           <span *ngIf="registerPassword.errors?.required">Password is required</span>
-          <span *ngIf="registerPassword.errors?.minlength">Password must min 8 letters</span>
+          <span *ngIf="registerPassword.errors?.pattern">Password must be at least 8 characters, one uppercase letter, one lowercase letter and one number</span>
         </p>
         <input type="password"
                placeholder="confirm password"

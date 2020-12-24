@@ -4,7 +4,7 @@
     <form (ngSubmit)="passwordForm.form.valid && changePassword()" #passwordForm="ngForm">
       <mat-form-field appearance="standard">
         <mat-label>Old password</mat-label>
-        <input matInput [(ngModel)]="changePasswordModel.oldPassword"
+        <input type="password" matInput [(ngModel)]="changePasswordModel.oldPassword"
                name="oldPassword" #oldPassword="ngModel" required>
       </mat-form-field>
       <div class="message-container invalid-messages" *ngIf="passwordForm.submitted && oldPassword.invalid">
@@ -13,22 +13,23 @@
 
       <mat-form-field appearance="standard">
         <mat-label>New password</mat-label>
-        <input matInput [(ngModel)]="changePasswordModel.newPassword"
-               name="newPassword" #newPassword="ngModel" required minlength="8" maxlength="40">
+        <input type="password" matInput [(ngModel)]="changePasswordModel.newPassword"
+               name="newPassword" #newPassword="ngModel" required minlength="8" maxlength="40"
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$">
       </mat-form-field>
       <div class="message-container invalid-messages" *ngIf="passwordForm.submitted && newPassword.invalid">
-        <span class="message error" *ngIf="newPassword.errors?.required">New password is required!</span>
-        <span class="message error" *ngIf="newPassword.errors?.minlength">New password must be at least 8 characters</span>
+        <span class="message error" *ngIf="newPassword.errors.required">New password is required!</span>
+        <span class="message error" *ngIf="newPassword.errors.pattern">Password must be at least 8 characters, one uppercase letter, one lowercase letter and one number</span>
       </div>
 
       <mat-form-field appearance="standard">
         <mat-label>Confirm new password</mat-label>
-        <input matInput [(ngModel)]="changePasswordModel.confirmNewPassword"
+        <input type="password" matInput [(ngModel)]="changePasswordModel.confirmNewPassword"
                name="confirmPassword" #confirmPassword="ngModel" required pattern="{{newPassword.value}}">
       </mat-form-field>
       <div class="message-container invalid-messages" *ngIf="passwordForm.submitted && confirmPassword.invalid">
         <span class="message error" *ngIf="confirmPassword.errors.required">Confirm new password is required!</span>
-        <span class="message error" *ngIf="confirmPassword.errors?.pattern">Password & Confirm Password must be the same</span>
+        <span class="message error" *ngIf="confirmPassword.errors.pattern">Password & Confirm Password must be the same</span>
       </div>
 
       <button mat-raised-button color="primary">Change password</button>
