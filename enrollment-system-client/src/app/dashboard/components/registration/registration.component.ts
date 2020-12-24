@@ -56,10 +56,9 @@ export class RegistrationComponent implements OnInit {
 
   isBlockedRegistration(abbreviation: string) {
     this.facultyService.isBlocked(abbreviation).subscribe(result => {
-      console.log(result);
       if (result) {
         this.blockedRegistration = true;
-        this.messageBlockedRegistration = 'Registration is currently blocked. \nThe registration opening date: <b>' + new DatePipe("en-US").transform(result, 'yyyy-MM-dd HH:mm') + '</b>';
+        this.messageBlockedRegistration = 'Registration is currently blocked. \nThe registration opening date: <b>' + new DatePipe("en-US").transform(result, 'yyyy-MM-dd HH:mm:ss') + '</b>';
       } else {
         this.blockedRegistration = false;
       }

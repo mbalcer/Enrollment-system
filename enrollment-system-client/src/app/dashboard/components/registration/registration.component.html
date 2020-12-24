@@ -1,5 +1,5 @@
 <div class="container-component">
-  <div class="info-blocked-registration" *ngIf="blockedRegistration" [innerHTML]="messageBlockedRegistration"></div>
+  <div class="info-blocked-registration list-with-whitespace" *ngIf="blockedRegistration" [innerHTML]="messageBlockedRegistration"></div>
   <div class="mat-elevation-z8 div-table-groups" *ngIf="!blockedRegistration">
     <table mat-table [dataSource]="dataSource" class="table">
       <ng-container matColumnDef="id">
