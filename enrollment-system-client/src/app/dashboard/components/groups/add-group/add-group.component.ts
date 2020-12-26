@@ -116,13 +116,14 @@ export class AddGroupComponent implements OnInit {
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
-  saveGroup() {
+  saveGroup(form: NgForm) {
     this.groupToAdd.timeTableDTO = this.timeTable;
     if (this.isAdd) {
       this.subjectGroupService.postGroup(this.groupToAdd).subscribe(result => {
         this.notificationService.success("Add group", "You added the new group with id " + result.id);
         this.groupToAdd = new SubjectGroup();
         this.timeTable = [];
+        form.resetForm();
       }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     } else {
       this.subjectGroupService.putGroup(this.groupToAdd, this.groupToAdd.id).subscribe(result => {
@@ -130,6 +131,7 @@ export class AddGroupComponent implements OnInit {
         this.groupToAdd = new SubjectGroup();
         this.isAdd = true;
         this.timeTable = [];
+        form.resetForm();
         this.router.navigateByUrl('/dashboard/groups/add');
       }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     }
@@ -139,14 +141,18 @@ export class AddGroupComponent implements OnInit {
     const startDate = new DatePipe('en-US').transform(timeTableForm.form.value.startDate, 'yyyy-MM-ddTHH:mm:ss');
     const endDate = new DatePipe('en-US').transform(timeTableForm.form.value.endDate, 'yyyy-MM-ddTHH:mm:ss');
 
-    const appointment: IAppointment = {
-      startTime: startDate,
-      endTime: endDate
-    };
+    if(new Date(endDate) < new Date(startDate)) {
+      this.notificationService.alert("Invalid dates!", "End date must be after start date");
+    } else {
+      const appointment: IAppointment = {
+        startTime: startDate,
+        endTime: endDate
+      };
 
-    this.timeTable.push(appointment);
-    timeTableForm.resetForm();
-    this.notificationService.info("Add appointment", "You added the appointment to time table.");
+      this.timeTable.push(appointment);
+      timeTableForm.resetForm();
+      this.notificationService.info("Add appointment", "You added the appointment to time table.");
+    }
   }
 
   add(event: MatChipInputEvent): void {

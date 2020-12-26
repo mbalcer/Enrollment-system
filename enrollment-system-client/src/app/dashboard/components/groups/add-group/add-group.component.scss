@@ -10,3 +10,8 @@
 .delete-button {
   display: flex;
 }
+
+.container-component > form {
+  display: flex;
+  flex-direction: column;
+}
