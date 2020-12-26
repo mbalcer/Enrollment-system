@@ -68,10 +68,10 @@ public class AuthService {
 
     public ResponseEntity<?> registerUser(RegisterUserRequest registerRequest) {
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+            throw new UsernameAlreadyUsedException();
         }
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+            throw new EmailAlreadyUsedException();
         }
 
         User user = new User(registerRequest.getUsername(),

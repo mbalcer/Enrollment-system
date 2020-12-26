@@ -16,8 +16,8 @@ public class ExceptionHandlerAdvice {
         return ResponseEntity.badRequest().body(ex);
     }
 
-    @ExceptionHandler(LoginAlreadyUsedException.class)
-    public ResponseEntity handleLoginUsedException(LoginAlreadyUsedException ex) {
+    @ExceptionHandler(UsernameAlreadyUsedException.class)
+    public ResponseEntity handleLoginUsedException(UsernameAlreadyUsedException ex) {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.badRequest().body(ex);
     }
