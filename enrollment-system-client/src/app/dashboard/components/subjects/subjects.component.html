@@ -1,4 +1,11 @@
 <div class="container-component">
+  <div class="btn-add" *ngIf="checkUserIsAdmin()">
+    <span class="space"></span>
+    <button mat-button aria-label="Add Group button" class="add-button" routerLink="../subjects/add">
+      <mat-icon>add_circle_outline</mat-icon>
+      <span>Add new subject</span>
+    </button>
+  </div>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" class="table">
       <ng-container matColumnDef="id">

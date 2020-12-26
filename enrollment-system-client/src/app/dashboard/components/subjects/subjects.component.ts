@@ -4,6 +4,7 @@ import {ISubject, Subject} from './subject.model';
 import {SubjectService} from './subject.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {NotificationsService} from 'angular2-notifications';
+import {TokenStorageService} from '../../../user/auth/token-storage.service';
 
 @Component({
   selector: 'app-subjects',
@@ -17,7 +18,9 @@ export class SubjectsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private subjectService: SubjectService, private notificationService: NotificationsService) { }
+  constructor(private subjectService: SubjectService,
+              private notificationService: NotificationsService,
+              private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     this.getSubjects();
@@ -30,11 +33,12 @@ export class SubjectsComponent implements OnInit {
 
   getSubjects() {
     this.subjectService.getAllSubjects().subscribe(result => {
-      console.log(result);
       this.subjects = result;
-      console.log(this.subjects);
       this.refreshTable();
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
+  checkUserIsAdmin() {
+    return this.tokenStorage.isRole('ADMIN');
+  }
 }
