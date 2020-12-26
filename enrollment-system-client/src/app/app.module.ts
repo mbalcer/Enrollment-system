@@ -40,6 +40,7 @@ import {AngularEditorModule} from '@kolkov/angular-editor';
 import {EditProfileComponent} from './dashboard/components/profile/edit-profile/edit-profile.component';
 import {ChangeRoleComponent} from './dashboard/components/users/change-role/change-role.component';
 import {SimpleNotificationsModule} from 'angular2-notifications';
+import {AddSubjectComponent} from './dashboard/components/subjects/add-subject/add-subject.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import {SimpleNotificationsModule} from 'angular2-notifications';
     TimeTablePipe,
     AppointmentPipe,
     EditProfileComponent,
-    ChangeRoleComponent
+    ChangeRoleComponent,
+    AddSubjectComponent
   ],
   imports: [
     BrowserModule,

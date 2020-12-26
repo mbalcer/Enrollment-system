@@ -24,6 +24,7 @@ import {AdminGuard} from './user/auth/admin.guard';
 import {StudentGuard} from './user/auth/student.guard';
 import {TeacherGuard} from './user/auth/teacher.guard';
 import {TeacherAdminGuard} from './user/auth/teacher-admin.guard';
+import {AddSubjectComponent} from './dashboard/components/subjects/add-subject/add-subject.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'registration', component: RegistrationComponent, outlet: 'panel', canActivate: [StudentGuard] },
       { path: 'subjects', component: SubjectsComponent, outlet: 'panel' },
       { path: 'subjects/:id', component: SubjectDetailsComponent, outlet: 'panel'},
+      { path: 'subjects/add', component: AddSubjectComponent, outlet: 'panel', canActivate: [AdminGuard] },
       { path: 'my-groups', component: MyGroupsComponent, outlet: 'panel', canActivate: [TeacherGuard] },
       { path: 'profile', component: ProfileComponent, outlet: 'panel' },
       { path: 'profile/edit', component: EditProfileComponent, outlet: 'panel' },
