@@ -1,1 +1,66 @@
-<p>add-subject works!</p>
+<div class="container-component">
+  <h2 *ngIf="isAdd">Add subject</h2>
+  <h2 *ngIf="!isAdd">Edit subject</h2>
+  <form (ngSubmit)="f.form.valid && saveSubject(f)" #f="ngForm" novalidate>
+    <mat-form-field appearance="standard">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="subjectToEdit.name" name="name"
+             required minlength="3" maxlength="100" #name="ngModel">
+    </mat-form-field>
+    <div class="message-container" *ngIf="f.submitted && name.invalid">
+      <span class="message error" *ngIf="name.errors.required">Name is required!</span>
+      <span class="message error" *ngIf="name.errors.minlength">Name must be at least 3 characters</span>
+    </div>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Number of hours</mat-label>
+      <input matInput type="number" min="0" [(ngModel)]="subjectToEdit.numberOfHours" name="numberOfHours"
+             required #numberOfHours="ngModel" pattern="^[1-9][0-9]*$">
+    </mat-form-field>
+    <div class="message-container invalid-messages" *ngIf="f.submitted && numberOfHours.invalid">
+      <span class="message error" *ngIf="numberOfHours.errors.required">Number of hours is required!</span>
+      <span class="message error" *ngIf="numberOfHours.errors.pattern">Number of hours must be least 1!</span>
+    </div>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Course Type</mat-label>
+      <mat-select [(ngModel)]="subjectToEdit.courseType" name="courseType"
+                  required #courseType="ngModel">
+        <mat-option *ngFor="let type of courseTypes" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="message-container invalid-messages" *ngIf="f.submitted && courseType.invalid">
+      <span class="message error" *ngIf="courseType.errors.required">Course type is required!</span>
+    </div>
+
+    <mat-form-field appearance="standard">
+      <mat-label>ECTS</mat-label>
+      <input matInput type="number" min="0" [(ngModel)]="subjectToEdit.ects" name="ects"
+             required #ects="ngModel" pattern="^[1-9][0-9]*$">
+    </mat-form-field>
+    <div class="message-container invalid-messages" *ngIf="f.submitted && ects.invalid">
+      <span class="message error" *ngIf="ects.errors.required">Number of hours is required!</span>
+      <span class="message error" *ngIf="ects.errors.pattern">Number of hours must be least 1!</span>
+    </div>
+
+    <label>Description</label>
+    <angular-editor [config]="editorConfig" [(ngModel)]="subjectToEdit.description" name="description"
+                    #description="ngModel" required maxlength="8000"></angular-editor>
+    <div class="hint-container">
+      <div class="message-container" *ngIf="f.submitted && description.invalid">
+        <span class="message error" *ngIf="description.errors.required">Description is required!</span>
+        <span class="message error" *ngIf="description.errors.maxlength">Description must be max 8000 characters with HTML tags!</span>
+      </div>
+      <span class="space"></span>
+      <mat-hint align="end" class="small-hint">{{subjectToEdit.description.length}} / 8000</mat-hint>
+    </div>
+
+    <button mat-button aria-label="Add subject button" class="add-button">
+      <mat-icon>add_circle_outline</mat-icon>
+      <span *ngIf="isAdd">Add subject</span>
+      <span *ngIf="!isAdd">Edit subject</span>
+    </button>
+  </form>
+</div>

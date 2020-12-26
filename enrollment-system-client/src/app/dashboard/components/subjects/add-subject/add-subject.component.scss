@@ -1,0 +1,12 @@
+.container-component > form {
+  display: flex;
+  flex-direction: column;
+}
+
+.small-hint {
+  font-size: 75%;
+}
+
+.hint-container {
+  display: flex;
+}

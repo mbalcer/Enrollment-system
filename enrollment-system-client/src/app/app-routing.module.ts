@@ -39,6 +39,7 @@ const routes: Routes = [
       { path: 'subjects', component: SubjectsComponent, outlet: 'panel' },
       { path: 'subjects/add', component: AddSubjectComponent, outlet: 'panel', canActivate: [AdminGuard] },
       { path: 'subjects/:id', component: SubjectDetailsComponent, outlet: 'panel'},
+      { path: 'subjects/:id/edit', component: AddSubjectComponent, outlet: 'panel', canActivate: [AdminGuard]},
       { path: 'my-groups', component: MyGroupsComponent, outlet: 'panel', canActivate: [TeacherGuard] },
       { path: 'profile', component: ProfileComponent, outlet: 'panel' },
       { path: 'profile/edit', component: EditProfileComponent, outlet: 'panel' },
