@@ -7,10 +7,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.mbalcer.enrollmentsystem.errors.RoleNotFoundException;
+import pl.mbalcer.enrollmentsystem.errors.*;
 import pl.mbalcer.enrollmentsystem.model.Role;
 import pl.mbalcer.enrollmentsystem.model.Student;
 import pl.mbalcer.enrollmentsystem.model.User;
+import pl.mbalcer.enrollmentsystem.model.dto.request.ChangePasswordRequest;
 import pl.mbalcer.enrollmentsystem.model.dto.request.LoginUserRequest;
 import pl.mbalcer.enrollmentsystem.model.dto.request.RegisterUserRequest;
 import pl.mbalcer.enrollmentsystem.model.dto.response.JwtResponse;
@@ -88,5 +89,19 @@ public class AuthService {
 
         studentRepository.save(student);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    public ResponseEntity changePassword(ChangePasswordRequest passwordRequest) {
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!encoder.matches(passwordRequest.getOldPassword(), userPrincipal.getPassword())) {
+            throw new InvalidPasswordException();
+        }
+
+        User user = userRepository.findUserByUsername(userPrincipal.getUsername()).orElseThrow(UserNotFoundException::new);
+        String encodeNewPassword = encoder.encode(passwordRequest.getNewPassword());
+        user.setPassword(encodeNewPassword);
+
+        userRepository.save(user);
+        return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
     }
 }

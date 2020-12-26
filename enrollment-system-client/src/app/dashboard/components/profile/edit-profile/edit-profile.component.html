@@ -1,7 +1,7 @@
 <div class="container-component">
   <h2>Change password</h2>
   <div class="change-password">
-    <form (ngSubmit)="passwordForm.form.valid && changePassword()" #passwordForm="ngForm">
+    <form (ngSubmit)="passwordForm.form.valid && changePassword(passwordForm)" #passwordForm="ngForm" novalidate>
       <mat-form-field appearance="standard">
         <mat-label>Old password</mat-label>
         <input type="password" matInput [(ngModel)]="changePasswordModel.oldPassword"

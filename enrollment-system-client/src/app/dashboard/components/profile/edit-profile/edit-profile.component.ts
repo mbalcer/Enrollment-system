@@ -11,6 +11,8 @@ import {IFieldOfStudy} from '../../university/field-of-study.model';
 import {FacultyService} from '../../university/faculty.service';
 import {IFaculty} from '../../university/faculty.model';
 import {NotificationsService} from 'angular2-notifications';
+import {AuthService} from '../../../../user/auth/auth.service';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-edit-profile',
@@ -37,7 +39,8 @@ export class EditProfileComponent implements OnInit {
               private teacherService: TeacherService,
               private fieldOfStudyService: FieldOfStudyService,
               private facultyService: FacultyService,
-              private notificationService: NotificationsService) {
+              private notificationService: NotificationsService,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -103,8 +106,11 @@ export class EditProfileComponent implements OnInit {
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
-  changePassword() {
-    return false;
+  changePassword(form: NgForm) {
+    this.authService.changePassword(this.changePasswordModel).subscribe(result => {
+      form.resetForm();
+      this.notificationService.success("Change password", result.message);
+    }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 }
 

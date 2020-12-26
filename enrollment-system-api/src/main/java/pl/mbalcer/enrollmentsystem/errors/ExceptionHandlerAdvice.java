@@ -21,6 +21,13 @@ public class ExceptionHandlerAdvice {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.badRequest().body(ex);
     }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity handleInvalidPasswordException(InvalidPasswordException ex) {
+        log.error(ex.getMessage(), ex);
+        return ResponseEntity.badRequest().body(ex);
+    }
+
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity handleBadRequestException(BadRequestException ex) {
         log.error(ex.getMessage(), ex);

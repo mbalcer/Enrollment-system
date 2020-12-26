@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
+import {ChangePasswordViewModel} from '../../dashboard/components/profile/edit-profile/edit-profile.component';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,13 @@ export class AuthService {
       username: user.username,
       email: user.email,
       password: user.password
+    }, this.httpOptions);
+  }
+
+  changePassword(passwords: ChangePasswordViewModel): Observable<any> {
+    return this.http.post(this.AUTH_URL + '/changePassword', {
+      oldPassword: passwords.oldPassword,
+      newPassword: passwords.newPassword
     }, this.httpOptions);
   }
 }

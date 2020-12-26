@@ -2,6 +2,7 @@ package pl.mbalcer.enrollmentsystem.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.mbalcer.enrollmentsystem.model.dto.request.ChangePasswordRequest;
 import pl.mbalcer.enrollmentsystem.model.dto.request.LoginUserRequest;
 import pl.mbalcer.enrollmentsystem.model.dto.request.RegisterUserRequest;
 import pl.mbalcer.enrollmentsystem.service.AuthService;
@@ -24,5 +25,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity signIn(@RequestBody LoginUserRequest loginRequest) {
         return authService.authenticateUser(loginRequest);
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity changePassword(@RequestBody ChangePasswordRequest passwordRequest) {
+        return authService.changePassword(passwordRequest);
     }
 }
