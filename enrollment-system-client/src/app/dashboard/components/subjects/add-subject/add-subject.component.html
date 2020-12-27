@@ -38,19 +38,18 @@
     <mat-form-field appearance="standard">
       <mat-label>ECTS</mat-label>
       <input matInput type="number" min="0" [(ngModel)]="subjectToEdit.ects" name="ects"
-             required #ects="ngModel" pattern="^[1-9][0-9]*$">
+             required #ects="ngModel" pattern="^[0-9]*$">
     </mat-form-field>
     <div class="message-container invalid-messages" *ngIf="f.submitted && ects.invalid">
-      <span class="message error" *ngIf="ects.errors.required">Number of hours is required!</span>
-      <span class="message error" *ngIf="ects.errors.pattern">Number of hours must be least 1!</span>
+      <span class="message error" *ngIf="ects.errors.required">ECTS is required!</span>
+      <span class="message error" *ngIf="ects.errors.pattern">ECTS must be least 0 and integer!</span>
     </div>
 
     <label>Description</label>
     <angular-editor [config]="editorConfig" [(ngModel)]="subjectToEdit.description" name="description"
-                    #description="ngModel" required maxlength="8000"></angular-editor>
+                    #description="ngModel" maxlength="8000"></angular-editor>
     <div class="hint-container">
       <div class="message-container" *ngIf="f.submitted && description.invalid">
-        <span class="message error" *ngIf="description.errors.required">Description is required!</span>
         <span class="message error" *ngIf="description.errors.maxlength">Description must be max 8000 characters with HTML tags!</span>
       </div>
       <span class="space"></span>

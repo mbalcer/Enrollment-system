@@ -56,6 +56,20 @@ export class AddSubjectComponent implements OnInit {
   }
 
   saveSubject(f: NgForm) {
-
+    if (this.isAdd) {
+      this.subjectService.postSubject(this.subjectToEdit).subscribe(result => {
+        this.notificationService.success("Add subject", "You added the new subject with name " + result.name);
+        this.subjectToEdit = new Subject();
+        f.resetForm();
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
+    } else {
+      this.subjectService.putSubject(this.subjectToEdit, this.subjectToEdit.id).subscribe(result => {
+        this.notificationService.success("Update subject", "You updated the subject with name " + result.name);
+        this.subjectToEdit = new Subject();
+        this.isAdd = true;
+        f.resetForm();
+        this.router.navigateByUrl('/dashboard/subjects/add');
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
+    }
   }
 }
