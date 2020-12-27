@@ -22,4 +22,5 @@ public class Subject {
     private Duration numberOfHours;
     private CourseType courseType;
     private Integer ECTS;
+    private String language;
 }

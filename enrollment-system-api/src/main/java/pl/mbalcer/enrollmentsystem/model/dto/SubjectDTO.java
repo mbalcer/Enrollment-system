@@ -17,4 +17,5 @@ public class SubjectDTO {
     private Long numberOfHours;
     private CourseType courseType;
     private Integer ECTS;
+    private String language;
 }

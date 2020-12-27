@@ -5,6 +5,7 @@ export interface ISubject {
   numberOfHours: number;
   courseType: string;
   ects: number;
+  language: string;
 }
 
 export class Subject implements ISubject {
@@ -14,6 +15,7 @@ export class Subject implements ISubject {
   numberOfHours: number;
   courseType: string;
   ects: number;
+  language: string;
 
   constructor() {
     this.id = null;
@@ -22,5 +24,6 @@ export class Subject implements ISubject {
     this.numberOfHours = 0;
     this.courseType = '';
     this.ects = 0;
+    this.language = '';
   }
 }

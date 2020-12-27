@@ -86,7 +86,7 @@ public class InitService {
         studentUser = studentRepository.save(studentUser);
         userService.enableUser(studentUser.getUsername());
 
-        Subject subject = new Subject(0l, "Graduation seminar", "description", Duration.ofHours(30), CourseType.SEMINAR, 4);
+        Subject subject = new Subject(0l, "Graduation seminar", "description", Duration.ofHours(30), CourseType.SEMINAR, 4, "English");
         subject = subjectRepository.save(subject);
 
         Teacher teacherUser = new Teacher(mathAndItFaculty, "janek", passwordEncoder.encode("janek"), "Jan Kowalski", "jankow111@wp.pl", teacherRole);
@@ -108,7 +108,7 @@ public class InitService {
                             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A architecto, consequatur delectus dicta dignissimos dolores illum in ipsa ipsum laboriosam magni officia qui recusandae rerum soluta tenetur veniam vitae? Modi.\n\n" +
                             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A architecto, consequatur delectus dicta dignissimos dolores illum in ipsa ipsum laboriosam magni officia qui recusandae rerum soluta tenetur veniam vitae? Modi." +
                             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A architecto, consequatur delectus dicta dignissimos dolores illum in ipsa ipsum laboriosam magni officia qui recusandae rerum soluta tenetur veniam vitae? Modi.",
-                    Duration.ofHours(i*5), CourseType.LECTURE, i);
+                    Duration.ofHours(i*5), CourseType.LECTURE, i, "English");
             subjectRepository.save(s);
         }
 
