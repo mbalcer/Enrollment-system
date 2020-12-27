@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SubjectGroupService} from '../groups/subject-group.service';
 import {TokenStorageService} from '../../../user/auth/token-storage.service';
 import {ISubjectGroup, SubjectGroup} from '../groups/subject-group.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {NotificationsService} from 'angular2-notifications';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-my-groups',
@@ -15,6 +16,8 @@ export class MyGroupsComponent implements OnInit {
   dataSource = new MatTableDataSource<SubjectGroup>();
   groups: ISubjectGroup[] = [];
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(private subjectGroupService: SubjectGroupService,
               private tokenStorage: TokenStorageService,
               private notificationService: NotificationsService) { }
@@ -25,6 +28,7 @@ export class MyGroupsComponent implements OnInit {
 
   refreshTable() {
     this.dataSource = new MatTableDataSource<SubjectGroup>(this.groups);
+    this.dataSource.paginator = this.paginator;
   }
 
   getMyGroups() {

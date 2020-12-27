@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SubjectGroupService} from '../groups/subject-group.service';
 import {StudentService} from '../../../user/service/student.service';
 import {TokenStorageService} from '../../../user/auth/token-storage.service';
@@ -8,6 +8,7 @@ import {Student} from '../../../user/model/student.model';
 import {NotificationsService} from 'angular2-notifications';
 import {FacultyService} from '../university/faculty.service';
 import {DatePipe} from '@angular/common';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-registration',
@@ -21,6 +22,8 @@ export class RegistrationComponent implements OnInit {
   student = new Student();
   blockedRegistration = false;
   messageBlockedRegistration = '';
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private tokenStorage: TokenStorageService,
               private studentService: StudentService,
@@ -39,6 +42,7 @@ export class RegistrationComponent implements OnInit {
 
   refreshTable() {
     this.dataSource = new MatTableDataSource<SubjectGroup>(this.groups);
+    this.dataSource.paginator = this.paginator;
     this.sortTable();
   }
 

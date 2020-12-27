@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {Faculty, IFaculty} from './faculty.model';
 import {FacultyService} from './faculty.service';
 import {FieldOfStudy, IFieldOfStudy} from './field-of-study.model';
 import {FieldOfStudyService} from './field-of-study.service';
 import {NotificationsService} from 'angular2-notifications';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-university',
@@ -25,6 +26,8 @@ export class UniversityComponent implements OnInit {
   studyTypes = ['FIRST_CYCLE', 'SECOND_CYCLE', 'THIRD_CYCLE', 'LONG_CYCLE'];
   studyModes = ['FULL_TIME', 'PART_TIME'];
 
+  @ViewChild(MatPaginator) paginatorFieldOfStudy: MatPaginator;
+
   constructor(private facultyService: FacultyService,
               private fieldOfStudyService: FieldOfStudyService,
               private notificationService: NotificationsService) { }
@@ -37,6 +40,7 @@ export class UniversityComponent implements OnInit {
   refreshTables() {
     this.dataSourceFaculties = new MatTableDataSource<Faculty>(this.faculties);
     this.dataSourceFieldsOfStudy = new MatTableDataSource<FieldOfStudy>(this.fieldsOfStudy);
+    this.dataSourceFieldsOfStudy.paginator = this.paginatorFieldOfStudy;
   }
 
   processError(err) {
