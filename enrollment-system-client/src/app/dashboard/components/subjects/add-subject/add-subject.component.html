@@ -45,6 +45,11 @@
       <span class="message error" *ngIf="ects.errors.pattern">ECTS must be least 0 and integer!</span>
     </div>
 
+    <mat-form-field appearance="standard">
+      <mat-label>Language</mat-label>
+      <input matInput [(ngModel)]="subjectToEdit.language" name="language" maxlength="100">
+    </mat-form-field>
+
     <label>Description</label>
     <angular-editor [config]="editorConfig" [(ngModel)]="subjectToEdit.description" name="description"
                     #description="ngModel" maxlength="8000"></angular-editor>

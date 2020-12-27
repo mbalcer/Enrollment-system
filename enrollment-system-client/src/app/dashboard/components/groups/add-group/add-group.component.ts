@@ -123,6 +123,7 @@ export class AddGroupComponent implements OnInit {
         this.notificationService.success("Add group", "You added the new group with id " + result.id);
         this.groupToAdd = new SubjectGroup();
         this.timeTable = [];
+        this.getFieldsOfStudy();
         form.resetForm();
       }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     } else {

@@ -48,6 +48,7 @@ export class RequestsComponent implements OnInit {
       } else {
         this.notificationService.success("Request", "You have don't accepted the new group");
       }
+      this.refreshTable();
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 }
