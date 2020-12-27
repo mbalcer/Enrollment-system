@@ -23,6 +23,9 @@ export class SubjectsComponent implements OnInit {
               private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
+    if (this.checkUserIsAdmin()) {
+      this.displayedColumns.push('actions');
+    }
     this.getSubjects();
   }
 
@@ -40,5 +43,14 @@ export class SubjectsComponent implements OnInit {
 
   checkUserIsAdmin() {
     return this.tokenStorage.isRole('ADMIN');
+  }
+
+  deleteSubject(subject: ISubject) {
+    if (confirm("Are you sure you want to delete the group with id " + subject.id + "?")) {
+      this.subjectService.deleteSubject(subject.id).subscribe(result => {
+        this.subjects.splice(this.subjects.indexOf(subject), 1);
+        this.notificationService.success("Delete subject", "You deleted the subject with id " + subject.id);
+      }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message))
+    }
   }
 }
