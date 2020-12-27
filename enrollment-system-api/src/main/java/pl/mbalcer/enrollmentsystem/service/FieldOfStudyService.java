@@ -8,6 +8,7 @@ import pl.mbalcer.enrollmentsystem.model.dto.FieldOfStudyDTO;
 import pl.mbalcer.enrollmentsystem.repository.FieldOfStudyRepository;
 import pl.mbalcer.enrollmentsystem.service.mapper.FieldOfStudyMapper;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,6 +31,7 @@ public class FieldOfStudyService implements CrudService<FieldOfStudyDTO> {
         return fieldOfStudyRepository.findAll()
                 .stream()
                 .map(fieldOfStudyMapper::toDto)
+                .sorted(Comparator.comparingLong(FieldOfStudyDTO::getId))
                 .collect(Collectors.toList());
     }
 

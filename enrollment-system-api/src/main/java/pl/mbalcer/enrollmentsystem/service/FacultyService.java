@@ -10,6 +10,7 @@ import pl.mbalcer.enrollmentsystem.repository.FacultyRepository;
 import pl.mbalcer.enrollmentsystem.service.mapper.FacultyMapper;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,6 +33,7 @@ public class FacultyService implements CrudService<FacultyDTO> {
         return facultyRepository.findAll()
                 .stream()
                 .map(facultyMapper::toDto)
+                .sorted(Comparator.comparingLong(FacultyDTO::getId))
                 .collect(Collectors.toList());
     }
 
