@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../user/model/user.model';
 import {UserService} from '../user/service/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,12 +11,15 @@ import {UserService} from '../user/service/user.service';
 export class DashboardComponent implements OnInit {
   user = new User();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.user.roles = [];
     this.userService.getUser().subscribe(result => {
       this.user = result;
+      if(!this.user.fullName) {
+        this.router.navigateByUrl("/dashboard/profile/edit");
+      }
     });
   }
 }
