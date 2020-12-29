@@ -58,7 +58,8 @@
         <span class="message error" *ngIf="description.errors.maxlength">Description must be max 8000 characters with HTML tags!</span>
       </div>
       <span class="space"></span>
-      <mat-hint align="end" class="small-hint">{{subjectToEdit.description.length}} / 8000</mat-hint>
+      <mat-hint align="end" class="small-hint" *ngIf="subjectToEdit.description">{{subjectToEdit.description.length}} / 8000</mat-hint>
+      <mat-hint align="end" class="small-hint" *ngIf="!subjectToEdit.description">0 / 8000</mat-hint>
     </div>
 
     <button mat-button aria-label="Add subject button" class="add-button">

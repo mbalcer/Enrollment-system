@@ -7,7 +7,8 @@
         <mat-label>Title</mat-label>
         <input matInput [(ngModel)]="newsToEdit.title" name="title"
                required minlength="6" maxlength="100" #title="ngModel">
-        <mat-hint align="end">{{title.value.length}} / 100</mat-hint>
+        <mat-hint align="end" *ngIf="title.value">{{title.value.length}} / 100</mat-hint>
+        <mat-hint align="end" *ngIf="!title.value">0 / 100</mat-hint>
       </mat-form-field>
 
       <div class="message-container" *ngIf="f.submitted && title.invalid">
@@ -24,7 +25,8 @@
           <span class="message error" *ngIf="description.errors.maxlength">Description must be max 8000 characters with HTML tags!</span>
         </div>
         <span class="space"></span>
-        <mat-hint align="end" class="small-hint">{{newsToEdit.description.length}} / 8000</mat-hint>
+        <mat-hint align="end" class="small-hint" *ngIf="newsToEdit.description">{{newsToEdit.description.length}} / 8000</mat-hint>
+        <mat-hint align="end" class="small-hint" *ngIf="!newsToEdit.description">0 / 8000</mat-hint>
       </div>
 
       <button mat-button aria-label="Add news button" class="add-button">
