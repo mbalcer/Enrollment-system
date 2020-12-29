@@ -45,7 +45,6 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
         return subjectGroupRepository.findAll()
                 .stream()
                 .map(subjectGroupMapper::toDto)
-                .sorted(Comparator.comparingLong(SubjectGroupDTO::getId))
                 .collect(Collectors.toList());
     }
 

@@ -42,8 +42,8 @@ export class RegistrationComponent implements OnInit {
 
   refreshTable() {
     this.dataSource = new MatTableDataSource<SubjectGroup>(this.groups);
-    this.dataSource.paginator = this.paginator;
     this.sortTable();
+    this.dataSource.paginator = this.paginator;
   }
 
   sortTable() {
