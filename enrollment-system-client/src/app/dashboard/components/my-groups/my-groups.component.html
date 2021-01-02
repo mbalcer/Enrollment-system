@@ -35,7 +35,7 @@
           <button mat-icon-button aria-label="Edit group button" matTooltip="Edit group" [routerLink]="'../groups/' + row.id + '/edit'">
             <mat-icon>create</mat-icon>
           </button>
-          <button mat-icon-button aria-label="Export to pdf button" matTooltip="Export to pdf">
+          <button mat-icon-button aria-label="Export to pdf button" matTooltip="Export to pdf" (click)="exportPdf(row)">
             <mat-icon>attachment</mat-icon>
           </button>
         </td>

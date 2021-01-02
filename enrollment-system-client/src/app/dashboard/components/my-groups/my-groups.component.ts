@@ -5,6 +5,7 @@ import {ISubjectGroup, SubjectGroup} from '../groups/subject-group.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {NotificationsService} from 'angular2-notifications';
 import {MatPaginator} from '@angular/material/paginator';
+import {PdfService} from './pdf.service';
 
 @Component({
   selector: 'app-my-groups',
@@ -20,7 +21,8 @@ export class MyGroupsComponent implements OnInit {
 
   constructor(private subjectGroupService: SubjectGroupService,
               private tokenStorage: TokenStorageService,
-              private notificationService: NotificationsService) { }
+              private notificationService: NotificationsService,
+              private pdfService: PdfService) { }
 
   ngOnInit(): void {
     this.getMyGroups();
@@ -39,4 +41,18 @@ export class MyGroupsComponent implements OnInit {
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
+  exportPdf(row: ISubjectGroup) {
+    this.pdfService.getPdfStream(row.id).subscribe(
+      (data: Blob) => {
+      const file = new Blob([data], { type: 'application/pdf' })
+      const fileURL = URL.createObjectURL(file);
+
+      let a         = document.createElement('a');
+      a.href        = fileURL;
+      a.target      = '_blank';
+      a.download    = 'group' + row.id + '.pdf';
+      document.body.appendChild(a);
+      a.click();
+    });
+  }
 }
