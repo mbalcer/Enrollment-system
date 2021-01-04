@@ -19,8 +19,8 @@ import java.util.Set;
 @Service
 @Slf4j
 public class InitService {
-    @Value("${spring.jpa.hibernate.ddl-auto}")
-    private String hibernateType;
+    @Value("${app.data.initialize}")
+    private Boolean dataInitialize;
 
     private final UserRepository userRepository;
     private final UserService userService;
@@ -50,7 +50,7 @@ public class InitService {
 
     @PostConstruct
     public void isInit() {
-        if (hibernateType.equals("create") || hibernateType.equals("create-drop")) {
+        if (dataInitialize) {
             log.info("The data was initialized");
             init();
         } else {
