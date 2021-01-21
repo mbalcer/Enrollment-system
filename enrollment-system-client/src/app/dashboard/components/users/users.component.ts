@@ -11,7 +11,7 @@ import {NotificationsService} from 'angular2-notifications';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['username', 'email', 'fullName', 'role', 'active', 'actions'];
+  displayedColumns: string[] = ['username', 'email', 'fullName', 'role', 'actions'];
   dataSource = new MatTableDataSource<User>();
   users: IUser[];
 

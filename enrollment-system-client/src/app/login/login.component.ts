@@ -33,10 +33,12 @@ export class LoginComponent implements OnInit {
       this.tokenStorage.saveActiveRole(result.role[0]);
       this.router.navigate(['/dashboard']);
     }, errorResponse => {
-      this.messageLogin = {
-        type: TypeMessage.ERROR,
-        // message: errorResponse.error.message
-        message: 'Invalid credentials'
+      this.userToLogin.password = '';
+      this.messageLogin.type = TypeMessage.ERROR;
+      if(errorResponse.error.message.length == 0) {
+        this.messageLogin.message = 'Invalid credentials';
+      } else {
+        this.messageLogin.message = errorResponse.error.message;
       };
     });
   }

@@ -16,7 +16,7 @@
         />
         <p class="message error invalid" *ngIf="registerForm.submitted && registerUsername.invalid">
           <span *ngIf="registerUsername.errors?.required">Username is required</span>
-          <span *ngIf="registerUsername.errors?.minlength">Username must min 6 letters</span>
+          <span *ngIf="registerUsername.errors?.minlength">Username must be at least 6 characters</span>
         </p>
         <input type="password"
                placeholder="password"
