@@ -42,6 +42,14 @@ export class RegistrationComponent implements OnInit {
 
   refreshTable() {
     this.dataSource = new MatTableDataSource<SubjectGroup>(this.groups);
+    this.dataSource.filterPredicate = (data, filter: string)  => {
+      const accumulator = (currentTerm, key) => {
+        return key === 'subjectDTO' ? currentTerm + data.subjectDTO.name : currentTerm + data[key];
+      };
+      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+      const transformedFilter = filter.trim().toLowerCase();
+      return dataStr.indexOf(transformedFilter) !== -1;
+    };
     this.sortTable();
     this.dataSource.paginator = this.paginator;
   }
@@ -98,7 +106,8 @@ export class RegistrationComponent implements OnInit {
     }, err => this.notificationService.error(err.error.status, err.error.message));
   }
 
-  getIndexOfStudentInGroup(group: ISubjectGroup) {
-    return group.studentsDTO.findIndex(student => student.username === this.student.username);
+  filterTable(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
