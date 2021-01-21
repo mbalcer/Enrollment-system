@@ -11,7 +11,7 @@
     </mat-list-item>
   </mat-list>
   <mat-divider></mat-divider>
-  <div class="add-role-form">
+  <div class="add-role-form" *ngIf="roles.length > 0">
     <h3>Add role</h3>
     <mat-form-field appearance="standard">
       <mat-label>Role</mat-label>
@@ -23,8 +23,4 @@
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="addRole(roleSelect.value)">Add role</button>
   </div>
-
-
-
-
 </div>

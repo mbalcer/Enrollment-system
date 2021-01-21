@@ -22,19 +22,28 @@ export class ChangeRoleComponent implements OnInit {
   ngOnInit(): void {
     const username = this.route.snapshot.paramMap.get('username');
     this.getUser(username);
-    this.getRoles();
   }
 
   getUser(username: string) {
     this.userService.getUserByUsername(username).subscribe(result => {
       this.user = result;
+      this.getRoles();
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 
   getRoles() {
     this.roleService.getAllRoles().subscribe(result => {
       this.roles = result;
+      this.removeUserRoles();
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
+  }
+
+  removeUserRoles() {
+    this.user.roles.forEach(role => {
+      if (this.roles.indexOf(role) != -1) {
+        this.roles.splice(this.roles.indexOf(role), 1);
+      }
+    });
   }
 
   removeRole(role: string) {
@@ -42,6 +51,7 @@ export class ChangeRoleComponent implements OnInit {
       this.userService.removeRoleFromUser(this.user.username, role).subscribe(result => {
         this.user = result;
         this.notificationService.success("Remove role", "The role has been correctly removed from " + this.user.fullName);
+        this.roles.push(role);
       }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
     }
   }
@@ -50,6 +60,8 @@ export class ChangeRoleComponent implements OnInit {
     this.userService.addRoleToUser(this.user.username, value).subscribe(result => {
       this.user = result;
       this.notificationService.success("Add role", "The role has been correctly added to " + this.user.fullName);
+      if(this.roles.length == 1)
+        this.removeUserRoles();
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
   }
 }
