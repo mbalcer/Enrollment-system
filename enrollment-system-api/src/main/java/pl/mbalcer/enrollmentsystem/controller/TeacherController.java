@@ -24,14 +24,12 @@ public class TeacherController {
 
     @GetMapping
     public ResponseEntity<List<TeacherDTO>> getAllTeachers() {
-        log.debug("REST request to get a page of Teachers");
         List<TeacherDTO> all = teacherService.findAll();
         return ResponseEntity.ok().body(all);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Long id) {
-        log.debug("REST request to get Teacher : {}", id);
         Optional<TeacherDTO> teacherDTO = teacherService.findOne(id);
         if (teacherDTO.isPresent()) return ResponseEntity.ok().body(teacherDTO.get());
         else return ResponseEntity.notFound().build();
@@ -39,28 +37,24 @@ public class TeacherController {
 
     @GetMapping("/byUsername/{username}")
     public ResponseEntity<TeacherDTO> getTeacherByUsername(@PathVariable String username) {
-        log.debug("REST request to get Teacher by username : {}", username);
         TeacherDTO teacherDTO = teacherService.findOneByUsername(username);
         return ResponseEntity.ok(teacherDTO);
     }
 
     @PostMapping
     public ResponseEntity<TeacherDTO> createTeacher(@RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
-        log.debug("REST request to save Teacher : {}", teacherDTO);
         TeacherDTO result = teacherService.create(teacherDTO);
         return ResponseEntity.created(new URI("/api/teacher/" + result.getUsername())).body(result);
     }
 
     @PutMapping("/{username}")
     public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody TeacherDTO teacherDTO, @PathVariable String username) throws URISyntaxException {
-        log.debug("REST request to update Teacher : {}", teacherDTO);
         TeacherDTO result = teacherService.updateByUsername(teacherDTO, username);
         return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTeacher(@PathVariable Long id) {
-        log.debug("REST request to delete Teacher : {}", id);
         teacherService.delete(id);
         return ResponseEntity.noContent().build();
     }

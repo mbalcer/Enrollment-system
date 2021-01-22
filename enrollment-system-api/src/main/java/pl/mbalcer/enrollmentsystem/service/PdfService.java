@@ -4,6 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.model.dto.StudentDTO;
@@ -16,8 +17,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
 
 @Service
+@Slf4j
 public class PdfService {
     public InputStreamResource getPdfStream(SubjectGroupDTO group) {
+        log.debug("Generate PDF file for group: {}", group.getId());
         Document document = new Document();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {

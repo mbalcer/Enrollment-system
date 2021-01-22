@@ -114,7 +114,7 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
     }
 
     public SubjectGroupDTO addStudentToGroup(SubjectGroupDTO dto, String usernameStudent) {
-        log.debug("Request to add Student to SubjectGroup : {}", dto);
+        log.debug("Request to add student {} to group {}", usernameStudent, dto);
         Student student = studentRepository.findByUsername(usernameStudent).orElseThrow(UserNotFoundException::new);
         final SubjectGroup group = subjectGroupRepository.findById(dto.getId()).orElseThrow(() -> new BadRequestException("Invalid id"));
 
@@ -134,7 +134,7 @@ public class SubjectGroupService implements CrudService<SubjectGroupDTO> {
     }
 
     public SubjectGroupDTO removeStudentFromGroup(SubjectGroupDTO dto, String usernameStudent) {
-        log.debug("Request to remove Student from SubjectGroup : {}", dto);
+        log.debug("Request to remove student {} from group {}", usernameStudent, dto);
         Student student = studentRepository.findByUsername(usernameStudent).orElseThrow(UserNotFoundException::new);
         final SubjectGroup group = subjectGroupRepository.findById(dto.getId()).orElseThrow(() -> new BadRequestException("Invalid id"));
 

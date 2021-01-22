@@ -3,9 +3,12 @@ package pl.mbalcer.enrollmentsystem.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.mbalcer.enrollmentsystem.errors.BadRequestException;
+import pl.mbalcer.enrollmentsystem.errors.UserNotFoundException;
 import pl.mbalcer.enrollmentsystem.model.News;
+import pl.mbalcer.enrollmentsystem.model.User;
 import pl.mbalcer.enrollmentsystem.model.dto.NewsDTO;
 import pl.mbalcer.enrollmentsystem.repository.NewsRepository;
+import pl.mbalcer.enrollmentsystem.repository.UserRepository;
 import pl.mbalcer.enrollmentsystem.service.mapper.NewsMapper;
 
 import java.time.LocalDateTime;
@@ -19,10 +22,12 @@ import java.util.stream.Collectors;
 public class NewsService implements CrudService<NewsDTO> {
     private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
+    private final UserRepository userRepository;
 
-    public NewsService(NewsRepository newsRepository, NewsMapper newsMapper) {
+    public NewsService(NewsRepository newsRepository, NewsMapper newsMapper, UserRepository userRepository) {
         this.newsRepository = newsRepository;
         this.newsMapper = newsMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -59,6 +64,8 @@ public class NewsService implements CrudService<NewsDTO> {
 
         News news = newsMapper.toEntity(dto);
         news.setTimeOfPublication(LocalDateTime.now());
+        User user = userRepository.findUserByUsername(dto.getAuthor().getUsername()).orElseThrow(UserNotFoundException::new);
+        news.setAuthor(user);
         news = newsRepository.save(news);
         return newsMapper.toDto(news);
     }
@@ -73,6 +80,8 @@ public class NewsService implements CrudService<NewsDTO> {
         dto.setId(id);
         News news = newsMapper.toEntity(dto);
         news.setTimeOfPublication(LocalDateTime.now());
+        User user = userRepository.findUserByUsername(dto.getAuthor().getUsername()).orElseThrow(UserNotFoundException::new);
+        news.setAuthor(user);
         news = newsRepository.save(news);
         return newsMapper.toDto(news);
     }

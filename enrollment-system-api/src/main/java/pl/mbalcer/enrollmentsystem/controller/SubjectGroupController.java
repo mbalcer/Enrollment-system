@@ -25,14 +25,12 @@ public class SubjectGroupController {
 
     @GetMapping
     public ResponseEntity<List<SubjectGroupDTO>> getAllGroups() {
-        log.debug("REST request to get a page of SubjectGroups");
         List<SubjectGroupDTO> all = subjectGroupService.findAll();
         return ResponseEntity.ok().body(all);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SubjectGroupDTO> getGroup(@PathVariable Long id) {
-        log.debug("REST request to get SubjectGroup : {}", id);
         Optional<SubjectGroupDTO> groupDTO = subjectGroupService.findOne(id);
         if (groupDTO.isPresent()) return ResponseEntity.ok().body(groupDTO.get());
         else return ResponseEntity.notFound().build();
@@ -40,63 +38,54 @@ public class SubjectGroupController {
 
     @GetMapping("/byTeacher/{teacher}")
     public ResponseEntity<List<SubjectGroupDTO>> getAllGroupsByTeacher(@PathVariable String teacher) {
-        log.debug("REST request to get SubjectGroup by Teacher: {}", teacher);
         List<SubjectGroupDTO> allByTeacher = subjectGroupService.findAllByTeacher(teacher);
         return ResponseEntity.ok(allByTeacher);
     }
 
     @GetMapping("/requests")
     public ResponseEntity<List<SubjectGroupDTO>> getAllGroupsForRequests() {
-        log.debug("REST request to get SubjectGroup for requests");
         List<SubjectGroupDTO> allRequests = subjectGroupService.findAllByType(GroupType.INACTIVE);
         return ResponseEntity.ok(allRequests);
     }
 
     @GetMapping("/registration/{fieldOfStudyId}")
     public ResponseEntity<List<SubjectGroupDTO>> getAllGroupsForRegistration(@PathVariable Long fieldOfStudyId) {
-        log.debug("REST request to get SubjectGroup for registration");
         List<SubjectGroupDTO> allGroups = subjectGroupService.findAllRegistration(fieldOfStudyId);
         return ResponseEntity.ok(allGroups);
     }
 
     @PostMapping
     public ResponseEntity<SubjectGroupDTO> createGroup(@RequestBody SubjectGroupDTO groupDTO) throws URISyntaxException {
-        log.debug("REST request to save SubjectGroup : {}", groupDTO);
         SubjectGroupDTO result = subjectGroupService.create(groupDTO);
         return ResponseEntity.created(new URI("/api/subjectGroup/" + result.getId())).body(result);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<SubjectGroupDTO> updateGroup(@RequestBody SubjectGroupDTO groupDTO, @PathVariable Long id) throws URISyntaxException {
-        log.debug("REST request to update SubjectGroup : {}", groupDTO);
         SubjectGroupDTO result = subjectGroupService.update(groupDTO, id);
         return ResponseEntity.ok().body(result);
     }
 
     @PutMapping("/add/student/{username}")
     public ResponseEntity<SubjectGroupDTO> addStudentToGroup(@RequestBody SubjectGroupDTO groupDTO, @PathVariable String username) {
-        log.debug("REST request to add student {} to group {}", username, groupDTO);
         SubjectGroupDTO result = subjectGroupService.addStudentToGroup(groupDTO, username);
         return ResponseEntity.ok().body(result);
     }
 
     @PutMapping("/remove/student/{username}")
     public ResponseEntity<SubjectGroupDTO> removeStudentFromGroup(@RequestBody SubjectGroupDTO groupDTO, @PathVariable String username) {
-        log.debug("REST request to remove student {} to group {}", username, groupDTO);
         SubjectGroupDTO result = subjectGroupService.removeStudentFromGroup(groupDTO, username);
         return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGroup(@PathVariable Long id) {
-        log.debug("REST request to delete SubjectGroup : {}", id);
         subjectGroupService.delete(id);
         return ResponseEntity.noContent().build();
     }
     
     @PutMapping("/type/{id}")
     public ResponseEntity<SubjectGroupDTO> updateTypeGroup(@RequestBody GroupType type, @PathVariable Long id) {
-        log.debug("REST request to update type SubjectGroup : {}", type);
         SubjectGroupDTO result = subjectGroupService.updateGroupType(type, id);
         return ResponseEntity.ok().body(result);
     }

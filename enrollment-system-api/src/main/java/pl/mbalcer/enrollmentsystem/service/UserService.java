@@ -43,6 +43,7 @@ public class UserService {
     }
 
     public ResponseEntity getUser(String username) {
+        log.debug("Request to get user by username: {}", username);
         Optional<User> userOptional = userRepository.findUserByUsername(username);
         if (userOptional.isEmpty())
             throw new UserNotFoundException();
@@ -51,6 +52,7 @@ public class UserService {
     }
 
     public List<UserDTO> findAll() {
+        log.debug("Request to get all Users");
         List<User> all = userRepository.findAll();
         return userMapper.toDto(all);
     }
@@ -64,6 +66,7 @@ public class UserService {
     }
 
     public void enableUser(String username) {
+        log.debug("Request to enable user by username: {}", username);
         Optional<User> optionalUser = userRepository.findUserByUsername(username);
         if(optionalUser.isEmpty())
             throw new UserNotFoundException();
@@ -73,6 +76,7 @@ public class UserService {
     }
 
     public UserDTO addRole(String username, ERole roleEnum) {
+        log.debug("Request to add role {} to user {}", roleEnum.name(), username);
         User user = userRepository.findUserByUsername(username).orElseThrow(UserNotFoundException::new);
         Role role = roleRepository.findByName(roleEnum).orElseThrow(RoleNotFoundException::new);
 
@@ -93,6 +97,7 @@ public class UserService {
     }
 
     public UserDTO removeRole(String username, ERole roleEnum) {
+        log.debug("Request to remove role {} from user {}", roleEnum.name(), username);
         User user = userRepository.findUserByUsername(username).orElseThrow(UserNotFoundException::new);
         Role role = roleRepository.findByName(roleEnum).orElseThrow(RoleNotFoundException::new);
 
