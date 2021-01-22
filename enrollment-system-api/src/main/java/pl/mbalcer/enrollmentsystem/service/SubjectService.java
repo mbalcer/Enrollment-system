@@ -71,7 +71,6 @@ public class SubjectService implements CrudService<SubjectDTO> {
         Optional<Subject> subjectById = subjectRepository.findById(id);
         if (subjectById.isEmpty())
             throw new BadRequestException("Invalid id");
-        // TODO remove foreign key to subject in subjectGroups
         subjectRepository.deleteById(id);
     }
 }

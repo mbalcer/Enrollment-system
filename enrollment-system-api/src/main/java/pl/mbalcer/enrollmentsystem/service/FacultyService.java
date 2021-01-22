@@ -73,7 +73,6 @@ public class FacultyService implements CrudService<FacultyDTO> {
         Optional<Faculty> facultyById = facultyRepository.findById(id);
         if (facultyById.isEmpty())
             throw new BadRequestException("Invalid id");
-        // TODO remove foreign key to faculty in fieldofstudy and teacher
         facultyRepository.deleteById(id);
     }
 
@@ -83,7 +82,7 @@ public class FacultyService implements CrudService<FacultyDTO> {
     }
 
     public ResponseEntity<?> isBlockedRegistration(String abbreviation) {
-        log.debug("Request to check if registration is blocked");
+        log.debug("Request to check if registration is blocked by faculty: {}", abbreviation);
         Optional<Faculty> optionalFaculty = findOneByAbbreviation(abbreviation);
         if (optionalFaculty.isPresent()) {
             Faculty faculty = optionalFaculty.get();

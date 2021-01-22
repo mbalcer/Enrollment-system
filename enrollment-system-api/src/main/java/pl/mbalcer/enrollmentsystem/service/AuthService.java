@@ -1,5 +1,6 @@
 package pl.mbalcer.enrollmentsystem.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +30,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class AuthService {
     private final RoleRepository roleRepository;
     private final StudentRepository studentRepository;
@@ -47,6 +49,7 @@ public class AuthService {
     }
 
     public ResponseEntity<?> authenticateUser(LoginUserRequest loginRequest) {
+        log.debug("Authenticate user: {}", loginRequest.getUsername());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -67,6 +70,7 @@ public class AuthService {
     }
 
     public ResponseEntity<?> registerUser(RegisterUserRequest registerRequest) {
+        log.debug("Register new user: {}", registerRequest.getUsername());
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
             throw new UsernameAlreadyUsedException();
         }
@@ -83,7 +87,7 @@ public class AuthService {
         roles.add(studentRole);
 
         user.setRoles(roles);
-        user.setIsActive(true); // TODO: Activation user system(AUS): remove this line after implementation AUS
+        user.setIsActive(true);
 
         Student student = new Student(user, 0l, 1, null, null);
 
@@ -98,6 +102,7 @@ public class AuthService {
         }
 
         User user = userRepository.findUserByUsername(userPrincipal.getUsername()).orElseThrow(UserNotFoundException::new);
+        log.debug("Request to change password for user: {}", user.getUsername());
         String encodeNewPassword = encoder.encode(passwordRequest.getNewPassword());
         user.setPassword(encodeNewPassword);
 

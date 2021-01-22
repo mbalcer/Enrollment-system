@@ -71,7 +71,6 @@ public class FieldOfStudyService implements CrudService<FieldOfStudyDTO> {
         Optional<FieldOfStudy> fieldOfStudyById = fieldOfStudyRepository.findById(id);
         if (fieldOfStudyById.isEmpty())
             throw new BadRequestException("Invalid id");
-        // TODO remove foreign key to fieldofstudy in subjectgroups
         fieldOfStudyRepository.deleteById(id);
     }
 }
