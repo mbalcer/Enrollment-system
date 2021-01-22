@@ -28,4 +28,7 @@ public class News {
     private String description;
 
     private LocalDateTime timeOfPublication;
+
+    @ManyToOne
+    private User author;
 }

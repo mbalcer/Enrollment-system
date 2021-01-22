@@ -14,4 +14,5 @@ public class NewsDTO {
     private String title;
     private String description;
     private LocalDateTime timeOfPublication;
+    private UserDTO author;
 }

@@ -5,11 +5,12 @@ import org.mapstruct.Mapping;
 import pl.mbalcer.enrollmentsystem.model.News;
 import pl.mbalcer.enrollmentsystem.model.dto.NewsDTO;
 
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface NewsMapper extends EntityMapper<NewsDTO, News> {
 
-    @Mapping(source = "title", target = "title")
+    @Mapping(target = "author", ignore = true)
     News toEntity(NewsDTO dto);
 
+    @Mapping(source = "author", target = "author")
     NewsDTO toDto(News entity);
 }

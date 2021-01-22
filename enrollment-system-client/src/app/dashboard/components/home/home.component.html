@@ -21,6 +21,11 @@
     </div>
     <div class="title">{{newsItem.title}}</div>
     <div class="description" [innerHTML]="newsItem.description"></div>
-    <div class="timeOfPublication">{{newsItem.timeOfPublication | date: 'yyyy-MM-dd, HH:mm'}}</div>
+    <div class="footer-news">
+      <div class="author" *ngIf="newsItem.author.fullName.length > 0">Author: {{newsItem.author.fullName}}</div>
+      <div class="author" *ngIf="newsItem.author.fullName.length == 0">Author: {{newsItem.author.username}}</div>
+      <span class="space"></span>
+      <div class="timeOfPublication">{{newsItem.timeOfPublication | date: 'yyyy-MM-dd, HH:mm'}}</div>
+    </div>
   </div>
 </div>

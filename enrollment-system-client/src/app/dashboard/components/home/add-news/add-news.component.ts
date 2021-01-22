@@ -5,6 +5,7 @@ import {News} from '../news.model';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 import {NgForm} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
+import {TokenStorageService} from '../../../../user/auth/token-storage.service';
 
 @Component({
   selector: 'app-add-news',
@@ -38,20 +39,29 @@ export class AddNewsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private newsService: NewsService,
               private router: Router,
-              private notificationService: NotificationsService) { }
+              private notificationService: NotificationsService,
+              private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id != null) {
       this.isAdd = false;
       this.getNews(Number(id));
+    } else {
+      this.setAuthorNews();
     }
   }
 
   getNews(id: number) {
     this.newsService.getNews(id).subscribe(result => {
       this.newsToEdit = result;
+      this.setAuthorNews();
     }, err => this.notificationService.error(err.status + ': ' + err.error.status, err.error.message));
+  }
+
+  setAuthorNews() {
+    const username = this.tokenStorage.getUser().username;
+    this.newsToEdit.author.username = username;
   }
 
   saveNews(form: NgForm) {
