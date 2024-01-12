@@ -9,6 +9,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=enrollment
+    networks:
+      - enrollment-network
   app:
     container_name: enrollment-app
     image: 'enrollment-be:1.0'
@@ -16,8 +18,27 @@ services:
       context: ./enrollment-system-api
     depends_on:
       - db
+    ports:
+      - 9000:9000
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/enrollment
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SERVER_PORT=9000
+    networks:
+      - enrollment-network
+  ui:
+    container_name: enrollment-ui
+    image: 'enrollment-fe:1.0'
+    build:
+      context: ./enrollment-system-client
+    depends_on:
+      - app
+    ports:
+      - 8000:8000
+    networks:
+      - enrollment-network
+networks:
+  enrollment-network:
+    driver: bridge
