@@ -11,6 +11,9 @@ services:
       - POSTGRES_DB=enrollment
     networks:
       - enrollment-network
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      - ./db/enrollment-dump.sql:/docker-entrypoint-initdb.d/enrollment-dump.sql
   app:
     container_name: enrollment-app
     image: 'enrollment-be:1.0'
